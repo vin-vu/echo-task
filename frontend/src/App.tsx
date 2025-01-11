@@ -3,7 +3,7 @@ import TodoForm from './components/TodoForm';
 import './App.css';
 
 type Task = {
-  value: string
+  description: string
 }
 
 function App() {
@@ -12,12 +12,13 @@ function App() {
   const addTask = (task: Task) => {
     setTasks([...tasks, task])
   }
+  console.log('tasks: ', tasks)
 
   return (
     <>
       <div className="main-container">
         <span>EchoTask</span>
-        <TodoForm/>
+        <TodoForm addTask={addTask} />
       </div>
     </>
   );
