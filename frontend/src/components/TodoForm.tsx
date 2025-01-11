@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-function TodoForm() {
+interface TodoFormProps {
+  addTask: (task: Task) => void;
+}
+
+export default function TodoForm() {
   const [value, setValue] = useState('');
   return (
     <div className="input-container">
@@ -15,5 +19,3 @@ function TodoForm() {
     </div>
   );
 }
-
-export default TodoForm;
