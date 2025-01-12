@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TodoForm from './components/TodoForm';
 import './App.css';
 
-type Task = {
+export type Task = {
   description: string
 }
 
@@ -12,13 +12,19 @@ function App() {
   const addTask = (task: Task) => {
     setTasks([...tasks, task])
   }
-  console.log('tasks: ', tasks)
+
+  const displayTasks = tasks.map((task) => (
+    <li>{task.description}</li>
+  ))
 
   return (
     <>
       <div className="main-container">
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
+        <ul>
+          {displayTasks}
+        </ul>
       </div>
     </>
   );

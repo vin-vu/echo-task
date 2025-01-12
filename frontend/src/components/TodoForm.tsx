@@ -1,8 +1,5 @@
 import { useState } from 'react';
-
-type Task = {
-  description: string
-}
+import { Task } from '../App';
 
 interface TodoFormProps {
   addTask: (task: Task) => void;
