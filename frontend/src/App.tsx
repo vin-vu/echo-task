@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import TodoForm from './components/TodoForm';
+import Task from './components/Task';
 import './App.css';
 
-export type Task = {
+export type TaskData = {
   description: string;
   id: string;
 };
 
-function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+export default function App() {
+  const [tasks, setTasks] = useState<TaskData[]>([]);
 
-  const addTask = (task: Task) => {
+  const addTask = (task: TaskData) => {
     setTasks([...tasks, task]);
   };
 
   const displayTasks = tasks.map((task) => (
-    <li key={task.id}>{task.description}</li>
+    <Task key={task.id} description={task.description} />
   ));
 
   return (
@@ -23,10 +24,8 @@ function App() {
       <div className="main-container">
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
-        <ul>{displayTasks}</ul>
+        {displayTasks}
       </div>
     </>
   );
 }
-
-export default App;
