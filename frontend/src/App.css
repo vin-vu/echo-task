@@ -14,5 +14,46 @@ body {
   padding-top: 50px;
   width: 750px;
   height: 1000px;
-  background-color: #1A1A40;
+  background-color: #1a1a40;
+  /* margin: 0 auto; */
+}
+
+.input-container {
+
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+}
+
+.input-container form {
+  flex-grow: 1;
+  display: flex;
+}
+.input-container input {
+  flex-grow: 3;
+
+}
+.input-container button {
+  flex-grow: 1;
+}
+
+.task-container {
+  width: 500px;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /* width: 200px; */
+  background-color: #8758ff;
+  height: 50px;
+  padding: 0px 10px;
+}
+
+.button-container {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
 }

@@ -24,7 +24,7 @@ export default function App() {
       <div className="main-container">
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
-        {displayTasks}
+        <div className="task-container">{displayTasks}</div>
       </div>
     </>
   );
