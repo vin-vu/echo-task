@@ -1,5 +1,6 @@
-import { FaTrash } from "react-icons/fa";
-import { TiEdit } from "react-icons/ti";
+import { FaTrash } from 'react-icons/fa';
+import { TiEdit } from 'react-icons/ti';
+import './Task.css';
 
 type TaskProps = {
   description: string;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import TodoForm from './components/TaskForm';
-import Task from './components/Task';
+import TodoForm from './components/TaskForm/TaskForm';
+import Task from './components/Task/Task';
 import './App.css';
 
 export type TaskData = {

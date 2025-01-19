@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { TaskData } from '../App';
+import { TaskData } from '../../App';
 import { v4 as uuid4 } from 'uuid';
+import './TaskForm.css';
 
 interface TodoFormProps {
   addTask: (task: TaskData) => void;
@@ -17,8 +18,7 @@ export default function TodoForm({ addTask }: TodoFormProps) {
 
   return (
     <div className="input-container">
-      <form onSubmit={handleSubmit}>   
-        
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={value}
