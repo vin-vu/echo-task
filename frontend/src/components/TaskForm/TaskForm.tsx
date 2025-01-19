@@ -21,6 +21,7 @@ export default function TodoForm({ addTask }: TodoFormProps) {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          placeholder='A task for now...'
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
