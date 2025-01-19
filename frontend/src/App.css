@@ -7,20 +7,24 @@ body {
   height: 100vh;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 50px;
+  row-gap: 20px;
   width: 750px;
   height: 1000px;
   background-color: #1a1a40;
-  /* margin: 0 auto; */
-}
+  }
 
 .input-container {
-
   width: 100%;
+  height: 30px;
   max-width: 500px;
   display: flex;
 }
@@ -29,12 +33,14 @@ body {
   flex-grow: 1;
   display: flex;
 }
+
 .input-container input {
   flex-grow: 3;
-
+  border-radius: 0px;
 }
 .input-container button {
   flex-grow: 1;
+  border-radius: 0px;
 }
 
 .task-container {
@@ -46,7 +52,6 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  /* width: 200px; */
   background-color: #8758ff;
   height: 50px;
   padding: 0px 10px;
