@@ -19,7 +19,7 @@ export default function Task({
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const handleEdit = () => {
-    setIsEdit(true);
+    setIsEdit(!isEdit);
   };
 
   const displayDescription = () =>
