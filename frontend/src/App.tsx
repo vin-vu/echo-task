@@ -6,7 +6,6 @@ import './App.css';
 export type TaskData = {
   description: string;
   id: string;
-  deleteTask: (id: string) => void;
 };
 
 export default function App() {

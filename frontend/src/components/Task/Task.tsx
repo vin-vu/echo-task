@@ -17,13 +17,32 @@ export default function Task({
   editTask,
 }: TaskProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [editValue, setEditValue] = useState<string>('');
 
   const handleEdit = () => {
     setIsEdit(!isEdit);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    editTask(id, editValue);
+    setEditValue('');
+    setIsEdit(false);
+  };
+
   const displayDescription = () =>
-    !isEdit ? <p>{description}</p> : <input></input>;
+    !isEdit ? (
+      <p>{description}</p>
+    ) : (
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder={description}
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+        ></input>
+      </form>
+    );
 
   return (
     <div className="task-item">
