@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TodoForm from './components/TaskForm/TaskForm';
 import Task from './components/Task/Task';
+import Microphone from './components/Microphone/Microphone';
 import './App.css';
 
 export type TaskData = {
@@ -52,6 +53,7 @@ export default function App() {
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
         <div className="task-container">{displayTasks}</div>
+        <Microphone />
       </div>
     </>
   );
