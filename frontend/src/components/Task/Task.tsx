@@ -33,7 +33,7 @@ export default function Task({
 
   const displayDescription = () =>
     !isEdit ? (
-      <p>{description}</p>
+      <span onClick={() => handleEdit()}>{description}</span>
     ) : (
       <form onSubmit={handleSubmit}>
         <input
