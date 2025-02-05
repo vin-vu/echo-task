@@ -15,9 +15,17 @@ export const useSpeech = () => {
   const startListening = SpeechRecognition.startListening;
   const stopListening = SpeechRecognition.stopListening;
 
-  const fetchIntent = (transcript: string) => {
+  const fetchIntent = async (transcript: string) => {
     if (transcript.length !== 0) {
       console.log('sending: ', transcript);
+      const backendAPI = 'http://localhost:8080/detect-intent';
+      try {
+        const response = await fetch(backendAPI);
+        const json = await response.json();
+        console.log('json: ', json)
+      } catch (e) {
+        console.error(e);
+      }
     }
     return;
   };
