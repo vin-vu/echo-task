@@ -2,7 +2,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 
-export default function useSpeech() {
+export const useSpeech = () => {
   const {
     transcript,
     listening,
@@ -26,4 +26,4 @@ export default function useSpeech() {
     startListening,
     isMicrophoneAvailable,
   };
-}
+};
