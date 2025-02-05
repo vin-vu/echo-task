@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import TodoForm from './components/TaskForm/TaskForm';
-import Task from './components/Task/Task';
-import Microphone from './components/Microphone/Microphone';
+import TodoForm from './components/taskform/TaskForm';
+import Task from './components/task/Task';
+import Microphone from './components/microphone/Microphone';
 import './App.css';
 
 export type TaskData = {
