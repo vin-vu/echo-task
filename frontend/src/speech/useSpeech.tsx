@@ -8,21 +8,11 @@ export const useSpeech = () => {
     finalTranscript,
     listening,
     browserSupportsSpeechRecognition,
-    browserSupportsContinuousListening,
     isMicrophoneAvailable,
   } = useSpeechRecognition();
 
-  const startListening = (): void => {
-    if (browserSupportsContinuousListening) {
-      SpeechRecognition.startListening({ continuous: true });
-    } else {
-      SpeechRecognition.startListening();
-    }
-  };
-
-  const stopListening = (): void => {
-    SpeechRecognition.stopListening()
-  }
+  const startListening = SpeechRecognition.startListening;
+  const stopListening = SpeechRecognition.stopListening;
 
   return {
     transcript,
@@ -32,6 +22,5 @@ export const useSpeech = () => {
     startListening,
     stopListening,
     isMicrophoneAvailable,
-    browserSupportsContinuousListening,
   };
 };

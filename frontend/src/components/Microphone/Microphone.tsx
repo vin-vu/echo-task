@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { FaMicrophone } from 'react-icons/fa';
 import { useSpeech } from '../../speech/useSpeech';
 import './Microphone.css';
+import { useEffect } from 'react';
 
 export default function Microphone() {
   const {
@@ -12,13 +12,8 @@ export default function Microphone() {
     startListening,
     stopListening,
     isMicrophoneAvailable,
-    browserSupportsContinuousListening,
   } = useSpeech();
 
-  useEffect(() => {
-    console.log('transcript: ', transcript);
-    console.log('final transcript: ', finalTranscript)
-  });
 
   return (
     <div className="mic-container">
@@ -26,8 +21,8 @@ export default function Microphone() {
       <FaMicrophone
         className="mic-icon"
         size={75}
-        onMouseDown={startListening}
-        onMouseUp={stopListening}
+        onMouseDown={() => startListening()}
+        onMouseUp={() => stopListening()}
       />
     </div>
   );
