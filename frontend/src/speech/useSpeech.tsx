@@ -5,6 +5,7 @@ import SpeechRecognition, {
 export const useSpeech = () => {
   const {
     transcript,
+    finalTranscript,
     listening,
     browserSupportsSpeechRecognition,
     browserSupportsContinuousListening,
@@ -19,11 +20,18 @@ export const useSpeech = () => {
     }
   };
 
+  const stopListening = (): void => {
+    SpeechRecognition.stopListening()
+  }
+
   return {
     transcript,
+    finalTranscript,
     listening,
     browserSupportsSpeechRecognition,
     startListening,
+    stopListening,
     isMicrophoneAvailable,
+    browserSupportsContinuousListening,
   };
 };
