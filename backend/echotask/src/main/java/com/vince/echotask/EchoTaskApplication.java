@@ -1,0 +1,1 @@
+package com.vince.echotask;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class EchoTaskApplication {	public static void main(String[] args) {		SpringApplication.run(EchoTaskApplication.class, args);	}}
