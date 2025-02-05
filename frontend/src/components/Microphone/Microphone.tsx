@@ -1,18 +1,9 @@
 import { FaMicrophone } from 'react-icons/fa';
 import { useSpeech } from '../../hooks/useSpeech';
 import './Microphone.css';
-import { useEffect } from 'react';
 
 export default function Microphone() {
-  const {
-    finalTranscript,
-    startListening,
-    stopListening,
-  } = useSpeech();
-  
-  useEffect(() => {
-    console.log('final transcript: ', finalTranscript)
-  })
+  const { startListening, stopListening } = useSpeech();
 
   return (
     <div className="mic-container">
