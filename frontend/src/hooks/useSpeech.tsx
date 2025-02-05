@@ -20,9 +20,15 @@ export const useSpeech = () => {
       console.log('sending: ', transcript);
       const backendAPI = 'http://localhost:8080/detect-intent';
       try {
-        const response = await fetch(backendAPI);
+        const response = await fetch(backendAPI, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ transcript }),
+        });
         const json = await response.json();
-        console.log('json: ', json)
+        console.log('json: ', json);
       } catch (e) {
         console.error(e);
       }
