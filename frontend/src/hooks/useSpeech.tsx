@@ -38,7 +38,7 @@ export const useSpeech = () => {
 
   useEffect(() => {
     fetchIntent(finalTranscript);
-  });
+  }, [finalTranscript]);
 
   return {
     transcript,
