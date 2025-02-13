@@ -1,0 +1,11 @@
+add task,add_task_stop_by_hmart
+add reminder,add_task_change_doctor_appointment
+add todo,add_task_drink_boba_at_omomo
+create task,add_task_drink_boba_at_omomo
+delete task,delete_task_stop_by_hmart
+remove reminder,delete_task_change_doctor_appointment
+cancel todo,delete_task_drink_boba_at_omomo
+forget task,delete_task_drink_boba_at_omomo
+completed task,completed_drink_boba_at_omomo
+finished task,completed_drink_boba_at_omomo
+done with task,completed_drink_boba_at_omomo
