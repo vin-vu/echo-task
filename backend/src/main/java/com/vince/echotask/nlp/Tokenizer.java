@@ -2,6 +2,7 @@ package com.vince.echotask.nlp;
 
 import jakarta.annotation.PostConstruct;
 import java.io.*;
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -40,9 +41,7 @@ public class Tokenizer {
 
     String text = "Sample text to be tokenized.";
     String[] tokens = tokenizer.tokenize(text);
-
-    for (String token : tokens) {
-      log.info("token: {}", token);
-    }
+    tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
+    log.info("tokens: {}", (Object) tokens);
   }
 }
