@@ -3,6 +3,8 @@ package com.vince.echotask.nlp;
 import jakarta.annotation.PostConstruct;
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Tokenizer {
 
+  public static Set<String> stopwordsSet = new HashSet<>();
+
   @PostConstruct
   public void readingTrainingData() throws IOException {
     ClassPathResource resource = new ClassPathResource("data/training_data.txt");
@@ -22,7 +26,7 @@ public class Tokenizer {
 
       String line;
       while ((line = bufferedReader.readLine()) != null) {
-        log.info("line: {}", line);
+        //        log.info("line: {}", line);
       }
 
     } catch (IOException e) {
@@ -43,5 +47,20 @@ public class Tokenizer {
     String[] tokens = tokenizer.tokenize(text);
     tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
     log.info("tokens: {}", (Object) tokens);
+
+    removeStopwords();
+  }
+
+  public void removeStopwords() throws IOException {
+    ClassPathResource stopwordsResource = new ClassPathResource("data/stopwords.txt");
+    BufferedReader bufferedReader =
+        new BufferedReader(new InputStreamReader(stopwordsResource.getInputStream()));
+
+    String stopword;
+    while ((stopword = bufferedReader.readLine()) != null) {
+      stopwordsSet.add(stopword);
+    }
+
+    log.info("stopword set: {}", stopwordsSet);
   }
 }
