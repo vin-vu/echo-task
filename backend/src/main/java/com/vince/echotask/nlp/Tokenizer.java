@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
+import opennlp.tools.lemmatizer.LemmatizerME;
+import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import org.springframework.core.io.ClassPathResource;
@@ -75,5 +77,16 @@ public class Tokenizer {
     tokens =
         Arrays.stream(tokens).filter(token -> !stopWordsSet.contains(token)).toArray(String[]::new);
     log.info("no stop word tokens: {}", (Object) tokens);
+  }
+
+  public void lemmatizeTokens(String[] tokens) throws IOException {
+    ClassPathResource modelResource =
+        new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin");
+    InputStream modelInput = modelResource.getInputStream();
+
+    LemmatizerModel lemmatizerModel = new LemmatizerModel(modelInput);
+    LemmatizerME lemmatizer = new LemmatizerME(lemmatizerModel);
+
+    String[] lemmas = lemmatizer.lemmatize(tokens);
   }
 }
