@@ -90,11 +90,13 @@ public class Tokenizer {
     POSModel posModel = new POSModel(modelInput);
     POSTaggerME posTagger = new POSTaggerME(posModel);
 
-    String tags[] = posTagger.tag(tokens);
+    String[] tags = posTagger.tag(tokens);
     log.info("tags: {}", (Object) tags);
+
+    lemmatizeTokens(tokens, tags);
   }
 
-  public void lemmatizeTokens(String[] tokens) throws IOException {
+  public void lemmatizeTokens(String[] tokens, String[] tags) throws IOException {
     ClassPathResource modelResource =
         new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin");
     InputStream modelInput = modelResource.getInputStream();
@@ -102,6 +104,7 @@ public class Tokenizer {
     LemmatizerModel lemmatizerModel = new LemmatizerModel(modelInput);
     LemmatizerME lemmatizer = new LemmatizerME(lemmatizerModel);
 
-    //    String[] lemmas = lemmatizer.lemmatize(tokens);
+    String[] lemmas = lemmatizer.lemmatize(tokens, tags);
+    log.info("lemmas: {}", (Object) lemmas);
   }
 }
