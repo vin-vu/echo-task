@@ -34,21 +34,6 @@ public class Tokenizer {
     }
   }
 
-  public void tokenizeSpeech() throws IOException {
-    ClassPathResource modelResource =
-        new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
-    InputStream modelInput = modelResource.getInputStream();
-
-    TokenizerModel tokenizerModel = new TokenizerModel(modelInput);
-    TokenizerME tokenizer = new TokenizerME(tokenizerModel);
-
-    String text = "Sample text to be tokenized.";
-    String[] tokens = tokenizer.tokenize(text);
-    tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
-    log.info("tokens: {}", (Object) tokens);
-    removeStopWords(tokens);
-  }
-
   @PostConstruct
   public void loadStopWords() throws IOException {
     ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
@@ -60,8 +45,30 @@ public class Tokenizer {
       stopWordsSet.add(stopWord);
     }
 
-    log.info("stopword set: {}", stopWordsSet);
-    tokenizeSpeech();
+    log.info("stopWord set: {}", stopWordsSet);
+    tokenizeText();
+  }
+
+  public void tokenizeText() throws IOException {
+    ClassPathResource modelResource =
+        new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
+    InputStream modelInput = modelResource.getInputStream();
+
+    TokenizerModel tokenizerModel = new TokenizerModel(modelInput);
+    TokenizerME tokenizer = new TokenizerME(tokenizerModel);
+
+    String text = "Sample text to be tokenized.";
+    String[] tokens = tokenizer.tokenize(text);
+
+    normalizeTokens(tokens);
+  }
+
+  public void normalizeTokens(String[] tokens) {
+
+    tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
+    log.info("tokens: {}", (Object) tokens);
+
+    removeStopWords(tokens);
   }
 
   public void removeStopWords(String[] tokens) {
