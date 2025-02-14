@@ -87,6 +87,6 @@ public class Tokenizer {
     LemmatizerModel lemmatizerModel = new LemmatizerModel(modelInput);
     LemmatizerME lemmatizer = new LemmatizerME(lemmatizerModel);
 
-    String[] lemmas = lemmatizer.lemmatize(tokens);
+    //    String[] lemmas = lemmatizer.lemmatize(tokens);
   }
 }
