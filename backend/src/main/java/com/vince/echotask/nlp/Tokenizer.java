@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Tokenizer {
 
-  public static Set<String> stopwordsSet = new HashSet<>();
+  public static Set<String> stopWordsSet = new HashSet<>();
 
   @PostConstruct
   public void readingTrainingData() throws IOException {
@@ -34,7 +34,6 @@ public class Tokenizer {
     }
   }
 
-  @PostConstruct
   public void tokenizeSpeech() throws IOException {
     ClassPathResource modelResource =
         new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
@@ -47,20 +46,27 @@ public class Tokenizer {
     String[] tokens = tokenizer.tokenize(text);
     tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
     log.info("tokens: {}", (Object) tokens);
-
-    removeStopwords();
+    removeStopWords(tokens);
   }
 
-  public void removeStopwords() throws IOException {
-    ClassPathResource stopwordsResource = new ClassPathResource("data/stopwords.txt");
+  @PostConstruct
+  public void loadStopWords() throws IOException {
+    ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
     BufferedReader bufferedReader =
-        new BufferedReader(new InputStreamReader(stopwordsResource.getInputStream()));
+        new BufferedReader(new InputStreamReader(stopWordsResource.getInputStream()));
 
-    String stopword;
-    while ((stopword = bufferedReader.readLine()) != null) {
-      stopwordsSet.add(stopword);
+    String stopWord;
+    while ((stopWord = bufferedReader.readLine()) != null) {
+      stopWordsSet.add(stopWord);
     }
 
-    log.info("stopword set: {}", stopwordsSet);
+    log.info("stopword set: {}", stopWordsSet);
+    tokenizeSpeech();
+  }
+
+  public void removeStopWords(String[] tokens) {
+    tokens =
+        Arrays.stream(tokens).filter(token -> !stopWordsSet.contains(token)).toArray(String[]::new);
+    log.info("no stop word tokens: {}", (Object) tokens);
   }
 }
