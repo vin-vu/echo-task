@@ -4,9 +4,8 @@ import jakarta.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CsvReader {
 
-  private static Set<String> vocabularySet = new HashSet<>();
-  public static ArrayList<String> vocabularyList = new ArrayList<>();
+  public static LinkedHashSet<String> vocabularyLinkedHashSet = new LinkedHashSet<>();
 
   @PostConstruct
   public void readingTrainingData() throws IOException {
@@ -32,14 +30,10 @@ public class CsvReader {
 
         String[] tokens = line.split(",");
         String[] splitPhrase = tokens[1].split(" ");
-        for (String word : splitPhrase) {
-          if (!vocabularySet.contains(word)) {
-            vocabularySet.add(word);
-            vocabularyList.add(word);
-          }
-        }
+
+        vocabularyLinkedHashSet.addAll(Arrays.asList(splitPhrase));
       }
-      log.info("vocab list: {}", vocabularyList);
+      log.info("vocabularyLinkedHashSet list: {}", vocabularyLinkedHashSet);
 
     } catch (IOException e) {
       throw new IOException(e);
