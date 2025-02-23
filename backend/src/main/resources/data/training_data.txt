@@ -1,93 +1,93 @@
 intent,sentence
-ADD_TASK,add task drink omomo boba
-ADD_TASK,add new task drink omomo boba
-ADD_TASK,add todo drink omomo boba
-ADD_TASK,add reminder drink omomo boba
-ADD_TASK,add item drink omomo boba
+ADD_TASK,add task
+ADD_TASK,add new task
+ADD_TASK,add todo
+ADD_TASK,add reminder
+ADD_TASK,add item
 
-ADD_TASK,create task oil change gr86
-ADD_TASK,create new task oil change gr86
-ADD_TASK,create todo oil change gr86
-ADD_TASK,create reminder oil change gr86
-ADD_TASK,create item oil change gr86
+ADD_TASK,create task
+ADD_TASK,create new task
+ADD_TASK,create todo
+ADD_TASK,create reminder
+ADD_TASK,create item
 
-ADD_TASK,set task listen illenium
-ADD_TASK,set new task listen illenium
-ADD_TASK,set todo listen illenium
-ADD_TASK,set reminder listen illenium
-ADD_TASK,set item listen illenium
+ADD_TASK,set task
+ADD_TASK,set new task
+ADD_TASK,set todo
+ADD_TASK,set reminder
+ADD_TASK,set item
 
-ADD_TASK,make task install advan gt wheels
-ADD_TASK,make new task install advan gt wheels
-ADD_TASK,make todo install advan gt wheels
-ADD_TASK,make reminder install advan gt wheels
-ADD_TASK,make item install advan gt wheels
+ADD_TASK,make task
+ADD_TASK,make new task
+ADD_TASK,make todo
+ADD_TASK,make reminder
+ADD_TASK,make item
 
-ADD_TASK,insert task eat pho
-ADD_TASK,insert new task eat pho
-ADD_TASK,insert todo eat pho
-ADD_TASK,insert reminder eat pho
-ADD_TASK,insert item eat pho
+ADD_TASK,insert task
+ADD_TASK,insert new task
+ADD_TASK,insert todo
+ADD_TASK,insert reminder
+ADD_TASK,insert item
 
-ADD_TASK,schedule task watch frieren
-ADD_TASK,schedule new task watch frieren
-ADD_TASK,schedule todo watch frieren
-ADD_TASK,schedule reminder watch frieren
-ADD_TASK,schedule item watch frieren
+ADD_TASK,schedule task
+ADD_TASK,schedule new task
+ADD_TASK,schedule todo
+ADD_TASK,schedule reminder
+ADD_TASK,schedule item
 
-ADD_TASK,plan task join discord server
-ADD_TASK,plan new task join discord server
-ADD_TASK,plan todo join discord server
-ADD_TASK,plan reminder join discord server
-ADD_TASK,plan item join discord server
+ADD_TASK,plan task
+ADD_TASK,plan new task
+ADD_TASK,plan todo
+ADD_TASK,plan reminder
+ADD_TASK,plan item
 
-DELETE_TASK,delete task drink omomo boba
-DELETE_TASK,delete old task drink omomo boba
-DELETE_TASK,delete todo drink omomo boba
-DELETE_TASK,delete reminder task drink omomo boba
-DELETE_TASK,delete item task drink omomo boba
+DELETE_TASK,delete task
+DELETE_TASK,delete old task
+DELETE_TASK,delete todo
+DELETE_TASK,delete reminder task
+DELETE_TASK,delete item task
 
-DELETE_TASK,remove task buy oil change gr86
-DELETE_TASK,remove old task oil change gr86
-DELETE_TASK,remove todo oil change gr86
-DELETE_TASK,remove reminder task oil change gr86
-DELETE_TASK,remove item task oil change gr86
+DELETE_TASK,remove task buy
+DELETE_TASK,remove old task
+DELETE_TASK,remove todo
+DELETE_TASK,remove reminder task
+DELETE_TASK,remove item task
 
-DELETE_TASK,cancel task listen illenium
-DELETE_TASK,cancel old task listen illenium
-DELETE_TASK,cancel todo listen illenium
-DELETE_TASK,cancel reminder listen illenium
-DELETE_TASK,cancel item listen illenium
+DELETE_TASK,cancel task
+DELETE_TASK,cancel old task
+DELETE_TASK,cancel todo
+DELETE_TASK,cancel reminder
+DELETE_TASK,cancel item
 
-DELETE_TASK,clear task install advan gt wheels
-DELETE_TASK,clear old task install advan gt wheels
-DELETE_TASK,clear todo install advan gt wheels
-DELETE_TASK,clear reminder install advan gt wheels
-DELETE_TASK,clear item install advan gt wheels
+DELETE_TASK,clear task
+DELETE_TASK,clear old task
+DELETE_TASK,clear todo
+DELETE_TASK,clear reminder
+DELETE_TASK,clear item
 
-DELETE_TASK,drop task eat pho
-DELETE_TASK,drop old task eat pho
-DELETE_TASK,drop todo eat pho
-DELETE_TASK,drop reminder eat pho
-DELETE_TASK,drop item eat pho
+DELETE_TASK,drop task
+DELETE_TASK,drop old task
+DELETE_TASK,drop todo
+DELETE_TASK,drop reminder
+DELETE_TASK,drop item
 
-DELETE_TASK,discard task watch frieren
-DELETE_TASK,discard old task watch frieren
-DELETE_TASK,discard todo watch frieren
-DELETE_TASK,discard reminder watch frieren
-DELETE_TASK,discard item watch frieren
+DELETE_TASK,discard task
+DELETE_TASK,discard old task
+DELETE_TASK,discard todo
+DELETE_TASK,discard reminder
+DELETE_TASK,discard item
 
-MARK_DONE,complete task drink omomo boba
-MARK_DONE,complete old task drink omomo boba
-MARK_DONE,complete todo drink omomo boba
-MARK_DONE,complete reminder drink omomo boba
-MARK_DONE,complete item drink omomo boba
+MARK_DONE,complete task
+MARK_DONE,complete old task
+MARK_DONE,complete todo
+MARK_DONE,complete reminder
+MARK_DONE,complete item
 
-MARK_DONE,finish task oil change gr86
-MARK_DONE,finish old task oil change gr86
-MARK_DONE,finish todo oil change gr86
-MARK_DONE,finish reminder oil change gr86
-MARK_DONE,finish item oil change gr86
+MARK_DONE,finish task
+MARK_DONE,finish old task
+MARK_DONE,finish todo
+MARK_DONE,finish reminder
+MARK_DONE,finish item
 
 MARK_DONE,done task
 MARK_DONE,done old task
