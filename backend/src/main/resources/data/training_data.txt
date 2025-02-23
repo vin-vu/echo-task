@@ -77,4 +77,41 @@ DELETE_TASK,discard todo watch frieren
 DELETE_TASK,discard reminder watch frieren
 DELETE_TASK,discard item watch frieren
 
+MARK_DONE,complete task drink omomo boba
+MARK_DONE,complete old task drink omomo boba
+MARK_DONE,complete todo drink omomo boba
+MARK_DONE,complete reminder drink omomo boba
+MARK_DONE,complete item drink omomo boba
+
+MARK_DONE,finish task oil change gr86
+MARK_DONE,finish old task oil change gr86
+MARK_DONE,finish todo oil change gr86
+MARK_DONE,finish reminder oil change gr86
+MARK_DONE,finish item oil change gr86
+
+MARK_DONE,done task
+MARK_DONE,done old task
+MARK_DONE,done todo
+MARK_DONE,done reminder
+MARK_DONE,done item
+
+MARK_DONE,mark complete task
+MARK_DONE,mark complete old task
+MARK_DONE,mark complete todo
+MARK_DONE,mark complete reminder
+MARK_DONE,mark complete item
+
+MARK_DONE,set complete task
+MARK_DONE,set complete old task
+MARK_DONE,set complete todo
+MARK_DONE,set complete reminder
+MARK_DONE,set complete item
+
+MARK_DONE,set finish task
+MARK_DONE,set finish old task
+MARK_DONE,set finish todo
+MARK_DONE,set finish reminder
+MARK_DONE,set finish item
+
+
 
