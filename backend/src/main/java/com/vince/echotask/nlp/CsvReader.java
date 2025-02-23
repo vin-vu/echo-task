@@ -23,18 +23,17 @@ public class CsvReader {
     try {
       BufferedReader bufferedReader =
           new BufferedReader(new InputStreamReader(resource.getInputStream()));
+      bufferedReader.readLine(); // skip header
 
       String line;
       while ((line = bufferedReader.readLine()) != null) {
         if (line.isEmpty()) continue;
 
         String[] tokens = line.split(",");
-        String[] splitPhrase = tokens[1].split(" ");
-
-        vocabularyLinkedHashSet.addAll(Arrays.asList(splitPhrase));
+        String[] splitTokens = tokens[1].split(" ");
+        vocabularyLinkedHashSet.addAll(Arrays.asList(splitTokens));
+        log.info("vocabularyLinkedHashSet list: {}", vocabularyLinkedHashSet);
       }
-      log.info("vocabularyLinkedHashSet list: {}", vocabularyLinkedHashSet);
-
     } catch (IOException e) {
       throw new IOException(e);
     }
