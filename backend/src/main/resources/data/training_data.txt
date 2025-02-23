@@ -40,3 +40,41 @@ ADD_TASK,plan new task join discord server
 ADD_TASK,plan todo join discord server
 ADD_TASK,plan reminder join discord server
 ADD_TASK,plan item join discord server
+
+DELETE_TASK,delete task drink omomo boba
+DELETE_TASK,delete old task drink omomo boba
+DELETE_TASK,delete todo drink omomo boba
+DELETE_TASK,delete reminder task drink omomo boba
+DELETE_TASK,delete item task drink omomo boba
+
+DELETE_TASK,remove task buy oil change gr86
+DELETE_TASK,remove old task oil change gr86
+DELETE_TASK,remove todo oil change gr86
+DELETE_TASK,remove reminder task oil change gr86
+DELETE_TASK,remove item task oil change gr86
+
+DELETE_TASK,cancel task listen illenium
+DELETE_TASK,cancel old task listen illenium
+DELETE_TASK,cancel todo listen illenium
+DELETE_TASK,cancel reminder listen illenium
+DELETE_TASK,cancel item listen illenium
+
+DELETE_TASK,clear task install advan gt wheels
+DELETE_TASK,clear old task install advan gt wheels
+DELETE_TASK,clear todo install advan gt wheels
+DELETE_TASK,clear reminder install advan gt wheels
+DELETE_TASK,clear item install advan gt wheels
+
+DELETE_TASK,drop task eat pho
+DELETE_TASK,drop old task eat pho
+DELETE_TASK,drop todo eat pho
+DELETE_TASK,drop reminder eat pho
+DELETE_TASK,drop item eat pho
+
+DELETE_TASK,discard task watch frieren
+DELETE_TASK,discard old task watch frieren
+DELETE_TASK,discard todo watch frieren
+DELETE_TASK,discard reminder watch frieren
+DELETE_TASK,discard item watch frieren
+
+
