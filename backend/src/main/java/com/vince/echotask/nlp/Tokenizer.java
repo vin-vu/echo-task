@@ -22,23 +22,6 @@ public class Tokenizer {
   public static Set<String> stopWordsSet = new HashSet<>();
 
   @PostConstruct
-  public void readingTrainingData() throws IOException {
-    ClassPathResource resource = new ClassPathResource("data/training_data.txt");
-    try {
-      BufferedReader bufferedReader =
-          new BufferedReader(new InputStreamReader(resource.getInputStream()));
-
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        //        log.info("line: {}", line);
-      }
-
-    } catch (IOException e) {
-      throw new IOException(e);
-    }
-  }
-
-  @PostConstruct
   public void loadStopWords() throws IOException {
     ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
     BufferedReader bufferedReader =
