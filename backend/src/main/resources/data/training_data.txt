@@ -1,11 +1,42 @@
-add task,add_task_stop_by_hmart
-add reminder,add_task_change_doctor_appointment
-add todo,add_task_drink_boba_at_omomo
-create task,add_task_drink_boba_at_omomo
-delete task,delete_task_stop_by_hmart
-remove reminder,delete_task_change_doctor_appointment
-cancel todo,delete_task_drink_boba_at_omomo
-forget task,delete_task_drink_boba_at_omomo
-completed task,completed_drink_boba_at_omomo
-finished task,completed_drink_boba_at_omomo
-done with task,completed_drink_boba_at_omomo
+intent,sentence
+ADD_TASK,add task drink omomo boba
+ADD_TASK,add new task drink omomo boba
+ADD_TASK,add todo drink omomo boba
+ADD_TASK,add reminder drink omomo boba
+ADD_TASK,add item drink omomo boba
+
+ADD_TASK,create task oil change gr86
+ADD_TASK,create new task oil change gr86
+ADD_TASK,create todo oil change gr86
+ADD_TASK,create reminder oil change gr86
+ADD_TASK,create item oil change gr86
+
+ADD_TASK,set task listen illenium
+ADD_TASK,set new task listen illenium
+ADD_TASK,set todo listen illenium
+ADD_TASK,set reminder listen illenium
+ADD_TASK,set item listen illenium
+
+ADD_TASK,make task install advan gt wheels
+ADD_TASK,make new task install advan gt wheels
+ADD_TASK,make todo install advan gt wheels
+ADD_TASK,make reminder install advan gt wheels
+ADD_TASK,make item install advan gt wheels
+
+ADD_TASK,insert task eat pho
+ADD_TASK,insert new task eat pho
+ADD_TASK,insert todo eat pho
+ADD_TASK,insert reminder eat pho
+ADD_TASK,insert item eat pho
+
+ADD_TASK,schedule task watch frieren
+ADD_TASK,schedule new task watch frieren
+ADD_TASK,schedule todo watch frieren
+ADD_TASK,schedule reminder watch frieren
+ADD_TASK,schedule item watch frieren
+
+ADD_TASK,plan task join discord server
+ADD_TASK,plan new task join discord server
+ADD_TASK,plan todo join discord server
+ADD_TASK,plan reminder join discord server
+ADD_TASK,plan item join discord server
