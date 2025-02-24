@@ -1,6 +1,5 @@
 package com.vince.echotask.nlp;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
@@ -25,11 +24,9 @@ public class Tokenizer {
 
     public static Set<String> stopWordsSet = new HashSet<>();
 
-    @PostConstruct
     public void loadStopWords() throws IOException {
         ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
-        BufferedReader bufferedReader =
-                new BufferedReader(new InputStreamReader(stopWordsResource.getInputStream()));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stopWordsResource.getInputStream()));
 
         String stopWord;
         while ((stopWord = bufferedReader.readLine()) != null) {
@@ -37,43 +34,38 @@ public class Tokenizer {
         }
 
         log.info("stopWord set: {}", stopWordsSet);
-        tokenizeText();
     }
 
-    public void tokenizeText() throws IOException {
-        ClassPathResource modelResource =
-                new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
+    public String[] tokenizeText(String phrase) throws IOException {
+        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
         InputStream modelInput = modelResource.getInputStream();
 
         TokenizerModel tokenizerModel = new TokenizerModel(modelInput);
         TokenizerME tokenizer = new TokenizerME(tokenizerModel);
 
-        String text = "Sample text to be tokenized.";
-        String[] tokens = tokenizer.tokenize(text);
+        String[] tokens = tokenizer.tokenize(phrase);
 
-        normalizeTokens(tokens);
+        return normalizeTokens(tokens);
     }
 
-    public void normalizeTokens(String[] tokens) throws IOException {
+    public String[] normalizeTokens(String[] tokens) throws IOException {
 
         tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
         log.info("tokens: {}", (Object) tokens);
 
-        removeStopWords(tokens);
+        return removeStopWords(tokens);
     }
 
-    public void removeStopWords(String[] tokens) throws IOException {
-        tokens =
-                Arrays.stream(tokens)
-                        .filter(token -> !stopWordsSet.contains(token))
-                        .toArray(String[]::new);
+    public String[] removeStopWords(String[] tokens) throws IOException {
+        tokens = Arrays.stream(tokens)
+                .filter(token -> !stopWordsSet.contains(token))
+                .toArray(String[]::new);
         log.info("no stop word tokens: {}", (Object) tokens);
-        generatePartOfSpeechTags(tokens);
+        return generatePartOfSpeechTags(tokens);
     }
 
-    public void generatePartOfSpeechTags(String[] tokens) throws IOException {
-        ClassPathResource modelResource =
-                new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin");
+    public String[] generatePartOfSpeechTags(String[] tokens) throws IOException {
+        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin");
         InputStream modelInput = modelResource.getInputStream();
 
         POSModel posModel = new POSModel(modelInput);
@@ -82,12 +74,11 @@ public class Tokenizer {
         String[] tags = posTagger.tag(tokens);
         log.info("tags: {}", (Object) tags);
 
-        lemmatizeTokens(tokens, tags);
+        return lemmatizeTokens(tokens, tags);
     }
 
-    public void lemmatizeTokens(String[] tokens, String[] tags) throws IOException {
-        ClassPathResource modelResource =
-                new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin");
+    public String[] lemmatizeTokens(String[] tokens, String[] tags) throws IOException {
+        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin");
         InputStream modelInput = modelResource.getInputStream();
 
         LemmatizerModel lemmatizerModel = new LemmatizerModel(modelInput);
@@ -95,5 +86,6 @@ public class Tokenizer {
 
         String[] lemmas = lemmatizer.lemmatize(tokens, tags);
         log.info("lemmas: {}", (Object) lemmas);
+        return lemmas;
     }
 }

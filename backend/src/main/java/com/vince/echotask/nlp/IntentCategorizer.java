@@ -49,4 +49,8 @@ public class IntentCategorizer {
             throw new RuntimeException(e);
         }
     }
+
+    private void categorizeIntent() {
+        
+    }
 }
