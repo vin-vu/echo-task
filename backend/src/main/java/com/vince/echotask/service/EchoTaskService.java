@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class EchoTaskService {
 
-  public void processIntent(IntentRequest request) {
+    public void processIntent(IntentRequest request) {
 
-    log.info("process intent: {}", request.toString());
+        log.info("process intent: {}", request.toString());
 
-    // Step 1: Call NLP service to analyze intent
+        // Step 1: Call NLP service to analyze intent
 
-    // Step 2: Store request and intent in Postgres
-  }
+        // Step 2: Store request and intent in Postgres
+    }
 }
