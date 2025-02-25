@@ -26,7 +26,12 @@ public class EchoTaskService {
         log.info("process intent: {}", request.toString());
 
         String[] phraseTokens = tokenizer.tokenizeText(request.getTranscript());
-        SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(phraseTokens);
+        String[] normalizedTokens = tokenizer.normalizeTokens(phraseTokens);
+        String[] tokensWithoutStopWords = tokenizer.removeStopWords(normalizedTokens);
+        String[] partsOfSpeechTags = tokenizer.generatePartOfSpeechTags(tokensWithoutStopWords);
+        String[] lemmatizedTokens = tokenizer.lemmatizeTokens(tokensWithoutStopWords, partsOfSpeechTags);
+
+        SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", sortedScoreMap);
 
         Double highestScore = sortedScoreMap.lastKey();
