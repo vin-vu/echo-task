@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -31,7 +32,7 @@ public class ApplicationStart {
         String[] phraseTokens = tokenizer.tokenizeText(phrase);
         log.info("phrase tokens: {}", (Object) phraseTokens);
 
-        String categoryResults = intentCategorizer.categorizeIntent(phraseTokens);
+        Map<String, Double> categoryResults = intentCategorizer.categorizeIntent(phraseTokens);
         log.info("category results: {}", categoryResults);
     }
 }

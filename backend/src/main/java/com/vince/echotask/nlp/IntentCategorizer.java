@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -45,7 +46,7 @@ public class IntentCategorizer {
         }
     }
 
-    public String categorizeIntent(String[] phraseTokens) throws IOException {
+    public Map<String, Double> categorizeIntent(String[] phraseTokens) throws IOException {
         ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat.bin");
 
         try (InputStream modelInput = modelResource.getInputStream()) {
@@ -53,9 +54,7 @@ public class IntentCategorizer {
             DoccatModel doccatModel = new DoccatModel(modelInput);
             DocumentCategorizerME intentCategorizer = new DocumentCategorizerME(doccatModel);
 
-            double[] outcomes = intentCategorizer.categorize(phraseTokens);
-
-            return intentCategorizer.getAllResults(outcomes);
+            return intentCategorizer.scoreMap(phraseTokens);
         }
 
 
