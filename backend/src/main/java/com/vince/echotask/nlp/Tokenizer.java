@@ -35,7 +35,7 @@ public class Tokenizer {
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
              InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
-             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();) {
+             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream()) {
 
             // load models
             tokenizerModel = new TokenizerModel(tokenizerStream);
@@ -64,55 +64,31 @@ public class Tokenizer {
     }
 
     public String[] tokenizeText(String phrase) throws IOException {
-        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin");
-        InputStream modelInput = modelResource.getInputStream();
-
-        TokenizerModel tokenizerModel = new TokenizerModel(modelInput);
-        TokenizerME tokenizer = new TokenizerME(tokenizerModel);
-
-        String[] tokens = tokenizer.tokenize(phrase);
-
-        return normalizeTokens(tokens);
+        return tokenizeME.tokenize(phrase);
     }
 
     public String[] normalizeTokens(String[] tokens) throws IOException {
-
         tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
         log.info("tokens: {}", (Object) tokens);
-
-        return removeStopWords(tokens);
+        return tokens;
     }
 
     public String[] removeStopWords(String[] tokens) throws IOException {
         tokens = Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
-
         log.info("no stop word tokens: {}", (Object) tokens);
-        return generatePartOfSpeechTags(tokens);
+        return tokens;
     }
 
     public String[] generatePartOfSpeechTags(String[] tokens) throws IOException {
-        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin");
-        InputStream modelInput = modelResource.getInputStream();
-
-        POSModel posModel = new POSModel(modelInput);
-        POSTaggerME posTagger = new POSTaggerME(posModel);
-
-        String[] tags = posTagger.tag(tokens);
+        String[] tags = posTaggerME.tag(tokens);
         log.info("tags: {}", (Object) tags);
-
-        return lemmatizeTokens(tokens, tags);
+        return tags;
     }
 
     public String[] lemmatizeTokens(String[] tokens, String[] tags) throws IOException {
-        ClassPathResource modelResource = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin");
-        InputStream modelInput = modelResource.getInputStream();
-
-        LemmatizerModel lemmatizerModel = new LemmatizerModel(modelInput);
-        LemmatizerME lemmatizer = new LemmatizerME(lemmatizerModel);
-
-        String[] lemmas = lemmatizer.lemmatize(tokens, tags);
+        String[] lemmas = lemmatizerMe.lemmatize(tokens, tags);
         log.info("lemmas: {}", (Object) lemmas);
         return lemmas;
     }
