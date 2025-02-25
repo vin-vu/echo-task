@@ -9,8 +9,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Set;
-import java.util.SortedMap;
 
 @Slf4j
 @Component
@@ -25,15 +23,23 @@ public class ApplicationStart {
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
-
         tokenizer.loadStopWords();
 //        intentCategorizer.trainModel();
 
-        String phrase = "add task get my new Michelin Pilot Sport 5 tires installed at Costco because my stock tires need to be replaced";
-        String[] phraseTokens = tokenizer.tokenizeText(phrase);
-        log.info("phrase tokens: {}", (Object) phraseTokens);
-
-        SortedMap<Double, Set<String>> categoryResults = intentCategorizer.categorizeIntent(phraseTokens);
-        log.info("category results: {}", categoryResults);
+        // below is test on start up
+//        String phrase = "add task get my new Michelin Pilot Sport 5 tires installed at Costco because my stock tires need to be replaced";
+//        String[] phraseTokens = tokenizer.tokenizeText(phrase);
+//        log.info("phrase tokens: {}", (Object) phraseTokens);
+//
+//        SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(phraseTokens);
+//        log.info("sortedScoreMap: {}", sortedScoreMap);
+//
+//        Double highestScore = sortedScoreMap.lastKey();
+//        Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if < 1 intent share same probability and therefore in same Set
+//        String bestIntent = bestIntents.iterator().next();
+//
+//
+//        log.info("bestIntents: {}", sortedScoreMap.get(highestScore));
+//        log.info("bestIntent: {}", bestIntent);
     }
 }
