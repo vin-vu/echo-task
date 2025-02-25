@@ -1,16 +1,12 @@
 package com.vince.echotask.nlp;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.*;
 import opennlp.tools.util.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +15,7 @@ import java.nio.file.Paths;
 @Component
 public class IntentCategorizer {
 
-    @PostConstruct
-    private void trainModel() {
+    public void trainModel() {
         DoccatModel doccatModel;
         try {
 
@@ -50,7 +45,19 @@ public class IntentCategorizer {
         }
     }
 
-    private void categorizeIntent() {
-        
+    public String categorizeIntent(String[] phraseTokens) throws IOException {
+        ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat.bin");
+
+        try (InputStream modelInput = modelResource.getInputStream()) {
+
+            DoccatModel doccatModel = new DoccatModel(modelInput);
+            DocumentCategorizerME intentCategorizer = new DocumentCategorizerME(doccatModel);
+
+            double[] outcomes = intentCategorizer.categorize(phraseTokens);
+
+            return intentCategorizer.getAllResults(outcomes);
+        }
+
+
     }
 }
