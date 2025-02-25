@@ -28,7 +28,7 @@ export const useSpeech = () => {
           body: JSON.stringify({ transcript }),
         });
         const json = await response.json();
-        console.log('json: ', json);
+        console.log('response: ', json);
       } catch (e) {
         console.error(e);
       }

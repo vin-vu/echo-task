@@ -25,17 +25,12 @@ public class EchoTaskService {
 
         log.info("process intent: {}", request.toString());
 
-        // Step 1: Call NLP service to analyze intent
-
-        // Step 2: Store request and intent in Postgres
-
         String[] phraseTokens = tokenizer.tokenizeText(request.getTranscript());
         SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(phraseTokens);
         log.info("sortedScoreMap: {}", sortedScoreMap);
 
         Double highestScore = sortedScoreMap.lastKey();
-        Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if < 1 intent share same probability and therefore in same Set
-
+        Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if more than 1 intent - would share same probability and therefore in same Set
 
         return bestIntents.iterator().next();
     }
