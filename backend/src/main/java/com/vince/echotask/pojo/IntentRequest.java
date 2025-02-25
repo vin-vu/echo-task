@@ -8,5 +8,5 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 public class IntentRequest {
-  private String transcript;
+    private String transcript;
 }
