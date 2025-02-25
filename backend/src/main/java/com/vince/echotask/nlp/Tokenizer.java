@@ -63,17 +63,17 @@ public class Tokenizer {
         log.info("stopWord set: {}", stopWordsSet);
     }
 
-    public String[] tokenizeText(String phrase) throws IOException {
+    public String[] tokenizeText(String phrase) {
         return tokenizeME.tokenize(phrase);
     }
 
-    public String[] normalizeTokens(String[] tokens) throws IOException {
+    public String[] normalizeTokens(String[] tokens) {
         tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
         log.info("tokens: {}", (Object) tokens);
         return tokens;
     }
 
-    public String[] removeStopWords(String[] tokens) throws IOException {
+    public String[] removeStopWords(String[] tokens) {
         tokens = Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
@@ -81,13 +81,13 @@ public class Tokenizer {
         return tokens;
     }
 
-    public String[] generatePartOfSpeechTags(String[] tokens) throws IOException {
+    public String[] generatePartOfSpeechTags(String[] tokens) {
         String[] tags = posTaggerME.tag(tokens);
         log.info("tags: {}", (Object) tags);
         return tags;
     }
 
-    public String[] lemmatizeTokens(String[] tokens, String[] tags) throws IOException {
+    public String[] lemmatizeTokens(String[] tokens, String[] tags) {
         String[] lemmas = lemmatizerMe.lemmatize(tokens, tags);
         log.info("lemmas: {}", (Object) lemmas);
         return lemmas;
