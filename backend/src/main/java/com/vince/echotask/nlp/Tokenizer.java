@@ -28,6 +28,10 @@ public class Tokenizer {
     private static final POSModel posModel;
     private static final LemmatizerModel lemmatizerModel;
 
+    private static final TokenizerME tokenizeME;
+    private static final POSTaggerME posTaggerME;
+    private static final LemmatizerME lemmatizerMe;
+
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
              InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
@@ -38,10 +42,14 @@ public class Tokenizer {
             posModel = new POSModel(posStream);
             lemmatizerModel = new LemmatizerModel(lemmatizerStream);
 
+            // instantiate ME models
+            tokenizeME = new TokenizerME(tokenizerModel);
+            posTaggerME = new POSTaggerME(posModel);
+            lemmatizerMe = new LemmatizerME(lemmatizerModel);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void loadStopWords() throws IOException {
