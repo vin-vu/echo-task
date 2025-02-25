@@ -23,14 +23,20 @@ import java.util.Set;
 public class Tokenizer {
 
     public static Set<String> stopWordsSet = new HashSet<>();
-    private static final TokenizerModel TOKENIZER_MODEL = null;
-    private static final POSModel POS_MODEL = null;
-    private static final LemmatizerModel LEMMATIZER_MODEL = null;
+
+    private static final TokenizerModel tokenizerModel;
+    private static final POSModel posModel;
+    private static final LemmatizerModel lemmatizerModel;
 
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
              InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
              InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();) {
+
+            // load models
+            tokenizerModel = new TokenizerModel(tokenizerStream);
+            posModel = new POSModel(posStream);
+            lemmatizerModel = new LemmatizerModel(lemmatizerStream);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
