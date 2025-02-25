@@ -23,6 +23,20 @@ import java.util.Set;
 public class Tokenizer {
 
     public static Set<String> stopWordsSet = new HashSet<>();
+    private static final TokenizerModel TOKENIZER_MODEL = null;
+    private static final POSModel POS_MODEL = null;
+    private static final LemmatizerModel LEMMATIZER_MODEL = null;
+
+    static {
+        try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
+             InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
+             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();) {
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public void loadStopWords() throws IOException {
         ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
@@ -32,7 +46,6 @@ public class Tokenizer {
         while ((stopWord = bufferedReader.readLine()) != null) {
             stopWordsSet.add(stopWord);
         }
-
         log.info("stopWord set: {}", stopWordsSet);
     }
 
@@ -60,6 +73,7 @@ public class Tokenizer {
         tokens = Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
+
         log.info("no stop word tokens: {}", (Object) tokens);
         return generatePartOfSpeechTags(tokens);
     }

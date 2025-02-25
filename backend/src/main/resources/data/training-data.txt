@@ -91,4 +91,4 @@ MARK_DONE set complete item
 MARK_DONE set finish task
 MARK_DONE set finish old task
 MARK_DONE set finish todo
-MARK_DONE set finish rem
+MARK_DONE set finish reminder
