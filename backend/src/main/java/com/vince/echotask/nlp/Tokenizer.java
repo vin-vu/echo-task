@@ -22,9 +22,6 @@ import java.util.Set;
 @Component
 public class Tokenizer {
 
-    public static Set<String> stopWordsSet = new HashSet<>();
-//    private static final BufferedReader bufferedReader;
-
     private static final TokenizerModel tokenizerModel;
     private static final POSModel posModel;
     private static final LemmatizerModel lemmatizerModel;
@@ -32,6 +29,8 @@ public class Tokenizer {
     private static final TokenizerME tokenizeME;
     private static final POSTaggerME posTaggerME;
     private static final LemmatizerME lemmatizerME;
+
+    public static Set<String> stopWordsSet = new HashSet<>();
 
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
