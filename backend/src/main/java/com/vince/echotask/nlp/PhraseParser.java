@@ -18,7 +18,7 @@ public class PhraseParser {
     private static final Parser parser;
 
     static {
-        try (InputStream parserStream = new ClassPathResource("nlp/opennlp-en-arser-chunking.bin").getInputStream()) {
+        try (InputStream parserStream = new ClassPathResource("nlp/opennlp-en-parser-chunking.bin").getInputStream()) {
             parseModel = new ParserModel(parserStream);
             parser = ParserFactory.create(parseModel);
         } catch (IOException e) {

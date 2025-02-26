@@ -23,6 +23,7 @@ import java.util.Set;
 public class Tokenizer {
 
     public static Set<String> stopWordsSet = new HashSet<>();
+//    private static final BufferedReader bufferedReader;
 
     private static final TokenizerModel tokenizerModel;
     private static final POSModel posModel;
@@ -35,7 +36,9 @@ public class Tokenizer {
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
              InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
-             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream()) {
+             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("data/stopwords.txt").getInputStream()))
+        ) {
 
             // load models
             tokenizerModel = new TokenizerModel(tokenizerStream);
@@ -47,20 +50,16 @@ public class Tokenizer {
             posTaggerME = new POSTaggerME(posModel);
             lemmatizerME = new LemmatizerME(lemmatizerModel);
 
+            // load stopwords
+            String stopWord;
+            while ((stopWord = bufferedReader.readLine()) != null) {
+                stopWordsSet.add(stopWord);
+            }
+            log.info("stopWord set: {}", stopWordsSet);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void loadStopWords() throws IOException {
-        ClassPathResource stopWordsResource = new ClassPathResource("data/stopwords.txt");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stopWordsResource.getInputStream()));
-
-        String stopWord;
-        while ((stopWord = bufferedReader.readLine()) != null) {
-            stopWordsSet.add(stopWord);
-        }
-        log.info("stopWord set: {}", stopWordsSet);
     }
 
     public String[] tokenizeText(String phrase) {

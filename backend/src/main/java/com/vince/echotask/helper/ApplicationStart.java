@@ -1,11 +1,9 @@
 package com.vince.echotask.helper;
 
-import com.vince.echotask.nlp.IntentCategorizer;
+import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,14 +14,12 @@ public class ApplicationStart {
 
     @Autowired
     Tokenizer tokenizer;
-
     @Autowired
-    IntentCategorizer intentCategorizer;
+    PhraseParser parser;
 
-    @EventListener(ApplicationReadyEvent.class)
+    //    @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
-        tokenizer.loadStopWords();
 //        intentCategorizer.trainModel();
 
         // below is test on start up
