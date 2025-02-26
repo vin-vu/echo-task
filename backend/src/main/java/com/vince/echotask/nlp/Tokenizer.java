@@ -30,7 +30,7 @@ public class Tokenizer {
 
     private static final TokenizerME tokenizeME;
     private static final POSTaggerME posTaggerME;
-    private static final LemmatizerME lemmatizerMe;
+    private static final LemmatizerME lemmatizerME;
 
     static {
         try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
@@ -45,7 +45,7 @@ public class Tokenizer {
             // instantiate ME models
             tokenizeME = new TokenizerME(tokenizerModel);
             posTaggerME = new POSTaggerME(posModel);
-            lemmatizerMe = new LemmatizerME(lemmatizerModel);
+            lemmatizerME = new LemmatizerME(lemmatizerModel);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -88,7 +88,7 @@ public class Tokenizer {
     }
 
     public String[] lemmatizeTokens(String[] tokens, String[] tags) {
-        String[] lemmas = lemmatizerMe.lemmatize(tokens, tags);
+        String[] lemmas = lemmatizerME.lemmatize(tokens, tags);
         log.info("lemmas: {}", (Object) lemmas);
         return lemmas;
     }
