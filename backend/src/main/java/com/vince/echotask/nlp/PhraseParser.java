@@ -4,10 +4,12 @@ import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Properties;
 
 @Slf4j
@@ -38,6 +40,16 @@ public class PhraseParser {
             childrenList.add(child);
             log.info("child: {}, {}", child, child.value());
         }
+
+        IndexedWord mainObject = null;
+        for (IndexedWord child : childrenList) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(root, child);
+            log.info("child - edge: {}, {}, {}", child, edge, edge.getRelation().toString());
+            if (Objects.equals(edge.getRelation().toString(), "obj")) {
+                mainObject = child;
+            }
+        }
+        log.info("main object: {}", mainObject);
 
 
 //        CoreDocument document2 = pipeline.processToCoreDocument(utterance2);
