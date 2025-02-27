@@ -1,11 +1,13 @@
 package com.vince.echotask.nlp;
 
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 @Slf4j
@@ -27,6 +29,16 @@ public class PhraseParser {
         pipeline.annotate(document);
         SemanticGraph dependencyParse = document.sentences().get(0).dependencyParse();
         log.info("document: {}", dependencyParse);
+
+        IndexedWord root = dependencyParse.getFirstRoot();
+        log.info("root: {}", root);
+
+        ArrayList<IndexedWord> childrenList = new ArrayList<>();
+        for (IndexedWord child : dependencyParse.getChildList(root)) {
+            childrenList.add(child);
+            log.info("child: {}, {}", child, child.value());
+        }
+
 
 //        CoreDocument document2 = pipeline.processToCoreDocument(utterance2);
 //        pipeline.annotate(document2);
