@@ -2,6 +2,7 @@ package com.vince.echotask.helper;
 
 import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -24,7 +25,15 @@ public class ApplicationStart {
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
-//        parser.extractDescription();
+        String utterance = "Add item complete oil change on GR86 this weekend";
+        String utterance2 = "Add item do oil change on GR86 this weekend";
+
+        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
+        String taskDescription = parser.extractDescription(dependencyParse);
+
+        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance2);
+        String taskDescription2 = parser.extractDescription(dependencyParse2);
+
 
 //        intentCategorizer.trainModel();
 

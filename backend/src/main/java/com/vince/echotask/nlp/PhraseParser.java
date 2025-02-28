@@ -36,11 +36,7 @@ public class PhraseParser {
         IndexedWord root = dependencyParse.getFirstRoot();
         log.info("root: {}", root);
 
-        ArrayList<IndexedWord> childrenListRoot = new ArrayList<>();
-        for (IndexedWord child : dependencyParse.getChildList(root)) {
-            childrenListRoot.add(child);
-            log.info("child: {}, {}", child, child.value());
-        }
+        List<IndexedWord> childrenListRoot = dependencyParse.getChildList(root);
 
         IndexedWord mainObject = null;
         for (IndexedWord child : childrenListRoot) {
@@ -66,6 +62,7 @@ public class PhraseParser {
             // remove meta word - task, reminder, todo, etc.
             if (!removedMetaWord && Objects.equals(relation, "compound")) {
                 removedMetaWord = true;
+                log.info("removed meta: {}", child);
                 continue;
             }
             taskDescriptionWords.add(child);
