@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -68,6 +69,7 @@ public class PhraseParser {
         }
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
-        log.info("task description words: {}", taskDescriptionWords);
+        String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
+        log.info("task description words: {}", taskDescription);
     }
 }
