@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -18,8 +19,7 @@ public class PhraseParser {
 
     public void extractDescription() {
 
-        String utterance = "Add new task complete oil change on GR86 this weekend";
-        String utterance2 = "Add new task doctor appointment is at 8am tomorrow";
+        String utterance = "Add item complete oil change on GR86 this weekend";
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,pos,depparse");
@@ -35,14 +35,14 @@ public class PhraseParser {
         IndexedWord root = dependencyParse.getFirstRoot();
         log.info("root: {}", root);
 
-        ArrayList<IndexedWord> childrenList = new ArrayList<>();
+        ArrayList<IndexedWord> childrenListRoot = new ArrayList<>();
         for (IndexedWord child : dependencyParse.getChildList(root)) {
-            childrenList.add(child);
+            childrenListRoot.add(child);
             log.info("child: {}, {}", child, child.value());
         }
 
         IndexedWord mainObject = null;
-        for (IndexedWord child : childrenList) {
+        for (IndexedWord child : childrenListRoot) {
             SemanticGraphEdge edge = dependencyParse.getEdge(root, child);
             log.info("child - edge: {}, {}, {}", child, edge, edge.getRelation().toString());
             if (Objects.equals(edge.getRelation().toString(), "obj")) {
@@ -51,17 +51,13 @@ public class PhraseParser {
         }
         log.info("main object: {}", mainObject);
 
+        List<IndexedWord> mainObjectChildren = dependencyParse.getChildList(mainObject);
+        log.info("main object children: {}", mainObjectChildren);
 
-//        CoreDocument document2 = pipeline.processToCoreDocument(utterance2);
-//        pipeline.annotate(document2);
-//        SemanticGraph dependencyParse2 = document2.sentences().get(0).dependencyParse();
-//        log.info("document: {}", dependencyParse2);
-//
-//        CoreDocument document3 = pipeline.processToCoreDocument("Add new task class is at 8am tomorrow.");
-//        pipeline.annotate(document3);
-//        SemanticGraph dependencyParse3 = document3.sentences().get(0).dependencyParse();
-//        log.info("document: {}", dependencyParse3);
-
+        for (IndexedWord child : mainObjectChildren) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(mainObject, child);
+            String relation = edge.getRelation().toString();
+            log.info("edge to main object: {}, {}, {}", child, edge, relation);
+        }
     }
-
 }
