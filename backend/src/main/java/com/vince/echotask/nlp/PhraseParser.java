@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 @Component
 public class PhraseParser {
 
-    public SemanticGraph createDependencyParseTree(String phrase) {
+    private static final StanfordCoreNLP pipeline;
 
+    static {
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,pos,depparse");
         props.setProperty("depparse.model", "edu/stanford/nlp/models/parser/nndep/english_UD.gz");
+        pipeline = new StanfordCoreNLP(props);
+    }
 
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    public SemanticGraph createDependencyParseTree(String phrase) {
 
         CoreDocument document = pipeline.processToCoreDocument(phrase);
         pipeline.annotate(document);
