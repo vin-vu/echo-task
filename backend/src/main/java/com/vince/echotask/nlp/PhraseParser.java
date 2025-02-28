@@ -52,12 +52,22 @@ public class PhraseParser {
         log.info("main object: {}", mainObject);
 
         List<IndexedWord> mainObjectChildren = dependencyParse.getChildList(mainObject);
+        List<IndexedWord> taskDescriptionWord = new ArrayList<>();
+        boolean removedMetaWord = false;
         log.info("main object children: {}", mainObjectChildren);
 
         for (IndexedWord child : mainObjectChildren) {
             SemanticGraphEdge edge = dependencyParse.getEdge(mainObject, child);
             String relation = edge.getRelation().toString();
             log.info("edge to main object: {}, {}, {}", child, edge, relation);
+
+            // remove meta word - task, reminder, todo, etc.
+            if (!removedMetaWord && Objects.equals(relation, "compound")) {
+                removedMetaWord = true;
+                continue;
+            }
+            taskDescriptionWord.add(child);
         }
+        log.info("task description words: {}", taskDescriptionWord);
     }
 }
