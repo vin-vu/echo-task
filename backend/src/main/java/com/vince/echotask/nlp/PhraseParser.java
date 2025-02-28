@@ -8,10 +8,7 @@ import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -69,6 +66,8 @@ public class PhraseParser {
             }
             taskDescriptionWords.add(child);
         }
+
+        taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         log.info("task description words: {}", taskDescriptionWords);
     }
 }
