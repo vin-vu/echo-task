@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class PhraseParser {
 
     public SemanticGraph createDependencyParseTree(String phrase) {
-//        String utterance = "Add item complete oil change on GR86 this weekend";
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,pos,depparse");
@@ -36,36 +35,29 @@ public class PhraseParser {
         IndexedWord root = dependencyParse.getFirstRoot();
         log.info("root: {}", root);
 
-        List<IndexedWord> childrenListRoot = dependencyParse.getChildList(root);
-
+        // Identify main object
         IndexedWord mainObject = null;
-        for (IndexedWord child : childrenListRoot) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(root, child);
-            log.info("child - edge: {}, {}, {}", child, edge, edge.getRelation().toString());
-            if (Objects.equals(edge.getRelation().toString(), "obj")) {
-                mainObject = child;
-            }
-        }
-        log.info("main object: {}", mainObject);
-
-        List<IndexedWord> mainObjectChildren = dependencyParse.getChildList(mainObject);
+        List<IndexedWord> childrenOfRoot = dependencyParse.getChildList(root);
         List<IndexedWord> taskDescriptionWords = new ArrayList<>();
-        taskDescriptionWords.add(mainObject);
-        boolean removedMetaWord = false;
-        log.info("main object children: {}", mainObjectChildren);
 
-        for (IndexedWord child : mainObjectChildren) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(mainObject, child);
+        for (IndexedWord sibling : childrenOfRoot) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(root, sibling);
             String relation = edge.getRelation().toString();
-            log.info("edge to main object: {}, {}, {}", child, edge, relation);
+            log.info("edge to main object: {}, {}, {}", sibling, edge, relation);
 
-            // remove meta word - task, reminder, todo, etc.
-            if (!removedMetaWord && Objects.equals(relation, "compound")) {
-                removedMetaWord = true;
-                log.info("removed meta: {}", child);
+            if (Objects.equals(relation, "nsubj")) {
+                log.info("ignoring nsubj: {}", edge);
                 continue;
+            } else if (Objects.equals(relation, "obj")) {
+                mainObject = sibling;
+                taskDescriptionWords.add(mainObject);
+                log.info("found main object: {}", mainObject);
+
+                List<IndexedWord> childrenOfMainObject = dependencyParse.getChildList(mainObject);
+                taskDescriptionWords.addAll(childrenOfMainObject);
+            } else {
+                taskDescriptionWords.add(sibling);
             }
-            taskDescriptionWords.add(child);
         }
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));

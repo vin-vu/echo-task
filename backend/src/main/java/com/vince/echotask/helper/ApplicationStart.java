@@ -27,11 +27,12 @@ public class ApplicationStart {
 
         String utterance = "Add item complete oil change on GR86 this weekend";
         String utterance2 = "Add item do oil change on GR86 this weekend";
+        String utterance3 = "Add item go to doctor's appointment";
 
-        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
+        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance2);
         String taskDescription = parser.extractDescription(dependencyParse);
 
-        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance2);
+        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance3);
         String taskDescription2 = parser.extractDescription(dependencyParse2);
 
 
