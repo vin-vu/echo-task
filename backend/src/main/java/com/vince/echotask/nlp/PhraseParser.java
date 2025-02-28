@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class PhraseParser {
 
-    public void extractDescription() {
-
+    public void createDependencyParseTree() {
         String utterance = "Add item complete oil change on GR86 this weekend";
 
         Properties props = new Properties();
@@ -29,6 +28,9 @@ public class PhraseParser {
         pipeline.annotate(document);
         SemanticGraph dependencyParse = document.sentences().get(0).dependencyParse();
         log.info("document: {}", dependencyParse);
+    }
+
+    public void extractDescription(SemanticGraph dependencyParse) {
 
         IndexedWord root = dependencyParse.getFirstRoot();
         log.info("root: {}", root);
