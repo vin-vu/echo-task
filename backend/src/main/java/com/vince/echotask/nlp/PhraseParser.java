@@ -52,7 +52,8 @@ public class PhraseParser {
         log.info("main object: {}", mainObject);
 
         List<IndexedWord> mainObjectChildren = dependencyParse.getChildList(mainObject);
-        List<IndexedWord> taskDescriptionWord = new ArrayList<>();
+        List<IndexedWord> taskDescriptionWords = new ArrayList<>();
+        taskDescriptionWords.add(mainObject);
         boolean removedMetaWord = false;
         log.info("main object children: {}", mainObjectChildren);
 
@@ -66,8 +67,8 @@ public class PhraseParser {
                 removedMetaWord = true;
                 continue;
             }
-            taskDescriptionWord.add(child);
+            taskDescriptionWords.add(child);
         }
-        log.info("task description words: {}", taskDescriptionWord);
+        log.info("task description words: {}", taskDescriptionWords);
     }
 }
