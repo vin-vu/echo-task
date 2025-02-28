@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Component
 public class PhraseParser {
 
-    public SemanticGraph createDependencyParseTree() {
-        String utterance = "Add item complete oil change on GR86 this weekend";
+    public SemanticGraph createDependencyParseTree(String phrase) {
+//        String utterance = "Add item complete oil change on GR86 this weekend";
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,pos,depparse");
@@ -24,7 +24,7 @@ public class PhraseParser {
 
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        CoreDocument document = pipeline.processToCoreDocument(utterance);
+        CoreDocument document = pipeline.processToCoreDocument(phrase);
         pipeline.annotate(document);
         SemanticGraph dependencyParse = document.sentences().get(0).dependencyParse();
         log.info("document: {}", dependencyParse);

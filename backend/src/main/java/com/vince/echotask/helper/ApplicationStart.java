@@ -24,7 +24,7 @@ public class ApplicationStart {
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
-        parser.extractDescription();
+//        parser.extractDescription();
 
 //        intentCategorizer.trainModel();
 
