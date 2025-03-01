@@ -40,7 +40,15 @@ public class PhraseParser {
 
         List<IndexedWord> taskDescriptionWords = new ArrayList<>();
         taskDescriptionWords.add(root);
-        traverseParseTree(dependencyParse, root, taskDescriptionWords);
+
+        String rootPOS = root.tag();
+        log.info("tag: {}", rootPOS);
+        if (Objects.equals(rootPOS, "VBP")) {
+            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
+        } else if (Objects.equals(rootPOS, "NN")) {
+            traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
+        }
+
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
 
@@ -48,20 +56,51 @@ public class PhraseParser {
         return taskDescription;
     }
 
-    private void traverseParseTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
-
+    private void traverseVerbRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
 
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(parentNode, childNode);
             String relation = edge.getRelation().toString();
-
             log.info("edge - relation: {}, {}", edge, relation);
+
+            // skip intent phrase (ex. add task/todo)
             if (!Objects.equals(relation, "nsubj")) {
                 taskDescriptionWords.add(childNode);
-                traverseParseTree(dependencyParse, childNode, taskDescriptionWords);
+                traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
             }
         }
+    }
 
+    private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
+        List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
+        log.info("parent - children: {}, {}", parentNode, childrenNodes);
+
+        String currentTag = parentNode.tag();
+
+        // remove last nested compound noun which include intent noun (see utterance 4)
+        if (childrenNodes.isEmpty() && Objects.equals(currentTag, "NN")) {
+            IndexedWord previousWord = taskDescriptionWords.get(taskDescriptionWords.size() - 2);
+            SemanticGraphEdge edge = dependencyParse.getEdge(previousWord, parentNode);
+            String relation = edge.getRelation().toString();
+            if (Objects.equals(relation, "compound")) {
+                taskDescriptionWords.remove(taskDescriptionWords.size() - 1);
+            }
+            log.info("removed last element: {}, {}", parentNode, taskDescriptionWords);
+        }
+
+        for (IndexedWord childNode : childrenNodes) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(parentNode, childNode);
+            String relation = edge.getRelation().toString();
+            log.info("2: edge - relation: {}, {}", edge, relation);
+
+            String pos = childNode.tag();
+
+            // skip intent verb
+            if (!Objects.equals(pos, "VB")) {
+                taskDescriptionWords.add(childNode);
+            }
+            traverseNounRootTree(dependencyParse, childNode, taskDescriptionWords);
+        }
     }
 }
