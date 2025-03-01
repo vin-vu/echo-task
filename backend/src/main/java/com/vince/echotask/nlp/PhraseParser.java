@@ -43,6 +43,7 @@ public class PhraseParser {
 
         String rootPOS = root.tag();
         log.info("tag: {}", rootPOS);
+
         determineTraversalMethod(rootPOS, dependencyParse, root, taskDescriptionWords);
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
@@ -54,13 +55,13 @@ public class PhraseParser {
 
     private void determineTraversalMethod(String tag, SemanticGraph dependencyParse, IndexedWord root, List<IndexedWord> taskDescriptionWords) {
         if (Objects.equals(tag, "VBP")) {
-            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
+            traverseVerbPhraseRootTree(dependencyParse, root, taskDescriptionWords);
         } else if (Objects.equals(tag, "NN")) {
             traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
         }
     }
 
-    private void traverseVerbRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
+    private void traverseVerbPhraseRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
 
         for (IndexedWord childNode : childrenNodes) {
@@ -71,7 +72,7 @@ public class PhraseParser {
             // skip intent phrase (ex. add task/todo)
             if (!Objects.equals(relation, "nsubj")) {
                 taskDescriptionWords.add(childNode);
-                traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
+                traverseVerbPhraseRootTree(dependencyParse, childNode, taskDescriptionWords);
             }
         }
     }
