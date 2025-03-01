@@ -43,17 +43,21 @@ public class PhraseParser {
 
         String rootPOS = root.tag();
         log.info("tag: {}", rootPOS);
-        if (Objects.equals(rootPOS, "VBP")) {
-            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
-        } else if (Objects.equals(rootPOS, "NN")) {
-            traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
-        }
+        determineTraversalMethod(rootPOS, dependencyParse, root, taskDescriptionWords);
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
 
         log.info("task description words: {}", taskDescription);
         return taskDescription;
+    }
+
+    private void determineTraversalMethod(String tag, SemanticGraph dependencyParse, IndexedWord root, List<IndexedWord> taskDescriptionWords) {
+        if (Objects.equals(tag, "VBP")) {
+            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
+        } else if (Objects.equals(tag, "NN")) {
+            traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
+        }
     }
 
     private void traverseVerbRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
