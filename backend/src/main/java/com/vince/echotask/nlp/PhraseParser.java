@@ -39,6 +39,7 @@ public class PhraseParser {
         log.info("root: {}", root);
 
         List<IndexedWord> taskDescriptionWords = new ArrayList<>();
+        taskDescriptionWords.add(root);
         traverseParseTree(dependencyParse, root, taskDescriptionWords);
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
