@@ -72,25 +72,25 @@ public class PhraseParser {
         }
     }
 
-    private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
-        List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
-        log.info("parent - children: {}, {}", parentNode, childrenNodes);
+    private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+        List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
+        log.info("parent - children: {}, {}", currentNode, childrenNodes);
 
-        String currentTag = parentNode.tag();
+        String currentTag = currentNode.tag();
 
         // remove last nested compound noun which include intent noun (see utterance 4)
         if (childrenNodes.isEmpty() && Objects.equals(currentTag, "NN")) {
             IndexedWord previousWord = taskDescriptionWords.get(taskDescriptionWords.size() - 2);
-            SemanticGraphEdge edge = dependencyParse.getEdge(previousWord, parentNode);
+            SemanticGraphEdge edge = dependencyParse.getEdge(previousWord, currentNode);
             String relation = edge.getRelation().toString();
             if (Objects.equals(relation, "compound")) {
                 taskDescriptionWords.remove(taskDescriptionWords.size() - 1);
             }
-            log.info("removed last element: {}, {}", parentNode, taskDescriptionWords);
+            log.info("removed last element: {}, {}", currentNode, taskDescriptionWords);
         }
 
         for (IndexedWord childNode : childrenNodes) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(parentNode, childNode);
+            SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
             String relation = edge.getRelation().toString();
             log.info("2: edge - relation: {}, {}", edge, relation);
 
