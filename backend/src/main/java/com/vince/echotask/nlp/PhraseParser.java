@@ -39,7 +39,6 @@ public class PhraseParser {
         log.info("root: {}", root);
 
         List<IndexedWord> taskDescriptionWords = new ArrayList<>();
-        taskDescriptionWords.add(root);
 
         String rootPOS = root.tag();
         log.info("tag: {}", rootPOS);
@@ -62,6 +61,10 @@ public class PhraseParser {
     }
 
     private void traverseVerbPhraseRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+
+        // add root
+        if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
+
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
 
         for (IndexedWord childNode : childrenNodes) {
@@ -87,6 +90,10 @@ public class PhraseParser {
 //    }
 
     private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+
+        // add root
+        if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
+
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
         log.info("parent - children: {}, {}", currentNode, childrenNodes);
 
