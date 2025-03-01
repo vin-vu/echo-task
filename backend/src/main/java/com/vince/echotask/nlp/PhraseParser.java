@@ -57,6 +57,8 @@ public class PhraseParser {
             traverseVerbPhraseRootTree(dependencyParse, root, taskDescriptionWords);
         } else if (Objects.equals(tag, "NN")) {
             traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
+        } else if (Objects.equals(tag, "VB")) {
+            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
         }
     }
 
@@ -80,14 +82,20 @@ public class PhraseParser {
         }
     }
 
-//    private void traverseVerbRootTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
-//
-//        // remove intent verb
-//        taskDescriptionWords.remove(0);
-//
-//        List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
-//        for (IndexedWord c)
-//    }
+    private void traverseVerbRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+
+        List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
+        for (IndexedWord childNode : childrenNodes) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
+            String relation = edge.getRelation().toString();
+            log.info("edge - relation: {}, {}", edge, relation);
+
+            if (!Objects.equals(relation, "nsubj")) {
+                taskDescriptionWords.add(childNode);
+                traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
+            }
+        }
+    }
 
     private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
 
