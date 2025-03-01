@@ -40,32 +40,54 @@ public class PhraseParser {
 
         // Identify main object
         IndexedWord mainObject = null;
-        List<IndexedWord> childrenOfRoot = dependencyParse.getChildList(root);
         List<IndexedWord> taskDescriptionWords = new ArrayList<>();
 
-        for (IndexedWord sibling : childrenOfRoot) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(root, sibling);
-            String relation = edge.getRelation().toString();
-            log.info("edge to main object: {}, {}, {}", sibling, edge, relation);
+        traverseParseTree(dependencyParse, root, taskDescriptionWords);
 
-            if (Objects.equals(relation, "nsubj")) {
-                log.info("ignoring nsubj: {}", edge);
-                continue;
-            } else if (Objects.equals(relation, "obj")) {
-                mainObject = sibling;
-                taskDescriptionWords.add(mainObject);
-                log.info("found main object: {}", mainObject);
 
-                List<IndexedWord> childrenOfMainObject = dependencyParse.getChildList(mainObject);
-                taskDescriptionWords.addAll(childrenOfMainObject);
-            } else {
-                taskDescriptionWords.add(sibling);
-            }
-        }
+//        List<IndexedWord> childrenOfRoot = dependencyParse.getChildList(root);
+//
+//        for (IndexedWord sibling : childrenOfRoot) {
+//            SemanticGraphEdge edge = dependencyParse.getEdge(root, sibling);
+//            String relation = edge.getRelation().toString();
+//            log.info("edge to main object: {}, {}, {}", sibling, edge, relation);
+//
+//            if (Objects.equals(relation, "nsubj")) {
+//                log.info("ignoring nsubj: {}", edge);
+//                continue;
+//            } else if (Objects.equals(relation, "obj")) {
+//                mainObject = sibling;
+//                taskDescriptionWords.add(mainObject);
+//                log.info("found main object: {}", mainObject);
+//
+//                List<IndexedWord> childrenOfMainObject = dependencyParse.getChildList(mainObject);
+//                taskDescriptionWords.addAll(childrenOfMainObject);
+//            } else {
+//                taskDescriptionWords.add(sibling);
+//            }
+//        }
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
         log.info("task description words: {}", taskDescription);
         return taskDescription;
+    }
+
+    private void traverseParseTree(SemanticGraph dependencyParse, IndexedWord parentNode, List<IndexedWord> taskDescriptionWords) {
+
+
+        List<IndexedWord> childrenNodes = dependencyParse.getChildList(parentNode);
+
+        for (IndexedWord childNode : childrenNodes) {
+            SemanticGraphEdge edge = dependencyParse.getEdge(parentNode, childNode);
+            String relation = edge.getRelation().toString();
+
+            log.info("edge - relation: {}, {}", edge, relation);
+            if (!Objects.equals(relation, "nsubj")) {
+                taskDescriptionWords.add(childNode);
+                traverseParseTree(dependencyParse, childNode, taskDescriptionWords);
+            }
+        }
+
     }
 }

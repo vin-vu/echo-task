@@ -32,8 +32,8 @@ public class ApplicationStart {
         SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance2);
         String taskDescription = parser.extractDescription(dependencyParse);
 
-        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance3);
-        String taskDescription2 = parser.extractDescription(dependencyParse2);
+//        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance3);
+//        String taskDescription2 = parser.extractDescription(dependencyParse2);
 
 
 //        intentCategorizer.trainModel();
