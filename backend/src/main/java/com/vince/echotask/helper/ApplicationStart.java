@@ -25,27 +25,26 @@ public class ApplicationStart {
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
-        String utterance = "Add item complete oil change on GR86 this weekend";
-        String utterance2 = "Add item do oil change on GR86 this weekend";
-        String utterance3 = "Add item doctor appointment is tomorrow";
-        String utterance4 = "Add item tire center appointment is at night";
-        String utterance5 = "Add task buy new tires from costco";
+        // root is Add/VB
+        String utterance = "Add complete oil change on GR86 this weekend";
 
-//        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance2);
-//        String taskDescription = parser.extractDescription(dependencyParse);
+        // root is Night/NN
+        String utterance4 = "Add tire center appointment is at night";
 
-        SemanticGraph dependencyParse2 = parser.createDependencyParseTree(utterance2);
-        String taskDescription2 = parser.extractDescription(dependencyParse2);
-//
-//        SemanticGraph dependencyParse3 = parser.createDependencyParseTree(utterance3);
-//        String taskDescription3 = parser.extractDescription(dependencyParse3);
-//
-//        SemanticGraph dependencyParse4 = parser.createDependencyParseTree(utterance4);
-//        String taskDescription4 = parser.extractDescription(dependencyParse4);
+        // root is Buy/NN
+        String utterance6 = "Add buy new tires from costco";
 
-        SemanticGraph dependencyParse5 = parser.createDependencyParseTree(utterance5);
-        String taskDescription5 = parser.extractDescription(dependencyParse5);
+        // broken
+        String utterance7 = "Add buy new tires from costco which is located in irvine";
 
+        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
+        String taskDescription = parser.extractDescription(dependencyParse);
+
+        SemanticGraph dependencyParse4 = parser.createDependencyParseTree(utterance4);
+        String taskDescription4 = parser.extractDescription(dependencyParse4);
+
+        SemanticGraph dependencyParse6 = parser.createDependencyParseTree(utterance6);
+        String taskDescription6 = parser.extractDescription(dependencyParse6);
 
 //        intentCategorizer.trainModel();
 

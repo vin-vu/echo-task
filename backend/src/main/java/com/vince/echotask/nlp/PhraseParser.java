@@ -64,21 +64,16 @@ public class PhraseParser {
 
     private void traverseVerbPhraseRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
 
-        // add root
         if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
 
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
-
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
             String relation = edge.getRelation().toString();
             log.info("edge - relation: {}, {}", edge, relation);
 
-            // skip intent phrase (ex. add task/todo)
-            if (!Objects.equals(relation, "nsubj")) {
-                taskDescriptionWords.add(childNode);
-                traverseVerbPhraseRootTree(dependencyParse, childNode, taskDescriptionWords);
-            }
+            taskDescriptionWords.add(childNode);
+            traverseVerbPhraseRootTree(dependencyParse, childNode, taskDescriptionWords);
         }
     }
 
@@ -93,30 +88,19 @@ public class PhraseParser {
             if (!Objects.equals(relation, "nsubj")) {
                 taskDescriptionWords.add(childNode);
                 traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
+            } else {
+                // add verb root when it's not the intent - see ex. utterance 6
+                taskDescriptionWords.add(currentNode);
             }
         }
     }
 
     private void traverseNounRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
 
-        // add root
         if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
 
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
         log.info("parent - children: {}, {}", currentNode, childrenNodes);
-
-        String currentTag = currentNode.tag();
-
-        // remove last nested compound noun which include intent noun (see utterance 4)
-        if (childrenNodes.isEmpty() && Objects.equals(currentTag, "NN")) {
-            IndexedWord previousWord = taskDescriptionWords.get(taskDescriptionWords.size() - 2);
-            SemanticGraphEdge edge = dependencyParse.getEdge(previousWord, currentNode);
-            String relation = edge.getRelation().toString();
-            if (Objects.equals(relation, "compound")) {
-                taskDescriptionWords.remove(taskDescriptionWords.size() - 1);
-            }
-            log.info("removed last element: {}, {}", currentNode, taskDescriptionWords);
-        }
 
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
