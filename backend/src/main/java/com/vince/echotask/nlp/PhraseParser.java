@@ -53,27 +53,10 @@ public class PhraseParser {
     }
 
     private void determineTraversalMethod(String tag, SemanticGraph dependencyParse, IndexedWord root, List<IndexedWord> taskDescriptionWords) {
-        if (Objects.equals(tag, "VBP")) {
-            traverseVerbPhraseRootTree(dependencyParse, root, taskDescriptionWords);
+        if (Objects.equals(tag, "VB") || Objects.equals(tag, "VBP")) {
+            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
         } else if (Objects.equals(tag, "NN")) {
             traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
-        } else if (Objects.equals(tag, "VB")) {
-            traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
-        }
-    }
-
-    private void traverseVerbPhraseRootTree(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
-
-        if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
-
-        List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
-        for (IndexedWord childNode : childrenNodes) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
-            String relation = edge.getRelation().toString();
-            log.info("edge - relation: {}, {}", edge, relation);
-
-            taskDescriptionWords.add(childNode);
-            traverseVerbPhraseRootTree(dependencyParse, childNode, taskDescriptionWords);
         }
     }
 
@@ -85,11 +68,12 @@ public class PhraseParser {
             String relation = edge.getRelation().toString();
             log.info("edge - relation: {}, {}", edge, relation);
 
+            // nsubj is typically the intent
             if (!Objects.equals(relation, "nsubj")) {
                 taskDescriptionWords.add(childNode);
                 traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
             } else {
-                // add verb root when it's not the intent - see ex. utterance 6
+                // add verb root when it's not associated with intent - see ex. utterance 6
                 taskDescriptionWords.add(currentNode);
             }
         }

@@ -34,8 +34,8 @@ public class ApplicationStart {
         // root is Buy/NN
         String utterance6 = "Add buy new tires from costco";
 
-        // broken
-        String utterance7 = "Add buy new tires from costco which is located in irvine";
+        // root is get/VBP
+        String utterance7 = "Insert buy gas tomorrow";
 
         SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
         String taskDescription = parser.extractDescription(dependencyParse);
