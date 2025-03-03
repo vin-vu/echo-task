@@ -21,7 +21,6 @@ public class ApplicationStart {
     @Autowired
     PhraseParser parser;
 
-
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
 
@@ -32,7 +31,7 @@ public class ApplicationStart {
         String utterance4 = "Add tire center appointment is at night";
 
         // root is Buy/VB
-        String utterance6 = "Add go to Costco to buy gas";        // root is Buy/NN
+        String utterance6 = "Add go to Costco to buy gas";
         String utterance7 = "Add buy new tires from costco";
 
         // root is get/VBP
