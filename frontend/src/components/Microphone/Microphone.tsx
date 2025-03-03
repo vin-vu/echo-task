@@ -1,9 +1,12 @@
 import { FaMicrophone } from 'react-icons/fa';
-import { useSpeech } from '../../hooks/useSpeech';
+import { IntentResponse, useSpeech } from '../../hooks/useSpeech';
 import './Microphone.css';
 
-export default function Microphone() {
-  const { startListening, stopListening } = useSpeech();
+interface MicrophoneProps {
+  editTasksHandler: (intentPayload: IntentResponse) => void;
+}
+export default function Microphone({ editTasksHandler}: MicrophoneProps) {
+  const { startListening, stopListening } = useSpeech(editTasksHandler);
 
   return (
     <div className="mic-container">

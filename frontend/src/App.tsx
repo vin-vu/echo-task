@@ -4,7 +4,6 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
-
 import './App.css';
 
 export type TaskData = {
@@ -64,7 +63,7 @@ export default function App() {
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
         <div className="task-container">{displayTasks}</div>
-        <Microphone />
+        <Microphone editTasksHandler={editTasksHandler} />
       </div>
     </>
   );

@@ -6,9 +6,11 @@ import { useEffect } from 'react';
 export type IntentResponse = {
   intent: 'ADD_TASK' | 'DELETE_TASK' | 'MARK_DONE_TASK';
   taskDescription: string;
-}
+};
 
-export const useSpeech = () => {
+export const useSpeech = (
+  editTasksHandler: (intentPayload: IntentResponse) => void
+) => {
   const {
     transcript,
     finalTranscript,
@@ -21,7 +23,9 @@ export const useSpeech = () => {
   const stopListening = SpeechRecognition.stopListening;
 
   useEffect(() => {
-    const fetchIntent = async (transcript: string): Promise<IntentResponse | undefined> => {
+    const fetchIntent = async (
+      transcript: string
+    ): Promise<IntentResponse | undefined> => {
       if (transcript.length !== 0) {
         console.log('sending: ', transcript);
         const backendAPI = 'http://localhost:8080/detect-intent';
@@ -33,7 +37,7 @@ export const useSpeech = () => {
             },
             body: JSON.stringify({ transcript }),
           });
-          const json = await response.json();
+          const json: IntentResponse = await response.json();
           console.log('response: ', json);
           return json;
         } catch (e) {
@@ -42,8 +46,14 @@ export const useSpeech = () => {
       }
     };
 
-    fetchIntent(finalTranscript);
-  }, [finalTranscript]);
+    const updateTaskList = async () => {
+      const intentPayload = await fetchIntent(finalTranscript);
+      if (intentPayload) {
+        editTasksHandler(intentPayload);
+      }
+    };
+    updateTaskList();
+  }, [finalTranscript, editTasksHandler]);
 
   return {
     transcript,
