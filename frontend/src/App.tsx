@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
@@ -15,7 +15,7 @@ export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
   const addTask = (task: TaskData) => {
-    setTasks([...tasks, task]);
+    setTasks((tasks) => [...tasks, task])
   };
 
   const deleteTask = (id: string): void => {
@@ -39,13 +39,13 @@ export default function App() {
     setTasks(updatedTasks);
   };
 
-  const editTasksHandler = (intentPayload: IntentResponse) => {
+  const editTasksHandler = useCallback((intentPayload: IntentResponse) => {
     const { intent, taskDescription } = intentPayload;
     const newTask: TaskData = { id: uuid4(), description: taskDescription };
     if (intent === 'ADD_TASK') {
-      setTasks([...tasks, newTask]);
+      addTask(newTask);
     }
-  };
+  }, []);
 
   const displayTasks = tasks.map((task) => (
     <Task
