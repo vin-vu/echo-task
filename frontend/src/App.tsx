@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuid4 } from 'uuid';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
@@ -37,6 +38,14 @@ export default function App() {
       updatedTasks.push(task);
     }
     setTasks(updatedTasks);
+  };
+
+  const editTasksHandler = (intentPayload: IntentResponse) => {
+    const { intent, taskDescription } = intentPayload;
+    const newTask: TaskData = { id: uuid4(), description: taskDescription };
+    if (intent === 'ADD_TASK') {
+      setTasks([...tasks, newTask]);
+    }
   };
 
   const displayTasks = tasks.map((task) => (
