@@ -55,7 +55,7 @@ public class PhraseParser {
     private void determineTraversalMethod(String tag, SemanticGraph dependencyParse, IndexedWord root, List<IndexedWord> taskDescriptionWords) {
         if (Objects.equals(tag, "VB") || Objects.equals(tag, "VBP")) {
             traverseVerbRootTree(dependencyParse, root, taskDescriptionWords);
-        } else if (Objects.equals(tag, "NN")) {
+        } else if (Objects.equals(tag, "NN") || Objects.equals(tag, "NNP")) {
             traverseNounRootTree(dependencyParse, root, taskDescriptionWords);
         }
     }
