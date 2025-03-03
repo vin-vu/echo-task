@@ -66,28 +66,21 @@ public class Tokenizer {
     }
 
     public String[] normalizeTokens(String[] tokens) {
-        tokens = Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
-        log.info("tokens: {}", (Object) tokens);
-        return tokens;
+        return Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
     }
 
     public String[] removeStopWords(String[] tokens) {
         tokens = Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
-        log.info("no stop word tokens: {}", (Object) tokens);
         return tokens;
     }
 
     public String[] generatePartOfSpeechTags(String[] tokens) {
-        String[] tags = posTaggerME.tag(tokens);
-        log.info("tags: {}", (Object) tags);
-        return tags;
+        return posTaggerME.tag(tokens);
     }
 
     public String[] lemmatizeTokens(String[] tokens, String[] tags) {
-        String[] lemmas = lemmatizerME.lemmatize(tokens, tags);
-        log.info("lemmas: {}", (Object) lemmas);
-        return lemmas;
+        return lemmatizerME.lemmatize(tokens, tags);
     }
 }
