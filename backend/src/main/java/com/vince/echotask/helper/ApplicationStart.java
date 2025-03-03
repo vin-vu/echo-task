@@ -31,20 +31,27 @@ public class ApplicationStart {
         // root is Night/NN
         String utterance4 = "Add tire center appointment is at night";
 
-        // root is Buy/NN
-        String utterance6 = "Add buy new tires from costco";
+        // root is Buy/VB
+        String utterance6 = "Add go to Costco to buy gas";        // root is Buy/NN
+        String utterance7 = "Add buy new tires from costco";
 
         // root is get/VBP
-        String utterance7 = "Insert buy gas tomorrow";
+        String utterance8 = "Insert buy gas tomorrow";
 
         SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
         String taskDescription = parser.extractDescription(dependencyParse);
 
-        SemanticGraph dependencyParse4 = parser.createDependencyParseTree(utterance4);
-        String taskDescription4 = parser.extractDescription(dependencyParse4);
+//        SemanticGraph dependencyParse4 = parser.createDependencyParseTree(utterance4);
+//        String taskDescription4 = parser.extractDescription(dependencyParse4);
 
         SemanticGraph dependencyParse6 = parser.createDependencyParseTree(utterance6);
         String taskDescription6 = parser.extractDescription(dependencyParse6);
+
+        SemanticGraph dependencyParse7 = parser.createDependencyParseTree(utterance7);
+        String taskDescription7 = parser.extractDescription(dependencyParse7);
+
+        SemanticGraph dependencyParse8 = parser.createDependencyParseTree(utterance8);
+        String taskDescription8 = parser.extractDescription(dependencyParse8);
 
 //        intentCategorizer.trainModel();
 

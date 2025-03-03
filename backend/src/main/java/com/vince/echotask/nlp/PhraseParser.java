@@ -68,13 +68,14 @@ public class PhraseParser {
             String relation = edge.getRelation().toString();
             log.info("edge - relation: {}, {}", edge, relation);
 
-            // nsubj is typically the intent
-            if (!Objects.equals(relation, "nsubj")) {
+            IndexedWord root = dependencyParse.getFirstRoot();
+
+            // add root verb if intent exists as its nominal subject - see  ex. utterance 7
+            if (Objects.equals(relation, "nsubj") && currentNode == root) {
+                taskDescriptionWords.add(currentNode);
+            } else {
                 taskDescriptionWords.add(childNode);
                 traverseVerbRootTree(dependencyParse, childNode, taskDescriptionWords);
-            } else {
-                // add verb root when it's not associated with intent - see ex. utterance 6
-                taskDescriptionWords.add(currentNode);
             }
         }
     }
