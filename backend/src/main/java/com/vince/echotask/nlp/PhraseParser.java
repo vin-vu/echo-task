@@ -95,7 +95,7 @@ public class PhraseParser {
             String pos = childNode.tag();
 
             // skip intent verb
-            if (!Objects.equals(pos, "VB")) {
+            if (!Objects.equals(pos, "VB") && !Objects.equals(relation, "csubj")) {
                 taskDescriptionWords.add(childNode);
             }
             traverseNounRootTree(dependencyParse, childNode, taskDescriptionWords);
