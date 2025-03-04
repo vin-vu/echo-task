@@ -1,9 +1,6 @@
 package com.vince.echotask.service;
 
-import com.vince.echotask.models.IntentRequest;
-import com.vince.echotask.models.ParsedIntent;
-import com.vince.echotask.models.Task;
-import com.vince.echotask.models.TaskStatus;
+import com.vince.echotask.models.*;
 import com.vince.echotask.nlp.IntentCategorizer;
 import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
@@ -44,15 +41,14 @@ public class EchoTaskService {
 
         Double highestScore = sortedScoreMap.lastKey();
         Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if more than 1 intent - would share same probability and therefore in same Set
-        String intent = bestIntents.iterator().next();
+        Intent intent = Intent.valueOf(bestIntents.iterator().next());
 
         SemanticGraph dependencyParse = phraseParser.createDependencyParseTree(request.getTranscript());
         String taskDescription = phraseParser.extractDescription(dependencyParse);
 
-        if (Objects.equals(intent, "ADD_TASK")) {
+        if (Objects.equals(intent, Intent.ADD_TASK)) {
             saveTask(taskDescription);
         }
-
         return new ParsedIntent(intent, taskDescription);
     }
 
