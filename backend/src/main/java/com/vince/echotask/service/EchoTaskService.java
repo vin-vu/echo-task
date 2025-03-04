@@ -1,10 +1,10 @@
 package com.vince.echotask.service;
 
+import com.vince.echotask.models.IntentRequest;
+import com.vince.echotask.models.ParsedIntent;
 import com.vince.echotask.nlp.IntentCategorizer;
 import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
-import com.vince.echotask.pojo.IntentRequest;
-import com.vince.echotask.pojo.ParsedIntent;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

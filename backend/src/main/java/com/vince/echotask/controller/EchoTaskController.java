@@ -1,7 +1,7 @@
 package com.vince.echotask.controller;
 
-import com.vince.echotask.pojo.IntentRequest;
-import com.vince.echotask.pojo.ParsedIntent;
+import com.vince.echotask.models.IntentRequest;
+import com.vince.echotask.models.ParsedIntent;
 import com.vince.echotask.service.EchoTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

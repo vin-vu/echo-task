@@ -1,4 +1,4 @@
-package com.vince.echotask.pojo;
+package com.vince.echotask.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
