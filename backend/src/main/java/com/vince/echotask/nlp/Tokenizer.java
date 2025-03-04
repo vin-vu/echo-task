@@ -61,26 +61,34 @@ public class Tokenizer {
         }
     }
 
-    public String[] tokenizeText(String phrase) {
+    public String[] getTranscriptTokens(String transcript) {
+        String[] transcriptTokens = tokenizeText(transcript);
+        String[] normalizedTokens = normalizeTokens(transcriptTokens);
+        String[] tokensWithoutStopWords = removeStopWords(normalizedTokens);
+        String[] partsOfSpeechTags = generatePartOfSpeechTags(tokensWithoutStopWords);
+        return lemmatizeTokens(tokensWithoutStopWords, partsOfSpeechTags);
+    }
+
+    private String[] tokenizeText(String phrase) {
         return tokenizeME.tokenize(phrase);
     }
 
-    public String[] normalizeTokens(String[] tokens) {
+    private String[] normalizeTokens(String[] tokens) {
         return Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
     }
 
-    public String[] removeStopWords(String[] tokens) {
+    private String[] removeStopWords(String[] tokens) {
         tokens = Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
         return tokens;
     }
 
-    public String[] generatePartOfSpeechTags(String[] tokens) {
+    private String[] generatePartOfSpeechTags(String[] tokens) {
         return posTaggerME.tag(tokens);
     }
 
-    public String[] lemmatizeTokens(String[] tokens, String[] tags) {
+    private String[] lemmatizeTokens(String[] tokens, String[] tags) {
         return lemmatizerME.lemmatize(tokens, tags);
     }
 }

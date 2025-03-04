@@ -30,12 +30,7 @@ public class EchoTaskService {
     public ParsedIntent processIntent(IntentRequest request) throws IOException {
 
         log.info("process intent: {}", request.toString());
-
-        String[] phraseTokens = tokenizer.tokenizeText(request.getTranscript());
-        String[] normalizedTokens = tokenizer.normalizeTokens(phraseTokens);
-        String[] tokensWithoutStopWords = tokenizer.removeStopWords(normalizedTokens);
-        String[] partsOfSpeechTags = tokenizer.generatePartOfSpeechTags(tokensWithoutStopWords);
-        String[] lemmatizedTokens = tokenizer.lemmatizeTokens(tokensWithoutStopWords, partsOfSpeechTags);
+        String[] lemmatizedTokens = tokenizer.getTranscriptTokens(request.getTranscript());
 
         SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", sortedScoreMap);
