@@ -61,7 +61,8 @@ public class EchoTaskService {
         repository.save(task);
     }
 
-    private void deleteTask(String description) {
-        repository.deleteBestMatchingTask(description);
+    public void deleteTask(String description) {
+        Task task = repository.findBestMatch(description);
+        log.info("task to be deleted: {}", task);
     }
 }
