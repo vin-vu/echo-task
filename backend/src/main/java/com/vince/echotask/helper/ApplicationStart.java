@@ -2,7 +2,6 @@ package com.vince.echotask.helper;
 
 import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
-import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -37,20 +36,20 @@ public class ApplicationStart {
         // root is get/VBP
         String utterance8 = "Insert buy gas tomorrow";
 
-        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
-        String taskDescription = parser.extractDescription(dependencyParse);
+//        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
+//        String taskDescription = parser.extractDescription(dependencyParse);
 
 //        SemanticGraph dependencyParse4 = parser.createDependencyParseTree(utterance4);
 //        String taskDescription4 = parser.extractDescription(dependencyParse4);
 
-        SemanticGraph dependencyParse6 = parser.createDependencyParseTree(utterance6);
-        String taskDescription6 = parser.extractDescription(dependencyParse6);
-
-        SemanticGraph dependencyParse7 = parser.createDependencyParseTree(utterance7);
-        String taskDescription7 = parser.extractDescription(dependencyParse7);
-
-        SemanticGraph dependencyParse8 = parser.createDependencyParseTree(utterance8);
-        String taskDescription8 = parser.extractDescription(dependencyParse8);
+//        SemanticGraph dependencyParse6 = parser.createDependencyParseTree(utterance6);
+//        String taskDescription6 = parser.extractDescription(dependencyParse6);
+//
+//        SemanticGraph dependencyParse7 = parser.createDependencyParseTree(utterance7);
+//        String taskDescription7 = parser.extractDescription(dependencyParse7);
+//
+//        SemanticGraph dependencyParse8 = parser.createDependencyParseTree(utterance8);
+//        String taskDescription8 = parser.extractDescription(dependencyParse8);
 
 //        intentCategorizer.trainModel();
 
