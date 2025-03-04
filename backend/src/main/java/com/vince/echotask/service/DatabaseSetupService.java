@@ -24,7 +24,7 @@ public class DatabaseSetupService {
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("CREATE INDEX IF NOT EXISTS idx_description_fulltext ON " +
                     "tasks USING gin(to_tsvector('english', description))");
-            log.info("Created Postgres Task Description Full Text Index");
+            log.info("Create Postgres Task Description Full Text Index");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
