@@ -48,6 +48,8 @@ public class EchoTaskService {
 
         if (Objects.equals(intent, Intent.ADD_TASK)) {
             saveTask(taskDescription);
+        } else if (Objects.equals(intent, Intent.DELETE)) {
+            deleteTask(taskDescription);
         }
         return new ParsedIntent(intent, taskDescription);
     }
@@ -57,5 +59,9 @@ public class EchoTaskService {
         task.setDescription(description);
         task.setStatus(TaskStatus.PENDING);
         repository.save(task);
+    }
+
+    private void deleteTask(String description) {
+        repository.deleteBestMatchingTask(description);
     }
 }

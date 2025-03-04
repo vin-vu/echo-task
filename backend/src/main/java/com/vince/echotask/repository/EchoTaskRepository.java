@@ -8,4 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
+
+    default void deleteBestMatchingTask(String description) {
+
+    }
 }
