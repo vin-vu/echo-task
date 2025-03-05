@@ -48,11 +48,9 @@ public class EchoTaskService {
 
         CreateTaskResponse createTaskResponse;
         if (Objects.equals(intent, Intent.ADD_TASK)) {
-            CreateTaskResponse taskResponse = saveTask(taskDescription);
-            return new ParsedIntent(taskResponse.getId(), intent, taskDescription);
+            createTaskResponse = saveTask(taskDescription);
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
-            CreateTaskResponse taskResponse = deleteTask(taskDescription);
-            return new ParsedIntent(taskResponse.getId(), intent, taskDescription);
+            createTaskResponse = deleteTask(taskDescription);
         } else if (Objects.equals(intent, Intent.MARK_DONE)) {
             createTaskResponse = new CreateTaskResponse("no id", "mark done to be implemented");
         } else {

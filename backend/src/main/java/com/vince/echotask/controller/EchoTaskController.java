@@ -32,7 +32,7 @@ public class EchoTaskController {
 
     @PostMapping("/create-task")
     ResponseEntity<CreateTaskResponse> createTask(@RequestBody TaskRequest request) {
-        log.info("create task request: {}", request);
+        log.info("create task request: {}", request.toString());
 
         CreateTaskResponse response = echoTaskService.saveTask(request.getDescription());
         return new ResponseEntity<>(response, HttpStatus.OK);
