@@ -46,26 +46,39 @@ public class EchoTaskService {
         SemanticGraph dependencyParse = phraseParser.createDependencyParseTree(request.getTranscript());
         String taskDescription = phraseParser.extractDescription(dependencyParse);
 
+        CreateTaskResponse createTaskResponse = null;
         if (Objects.equals(intent, Intent.ADD_TASK)) {
-            saveTask(taskDescription);
+            CreateTaskResponse taskResponse = saveTask(taskDescription);
+            return new ParsedIntent(taskResponse.getId(), intent, taskDescription);
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
-            deleteTask(taskDescription);
+            CreateTaskResponse taskResponse = deleteTask(taskDescription);
+            return new ParsedIntent(taskResponse.getId(), intent, taskDescription);
+
         }
-        return new ParsedIntent(intent, taskDescription);
+        return new ParsedIntent(createTaskResponse.getId(), intent, taskDescription);
     }
 
     public CreateTaskResponse saveTask(String description) {
-        Task task = new Task();
-        task.setDescription(description);
-        task.setStatus(TaskStatus.PENDING);
-        Task savedTask = repository.save(task);
-        log.info("savedTask : {}", savedTask);
-        return new CreateTaskResponse(savedTask.getId().toString(), description);
+        return processTask(description, false);
     }
 
-    public void deleteTask(String description) {
-        Task task = repository.findBestMatch(description);
-        repository.deleteById(task.getId());
-        log.info("deleting task: {}", task);
+    public CreateTaskResponse deleteTask(String description) {
+        return processTask(description, true);
+    }
+
+    private CreateTaskResponse processTask(String description, boolean isDelete) {
+        Task task;
+        if (isDelete) {
+            task = repository.findBestMatch(description);
+            repository.deleteById(task.getId());
+            log.info("Deleted task: {}", task);
+        } else {
+            task = new Task();
+            task.setDescription(description);
+            task.setStatus(TaskStatus.PENDING);
+            Task savedTask = repository.save(task);
+            log.info("Saved task : {}", savedTask);
+        }
+        return new CreateTaskResponse(task.getId().toString(), description);
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParsedIntent {
+    private String id;
     private Intent intent;
     private String taskDescription;
 }
