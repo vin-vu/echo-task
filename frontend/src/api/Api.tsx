@@ -10,7 +10,7 @@ export const createTask = async (
   const createTaskAPI = 'http://localhost:8080/create-task';
   try {
     const response = await fetch(createTaskAPI, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
