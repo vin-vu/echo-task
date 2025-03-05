@@ -9,6 +9,15 @@
   border-radius: 3px;
 }
 
+.task-item:hover {
+  opacity: 0.8;
+}
+
+.button-container svg {
+  transition: all 0.2s ease;
+}
+
+
 .task-description {
   cursor: text;
 }
