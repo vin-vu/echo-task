@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { v4 as uuid4 } from 'uuid';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
@@ -15,9 +14,13 @@ export type TaskData = {
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
-  const addTask = async (description: string) => {
-    const task = await createTask(description);
-    if (task) {
+  const addTask = async (task: string | TaskData) => {
+    if (typeof task === 'string') {
+      const createdTask = await createTask(task);
+      if (createdTask) {
+        setTasks((tasks) => [...tasks, createdTask]);
+      }
+    } else {
       setTasks((tasks) => [...tasks, task]);
     }
   };
@@ -45,7 +48,7 @@ export default function App() {
 
   const editTasksHandler = useCallback((intentPayload: IntentResponse) => {
     const { intent, taskDescription } = intentPayload;
-    const newTask: TaskData = { id: uuid4(), description: taskDescription };
+    const newTask: TaskData = { description: taskDescription };
     if (intent === 'ADD_TASK') {
       addTask(newTask);
     }
