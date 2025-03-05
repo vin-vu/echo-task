@@ -58,8 +58,8 @@ public class EchoTaskService {
         Task task = new Task();
         task.setDescription(description);
         task.setStatus(TaskStatus.PENDING);
-        repository.save(task);
-        log.info("saving task: {}", task);
+        Task savedTask = repository.save(task);
+        log.info("savedTask id: {}", savedTask.getId());
     }
 
     public void deleteTask(String description) {
