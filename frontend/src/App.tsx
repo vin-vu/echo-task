@@ -47,8 +47,8 @@ export default function App() {
   };
 
   const editTasksHandler = useCallback((intentPayload: IntentResponse) => {
-    const { intent, taskDescription } = intentPayload;
-    const newTask: TaskData = { description: taskDescription };
+    const { id, intent, description } = intentPayload;
+    const newTask: TaskData = { id, description };
     if (intent === 'ADD_TASK') {
       addTask(newTask);
     }

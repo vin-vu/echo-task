@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 
 export type IntentResponse = {
   intent: 'ADD_TASK' | 'DELETE_TASK' | 'MARK_DONE_TASK';
-  taskDescription: string;
+  description: string;
+  id: string;
 };
 
 export const useSpeech = (
