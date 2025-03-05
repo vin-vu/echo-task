@@ -1,5 +1,6 @@
 package com.vince.echotask.controller;
 
+import com.vince.echotask.models.CreateTaskResponse;
 import com.vince.echotask.models.IntentRequest;
 import com.vince.echotask.models.ParsedIntent;
 import com.vince.echotask.models.TaskRequest;
@@ -31,11 +32,10 @@ public class EchoTaskController {
     }
 
     @GetMapping("/create-task")
-    ResponseEntity<String> createTask(@RequestBody TaskRequest request) {
+    ResponseEntity<CreateTaskResponse> createTask(@RequestBody TaskRequest request) {
         log.info("create task request: {}", request);
 
-        echoTaskService.saveTask(request.getDescription());
-
-        return new ResponseEntity<>("nothing", HttpStatus.OK);
+        String taskId = echoTaskService.saveTask(request.getDescription());
+        return new ResponseEntity<>(new CreateTaskResponse(taskId), HttpStatus.OK);
     }
 }

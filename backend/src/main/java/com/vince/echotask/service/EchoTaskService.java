@@ -54,12 +54,13 @@ public class EchoTaskService {
         return new ParsedIntent(intent, taskDescription);
     }
 
-    public void saveTask(String description) {
+    public String saveTask(String description) {
         Task task = new Task();
         task.setDescription(description);
         task.setStatus(TaskStatus.PENDING);
         Task savedTask = repository.save(task);
-        log.info("savedTask id: {}", savedTask.getId());
+        log.info("savedTask : {}", savedTask);
+        return savedTask.getId().toString();
     }
 
     public void deleteTask(String description) {
