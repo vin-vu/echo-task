@@ -4,6 +4,7 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
+import { createTask } from './api/Api';
 import './App.css';
 
 export type TaskData = {
@@ -14,8 +15,11 @@ export type TaskData = {
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
-  const addTask = (task: TaskData) => {
-    setTasks((tasks) => [...tasks, task])
+  const addTask = async (description: string) => {
+    const task = await createTask(description);
+    if (task) {
+      setTasks((tasks) => [...tasks, task]);
+    }
   };
 
   const deleteTask = (id: string): void => {

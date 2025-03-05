@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { TaskData } from '../../App';
 import { v4 as uuid4 } from 'uuid';
 import './TaskForm.css';
 
 interface TodoFormProps {
-  addTask: (task: TaskData) => void;
+  addTask: (task: string) => void;
 }
 
 export default function TodoForm({ addTask }: TodoFormProps) {
@@ -12,7 +11,7 @@ export default function TodoForm({ addTask }: TodoFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addTask({ description: value, id: uuid4() });
+    addTask(value);
     setValue('');
   };
 
@@ -21,7 +20,7 @@ export default function TodoForm({ addTask }: TodoFormProps) {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder='A task for now...'
+          placeholder="A task for now..."
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />

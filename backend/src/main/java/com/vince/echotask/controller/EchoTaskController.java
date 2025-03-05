@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +30,11 @@ public class EchoTaskController {
         return new ResponseEntity<>(parsedIntent, HttpStatus.OK);
     }
 
-    @GetMapping("/create-task")
+    @PostMapping("/create-task")
     ResponseEntity<CreateTaskResponse> createTask(@RequestBody TaskRequest request) {
         log.info("create task request: {}", request);
 
-        String taskId = echoTaskService.saveTask(request.getDescription());
-        return new ResponseEntity<>(new CreateTaskResponse(taskId), HttpStatus.OK);
+        CreateTaskResponse response = echoTaskService.saveTask(request.getDescription());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

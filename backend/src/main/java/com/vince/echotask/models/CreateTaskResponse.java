@@ -7,4 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateTaskResponse {
     private String id;
+    private String description;
 }
