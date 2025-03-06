@@ -3,7 +3,7 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
-import { createTask } from './api/Api';
+import { createTask, deleteTaskAPI } from './api/Api';
 import './App.css';
 
 export type TaskData = {
@@ -25,14 +25,17 @@ export default function App() {
     }
   };
 
-  const deleteTask = (id: string): void => {
+  const deleteTask = async (id: string) => {
     const updatedTasks = [];
-    for (const task of tasks) {
-      if (task.id !== id) {
-        updatedTasks.push(task);
+    const deletedTask = await deleteTaskAPI(id);
+    if (deletedTask) {
+      for (const task of tasks) {
+        if (task.id !== id) {
+          updatedTasks.push(task);
+        }
       }
+      setTasks(updatedTasks);
     }
-    setTasks(updatedTasks);
   };
 
   const editTask = (id: string, newDescription: string): void => {

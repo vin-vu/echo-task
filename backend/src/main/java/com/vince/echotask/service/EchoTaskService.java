@@ -75,11 +75,11 @@ public class EchoTaskService {
             task = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("Task not found with given ID"));
         } else if (description != null) {
             task = repository.findBestMatch(description);
-            repository.deleteById(task.getId());
         } else {
             throw new IllegalAccessException("Either ID or Description must be provided");
         }
         log.info("Deleted task: {}", task);
+        repository.deleteById(task.getId());
         return new CreateTaskResponse(task.getId().toString(), description);
     }
 }

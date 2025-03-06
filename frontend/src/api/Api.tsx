@@ -24,7 +24,7 @@ export const createTask = async (
   }
 };
 
-export const deleteTask = async (
+export const deleteTaskAPI = async (
   id: string
 ): Promise<TaskData | undefined> => {
   const createTaskAPI = 'http://localhost:8080/delete-task';
