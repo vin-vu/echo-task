@@ -3,7 +3,7 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
-import { createTask, deleteTaskAPI } from './api/Api';
+import { addTaskAPI, deleteTaskAPI } from './api/Api';
 import './App.css';
 
 export type TaskData = {
@@ -16,9 +16,9 @@ export default function App() {
 
   const addTask = async (task: string | TaskData) => {
     if (typeof task === 'string') {
-      const createdTask = await createTask(task);
-      if (createdTask) {
-        setTasks((tasks) => [...tasks, createdTask]);
+      const newTask = await addTaskAPI(task);
+      if (newTask) {
+        setTasks((tasks) => [...tasks, newTask]);
       }
     } else {
       setTasks((tasks) => [...tasks, task]);
@@ -49,7 +49,7 @@ export default function App() {
     setTasks(updatedTasks);
   };
 
-  const editTasksHandler = useCallback((intentPayload: IntentResponse) => {
+  const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description } = intentPayload;
     const newTask: TaskData = { id, description };
     if (intent === 'ADD_TASK') {
@@ -73,7 +73,7 @@ export default function App() {
         <span>EchoTask</span>
         <TodoForm addTask={addTask} />
         <div className="task-container">{displayTasks}</div>
-        <Microphone editTasksHandler={editTasksHandler} />
+        <Microphone handleVoiceCommands={handleVoiceCommands} />
       </div>
     </>
   );

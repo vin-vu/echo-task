@@ -1,11 +1,6 @@
 import { TaskData } from '../App';
 
-type CreateTaskResponse = {
-  id: string;
-  description: string;
-};
-
-export const createTask = async (
+export const addTaskAPI = async (
   description: string
 ): Promise<TaskData | undefined> => {
   const createTaskAPI = 'http://localhost:8080/create-task';
@@ -17,9 +12,9 @@ export const createTask = async (
       },
       body: JSON.stringify({ description }),
     });
-    const json: TaskData = await response.json();
-    console.log('add task json: ', json)
-    return json;
+    const task: TaskData = await response.json();
+    console.log('add task json: ', task);
+    return task;
   } catch (e) {
     console.error(e);
   }
@@ -37,9 +32,9 @@ export const deleteTaskAPI = async (
       },
       body: JSON.stringify({ id }),
     });
-    const json: TaskData = await response.json();
-    console.log('delete task json: ', json)
-    return json;
+    const task: TaskData = await response.json();
+    console.log('delete task json: ', task);
+    return task;
   } catch (e) {
     console.error(e);
   }

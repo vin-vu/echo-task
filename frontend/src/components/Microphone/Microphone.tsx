@@ -3,10 +3,12 @@ import { IntentResponse, useSpeech } from '../../hooks/useSpeech';
 import './Microphone.css';
 
 interface MicrophoneProps {
-  editTasksHandler: (intentPayload: IntentResponse) => void;
+  handleVoiceCommands: (intentPayload: IntentResponse) => void;
 }
-export default function Microphone({ editTasksHandler}: MicrophoneProps) {
-  const { startListening, stopListening } = useSpeech(editTasksHandler);
+export default function Microphone({
+  handleVoiceCommands: handleVoiceCommands,
+}: MicrophoneProps) {
+  const { startListening, stopListening } = useSpeech(handleVoiceCommands);
 
   return (
     <div className="mic-container">

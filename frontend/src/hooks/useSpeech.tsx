@@ -10,7 +10,7 @@ export type IntentResponse = {
 };
 
 export const useSpeech = (
-  editTasksHandler: (intentPayload: IntentResponse) => void
+  handleVoiceCommands: (intentPayload: IntentResponse) => void
 ) => {
   const {
     transcript,
@@ -50,11 +50,11 @@ export const useSpeech = (
     const updateTaskList = async () => {
       const intentPayload = await fetchIntent(finalTranscript);
       if (intentPayload) {
-        editTasksHandler(intentPayload);
+        handleVoiceCommands(intentPayload);
       }
     };
     updateTaskList();
-  }, [finalTranscript, editTasksHandler]);
+  }, [finalTranscript, handleVoiceCommands]);
 
   return {
     transcript,
