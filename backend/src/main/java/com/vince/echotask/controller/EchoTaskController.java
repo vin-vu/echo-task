@@ -25,6 +25,7 @@ public class EchoTaskController {
         log.info(request.toString());
 
         ParsedIntent parsedIntent = echoTaskService.processIntent(request);
+        log.info("Parsed Intent response: {}", parsedIntent.toString());
         return new ResponseEntity<>(parsedIntent, HttpStatus.OK);
     }
 

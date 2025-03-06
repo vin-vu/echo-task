@@ -18,6 +18,7 @@ export const createTask = async (
       body: JSON.stringify({ description }),
     });
     const json: TaskData = await response.json();
+    console.log('add task json: ', json)
     return json;
   } catch (e) {
     console.error(e);
@@ -37,6 +38,7 @@ export const deleteTaskAPI = async (
       body: JSON.stringify({ id }),
     });
     const json: TaskData = await response.json();
+    console.log('delete task json: ', json)
     return json;
   } catch (e) {
     console.error(e);

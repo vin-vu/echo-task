@@ -10,5 +10,10 @@ import lombok.NoArgsConstructor;
 public class ParsedIntent {
     private String id;
     private Intent intent;
-    private String taskDescription;
+    private String description;
+
+    @Override
+    public String toString() {
+        return "ParsedIntent{id='" + id + "', intent='" + intent + "', description='" + description + "'}";
+    }
 }
