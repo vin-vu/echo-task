@@ -61,7 +61,12 @@ public class EchoTaskService {
     }
 
     public CreateTaskResponse saveTask(String description) {
-        return processTask(description, false);
+        Task task = new Task();
+        task.setDescription(description);
+        task.setStatus(TaskStatus.PENDING);
+        Task savedTask = repository.save(task);
+        log.info("Saved task : {}", savedTask);
+        return new CreateTaskResponse(task.getId().toString(), description);
     }
 
     public CreateTaskResponse deleteTask(String description, String id) throws IllegalAccessException {
@@ -75,22 +80,6 @@ public class EchoTaskService {
             throw new IllegalAccessException("Either ID or Description must be provided");
         }
         log.info("Deleted task: {}", task);
-        return new CreateTaskResponse(task.getId().toString(), description);
-    }
-
-    private CreateTaskResponse processTask(String description, boolean isDelete) {
-        Task task;
-        if (isDelete) {
-            task = repository.findBestMatch(description);
-            repository.deleteById(task.getId());
-            log.info("Deleted task: {}", task);
-        } else {
-            task = new Task();
-            task.setDescription(description);
-            task.setStatus(TaskStatus.PENDING);
-            Task savedTask = repository.save(task);
-            log.info("Saved task : {}", savedTask);
-        }
         return new CreateTaskResponse(task.getId().toString(), description);
     }
 }
