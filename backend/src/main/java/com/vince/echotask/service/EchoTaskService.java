@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -31,7 +32,7 @@ public class EchoTaskService {
     @Autowired
     EchoTaskRepository repository;
 
-    public ParsedIntent processIntent(IntentRequest request) throws IOException {
+    public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
 
         log.info("process intent: {}", request.toString());
         String[] lemmatizedTokens = tokenizer.getTranscriptTokens(request.getTranscript());
@@ -50,7 +51,7 @@ public class EchoTaskService {
         if (Objects.equals(intent, Intent.ADD_TASK)) {
             createTaskResponse = saveTask(taskDescription);
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
-            createTaskResponse = deleteTask(taskDescription);
+            createTaskResponse = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.MARK_DONE)) {
             createTaskResponse = new CreateTaskResponse("no id", "mark done to be implemented");
         } else {
@@ -63,8 +64,18 @@ public class EchoTaskService {
         return processTask(description, false);
     }
 
-    public CreateTaskResponse deleteTask(String description) {
-        return processTask(description, true);
+    public CreateTaskResponse deleteTask(String description, String id) throws IllegalAccessException {
+        Task task;
+        if (id != null) {
+            task = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("Task not found with given ID"));
+        } else if (description != null) {
+            task = repository.findBestMatch(description);
+            repository.deleteById(task.getId());
+        } else {
+            throw new IllegalAccessException("Either ID or Description must be provided");
+        }
+        log.info("Deleted task: {}", task);
+        return new CreateTaskResponse(task.getId().toString(), description);
     }
 
     private CreateTaskResponse processTask(String description, boolean isDelete) {
