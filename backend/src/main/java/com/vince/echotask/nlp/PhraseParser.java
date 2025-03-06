@@ -95,9 +95,13 @@ public class PhraseParser {
             String pos = childNode.tag();
 
             // skip intent verb
-            if (!Objects.equals(pos, "VB") && !Objects.equals(relation, "csubj")) {
-                taskDescriptionWords.add(childNode);
+            if (Objects.equals(pos, "VB") && Objects.equals(relation, "csubj")) {
+                continue;
+                // handle NN root with JJ intent amod see ex. utterance9
+            } else if (dependencyParse.getFirstRoot() == currentNode && Objects.equals(pos, "JJ") && Objects.equals(relation, "amod")) {
+                continue;
             }
+            taskDescriptionWords.add(childNode);
             traverseNounRootTree(dependencyParse, childNode, taskDescriptionWords);
         }
     }

@@ -36,6 +36,9 @@ public class ApplicationStart {
         // root is get/VBP
         String utterance8 = "Insert buy gas tomorrow";
 
+        // root is go/NN
+        String utterance9 = "Delete go to Costco";
+
 //        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
 //        String taskDescription = parser.extractDescription(dependencyParse);
 
