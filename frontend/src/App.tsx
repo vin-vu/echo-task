@@ -57,6 +57,23 @@ export default function App() {
     setTasks(updatedTasks);
   };
 
+  const editTaskStatus = (id: string): void => {
+    setTasks((prevTasks) => {
+      const updatedTasks = [];
+      for (const task of prevTasks) {
+        if (task.id === id) {
+          if (task.status === TaskStatus.PENDING) {
+            task.status = TaskStatus.DONE;
+          } else {
+            task.status = TaskStatus.PENDING;
+          }
+          updatedTasks.push(task);
+        }
+      }
+      return updatedTasks;
+    });
+  };
+
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description } = intentPayload;
     const task: TaskData = { id, description, status: TaskStatus.PENDING };
