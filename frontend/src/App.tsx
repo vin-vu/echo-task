@@ -68,16 +68,6 @@ export default function App() {
     }
   }, []);
 
-  const displayTasks = tasks.map((task) => (
-    <Task
-      key={task.id}
-      id={task.id}
-      description={task.description}
-      deleteTask={deleteTask}
-      editTask={editTask}
-    />
-  ));
-
   useEffect(() => {
     async function fetchTasks() {
       const response = await getAllTasksAPI();
@@ -87,6 +77,16 @@ export default function App() {
     }
     fetchTasks();
   }, []);
+
+  const displayTasks = tasks.map((task) => (
+    <Task
+      key={task.id}
+      id={task.id}
+      description={task.description}
+      deleteTask={deleteTask}
+      editTask={editTask}
+    />
+  ));
 
   return (
     <>
