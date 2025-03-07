@@ -9,7 +9,13 @@ import './App.css';
 export type TaskData = {
   description: string;
   id: string;
+  status: TaskStatus;
 };
+
+enum TaskStatus {
+  PENDING,
+  DONE,
+}
 
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
@@ -53,7 +59,7 @@ export default function App() {
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description } = intentPayload;
-    const task: TaskData = { id, description };
+    const task: TaskData = { id, description, status: TaskStatus.PENDING };
     if (intent === 'ADD_TASK') {
       addTask(task);
     } else if (intent === 'DELETE_TASK') {
