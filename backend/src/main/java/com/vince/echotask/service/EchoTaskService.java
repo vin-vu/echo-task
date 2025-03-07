@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -83,9 +80,9 @@ public class EchoTaskService {
         return new TaskSummary(task.getId(), description, task.getStatus().toString());
     }
 
-//    public TaskSummary[] getAllTasks() {
-//        TaskSummary[] taskSummaries = repository.getAllTaskSummary();
-//        log.info("Task summaries: {}", (Object) taskSummaries);
-//        return taskSummaries;
-//    }
+    public ArrayList<TaskSummary> getAllTasks() {
+        ArrayList<TaskSummary> taskSummaries = repository.getAllTaskSummary();
+        log.info("Task summaries: {}", taskSummaries.toString());
+        return taskSummaries;
+    }
 }

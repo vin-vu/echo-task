@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Repository
@@ -20,5 +21,5 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
     Task findBestMatch(@Param("input") String input);
 
     @Query(value = "SELECT id, description, status FROM tasks", nativeQuery = true)
-    TaskSummary[] getAllTaskSummary();
+    ArrayList<TaskSummary> getAllTaskSummary();
 }

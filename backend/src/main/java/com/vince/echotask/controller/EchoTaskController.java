@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -45,10 +43,10 @@ public class EchoTaskController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//    @GetMapping("/get-tasks")
-//    ResponseEntity<TaskSummary[]> getTasks() {
-//        log.info("get all tasks request");
-//        TaskSummary[] response = echoTaskService.getAllTasks();
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    @GetMapping("/get-tasks")
+    ResponseEntity<ArrayList<TaskSummary>> getTasks() {
+        log.info("get all tasks request");
+        ArrayList<TaskSummary> response = echoTaskService.getAllTasks();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
