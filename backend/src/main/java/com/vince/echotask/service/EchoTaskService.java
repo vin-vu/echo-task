@@ -82,4 +82,10 @@ public class EchoTaskService {
         repository.deleteById(task.getId());
         return new TaskSummary(task.getId().toString(), description, task.getStatus().toString());
     }
+
+    public TaskSummary[] getAllTasks() {
+        TaskSummary[] taskSummaries = repository.getAllTaskSummary();
+        log.info("Task summaries: {}", (Object) taskSummaries);
+        return taskSummaries;
+    }
 }
