@@ -30,14 +30,38 @@ export default function Task({
     setLocalDescription(description);
   };
 
-  const handleEditStatus = () => {
-    setLocalStatus((prevStatus) => {
-      if (prevStatus === TaskStatus.DONE) {
-        return TaskStatus.PENDING;
-      } else {
-        return TaskStatus.DONE;
-      }
-    });
+  const handleEditStatus = (event: React.MouseEvent) => {
+    const taskItem: Element = document.getElementsByClassName('task-item')[0];
+    const descriptionBox: Element =
+      document.getElementsByClassName('task-description')[0];
+    const buttonContainer: Element =
+      document.getElementsByClassName('button-container')[0];
+
+    const target = event.target as Element;
+
+    console.log(
+      'taskItem: ',
+      taskItem,
+      ' descriptionBox: ',
+      descriptionBox,
+      ' button container: ',
+      buttonContainer
+    );
+
+    if (
+      taskItem.contains(target) &&
+      descriptionBox &&
+      !descriptionBox.contains(target) &&
+      !buttonContainer.contains(target)
+    ) {
+      setLocalStatus((prevStatus) => {
+        if (prevStatus === TaskStatus.DONE) {
+          return TaskStatus.PENDING;
+        } else {
+          return TaskStatus.DONE;
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -67,7 +91,7 @@ export default function Task({
     );
 
   return (
-    <div className="task-item" onClick={() => handleEditStatus()}>
+    <div className="task-item" onClick={(e) => handleEditStatus(e)}>
       {displayDescription()}
       <div className="button-container">
         <FaTrash onClick={() => deleteTask(id)} />
