@@ -12,7 +12,7 @@ export type TaskData = {
   status: TaskStatus;
 };
 
-enum TaskStatus {
+export enum TaskStatus {
   PENDING,
   DONE,
 }
@@ -100,8 +100,10 @@ export default function App() {
       key={task.id}
       id={task.id}
       description={task.description}
+      status={task.status}
       deleteTask={deleteTask}
       editTask={editTask}
+      editTaskStatus={editTaskStatus}
     />
   ));
 
