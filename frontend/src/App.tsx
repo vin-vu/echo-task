@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
@@ -25,16 +25,19 @@ export default function App() {
     }
   };
 
-  const deleteTask = async (id: string) => {
-    const updatedTasks = [];
-    const deletedTask = await deleteTaskAPI(id);
+  const deleteTask = async (taskToBeDeleted: string | TaskData) => {
+    console.log('task to be deleted: ', taskToBeDeleted);
+    let deletedTask: TaskData | undefined;
+    if (typeof taskToBeDeleted === 'string') {
+      deletedTask = await deleteTaskAPI(taskToBeDeleted);
+    } else {
+      deletedTask = taskToBeDeleted;
+    }
+
     if (deletedTask) {
-      for (const task of tasks) {
-        if (task.id !== id) {
-          updatedTasks.push(task);
-        }
-      }
-      setTasks(updatedTasks);
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task.id !== deletedTask.id)
+      );
     }
   };
 
@@ -51,9 +54,12 @@ export default function App() {
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description } = intentPayload;
-    const newTask: TaskData = { id, description };
+    const task: TaskData = { id, description };
     if (intent === 'ADD_TASK') {
-      addTask(newTask);
+      addTask(task);
+    } else if (intent === 'DELETE_TASK') {
+      console.log('here');
+      deleteTask(task);
     }
   }, []);
 

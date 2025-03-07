@@ -39,7 +39,7 @@ export const useSpeech = (
             body: JSON.stringify({ transcript }),
           });
           const json: IntentResponse = await response.json();
-          console.log('response: ', json);
+          console.log('voice command response: ', json);
           return json;
         } catch (e) {
           console.error(e);
