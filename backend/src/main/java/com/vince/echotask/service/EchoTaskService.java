@@ -53,9 +53,9 @@ public class EchoTaskService {
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
             taskSummary = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.MARK_DONE)) {
-            taskSummary = new TaskSummary("no id", "mark done to be implemented");
+            taskSummary = new TaskSummary("no id", "mark done to be implemented", "status");
         } else {
-            taskSummary = new TaskSummary("no id", "unknown to be implemented");
+            taskSummary = new TaskSummary("no id", "unknown to be implemented", "status");
         }
         return new ParsedIntent(taskSummary.getId(), intent, taskDescription);
     }
@@ -66,7 +66,7 @@ public class EchoTaskService {
         task.setStatus(TaskStatus.PENDING);
         Task savedTask = repository.save(task);
         log.info("Saved task : {}", savedTask);
-        return new TaskSummary(task.getId().toString(), description);
+        return new TaskSummary(task.getId().toString(), description, task.getStatus().toString());
     }
 
     public TaskSummary deleteTask(String description, String id) throws IllegalAccessException {
@@ -80,6 +80,6 @@ public class EchoTaskService {
         }
         log.info("Deleted task: {}", task);
         repository.deleteById(task.getId());
-        return new TaskSummary(task.getId().toString(), description);
+        return new TaskSummary(task.getId().toString(), description, task.getStatus().toString());
     }
 }

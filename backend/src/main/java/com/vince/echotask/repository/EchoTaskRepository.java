@@ -17,5 +17,4 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
             "ORDER BY ts_rank(to_tsvector('english', description), plainto_tsquery(:input)) DESC " +
             "LIMIT 1", nativeQuery = true)
     Task findBestMatch(@Param("input") String input);
-
 }

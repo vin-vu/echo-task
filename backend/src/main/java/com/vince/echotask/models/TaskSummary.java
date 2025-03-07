@@ -8,4 +8,5 @@ import lombok.Getter;
 public class TaskSummary {
     private String id;
     private String description;
+    private String status;
 }
