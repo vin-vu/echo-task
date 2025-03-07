@@ -3,7 +3,7 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
-import { addTaskAPI, deleteTaskAPI } from './api/Api';
+import { addTaskAPI, deleteTaskAPI, getAllTasksAPI } from './api/Api';
 import './App.css';
 
 export type TaskData = {
@@ -77,6 +77,16 @@ export default function App() {
       editTask={editTask}
     />
   ));
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const response = await getAllTasksAPI();
+      if (response) {
+        setTasks(response);
+      }
+    }
+    fetchTasks();
+  }, []);
 
   return (
     <>
