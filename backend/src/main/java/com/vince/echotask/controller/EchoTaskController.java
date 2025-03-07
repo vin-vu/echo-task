@@ -30,18 +30,18 @@ public class EchoTaskController {
     }
 
     @PostMapping("/create-task")
-    ResponseEntity<CreateTaskResponse> createTask(@RequestBody TaskRequest request) {
+    ResponseEntity<TaskSummary> createTask(@RequestBody TaskRequest request) {
         log.info("create task request: {}", request.toString());
 
-        CreateTaskResponse response = echoTaskService.saveTask(request.getDescription());
+        TaskSummary response = echoTaskService.saveTask(request.getDescription());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-task")
-    ResponseEntity<CreateTaskResponse> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException {
+    ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException {
         log.info("Delete task request: {}", request);
 
-        CreateTaskResponse response = echoTaskService.deleteTask(null, request.getId());
+        TaskSummary response = echoTaskService.deleteTask(null, request.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
