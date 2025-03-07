@@ -1,5 +1,22 @@
 import { TaskData } from '../App';
 
+export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
+  const createTaskAPI = 'http://localhost:8080/get-tasks';
+  try {
+    const response = await fetch(createTaskAPI, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const tasks: TaskData[] = await response.json();
+    console.log('fetched all Tasks: ', tasks);
+    return tasks;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const addTaskAPI = async (
   description: string
 ): Promise<TaskData | undefined> => {

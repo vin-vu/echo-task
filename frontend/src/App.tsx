@@ -26,7 +26,6 @@ export default function App() {
   };
 
   const deleteTask = async (taskToBeDeleted: string | TaskData) => {
-    console.log('task to be deleted: ', taskToBeDeleted);
     let deletedTask: TaskData | undefined;
     if (typeof taskToBeDeleted === 'string') {
       deletedTask = await deleteTaskAPI(taskToBeDeleted);
