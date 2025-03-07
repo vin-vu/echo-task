@@ -19,6 +19,6 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
             "LIMIT 1", nativeQuery = true)
     Task findBestMatch(@Param("input") String input);
 
-    @Query(value = "SELECT id, description, status FROM tasks")
+    @Query(value = "SELECT id, description, status FROM tasks", nativeQuery = true)
     TaskSummary[] getAllTaskSummary();
 }

@@ -44,4 +44,11 @@ public class EchoTaskController {
         TaskSummary response = echoTaskService.deleteTask(null, request.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+//    @GetMapping("/get-tasks")
+//    ResponseEntity<TaskSummary[]> getTasks() {
+//        log.info("get all tasks request");
+//        TaskSummary[] response = echoTaskService.getAllTasks();
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }
