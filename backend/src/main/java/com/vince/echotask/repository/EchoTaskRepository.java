@@ -1,6 +1,7 @@
 package com.vince.echotask.repository;
 
 import com.vince.echotask.models.Task;
+import com.vince.echotask.models.TaskSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,7 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
             "ORDER BY ts_rank(to_tsvector('english', description), plainto_tsquery(:input)) DESC " +
             "LIMIT 1", nativeQuery = true)
     Task findBestMatch(@Param("input") String input);
+
+    @Query(value = "SELECT id, description, status FROM tasks")
+    TaskSummary[] getAllTaskSummary();
 }
