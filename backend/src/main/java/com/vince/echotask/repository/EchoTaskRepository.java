@@ -22,4 +22,7 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
 
     @Query(value = "SELECT id, description, status FROM tasks", nativeQuery = true)
     ArrayList<TaskSummary> getAllTaskSummary();
+
+    @Query(value = "UPDATE tasks SET status = 'done' where id = :input")
+    Task updateTaskStatus(@Param("input") String input);
 }
