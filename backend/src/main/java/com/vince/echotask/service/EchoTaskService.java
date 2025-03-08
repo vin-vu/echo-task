@@ -66,6 +66,11 @@ public class EchoTaskService {
         return new TaskSummary(task.getId(), description, task.getStatus().toString());
     }
 
+    public void updateTaskStatus(String id, TaskStatus status) {
+        int rowsUpdated = repository.updateTaskStatus(status, UUID.fromString(id));
+        log.info("number of rows updated: {}", rowsUpdated);
+    }
+
     public TaskSummary deleteTask(String description, String id) throws IllegalAccessException {
         Task task;
         if (id != null) {

@@ -35,6 +35,15 @@ public class EchoTaskController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PutMapping("/update-task-status")
+    ResponseEntity<String> updateTaskStatus(@RequestBody UpdateTaskStatusRequest request) {
+        log.info("update task status request: {}", request.toString());
+
+        echoTaskService.updateTaskStatus(request.getId(), request.getStatus());
+
+        return new ResponseEntity<>("working?", HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete-task")
     ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException {
         log.info("Delete task request: {}", request);
