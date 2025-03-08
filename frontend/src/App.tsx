@@ -57,16 +57,19 @@ export default function App() {
     setTasks(updatedTasks);
   };
 
-  const editTaskStatus = (id: string, newStatus: TaskStatus): void => {
+  const editTaskStatus = (id: string): void => {
     setTasks((prevTasks) => {
-      const updatedTasks = [];
-      for (const task of prevTasks) {
-        if (task.id === id) {
-          task.status = newStatus;
-        }
-        updatedTasks.push(task);
-      }
-      return updatedTasks;
+      return prevTasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              status:
+                task.status === TaskStatus.DONE
+                  ? TaskStatus.PENDING
+                  : TaskStatus.DONE,
+            }
+          : task
+      );
     });
   };
 
@@ -100,7 +103,6 @@ export default function App() {
       key={task.id}
       id={task.id}
       description={task.description}
-      status={task.status}
       deleteTask={deleteTask}
       editTask={editTask}
       editTaskStatus={editTaskStatus}
