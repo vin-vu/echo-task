@@ -47,14 +47,11 @@ export default function App() {
   };
 
   const editTask = (id: string, newDescription: string): void => {
-    const updatedTasks = [];
-    for (const task of tasks) {
-      if (task.id === id) {
-        task.description = newDescription;
-      }
-      updatedTasks.push(task);
-    }
-    setTasks(updatedTasks);
+    setTasks((prevTasks) => {
+      return prevTasks.map((task) =>
+        task.id === id ? { ...task, description: newDescription } : task
+      );
+    });
   };
 
   const editTaskStatus = (id: string): void => {
