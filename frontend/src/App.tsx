@@ -57,18 +57,14 @@ export default function App() {
     setTasks(updatedTasks);
   };
 
-  const editTaskStatus = (id: string): void => {
+  const editTaskStatus = (id: string, newStatus: TaskStatus): void => {
     setTasks((prevTasks) => {
       const updatedTasks = [];
       for (const task of prevTasks) {
         if (task.id === id) {
-          if (task.status === TaskStatus.PENDING) {
-            task.status = TaskStatus.DONE;
-          } else {
-            task.status = TaskStatus.PENDING;
-          }
-          updatedTasks.push(task);
+          task.status = newStatus;
         }
+        updatedTasks.push(task);
       }
       return updatedTasks;
     });
@@ -84,6 +80,10 @@ export default function App() {
       deleteTask(task);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('tasks: ', tasks);
+  }, [tasks]);
 
   useEffect(() => {
     async function fetchTasks() {

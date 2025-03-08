@@ -10,7 +10,7 @@ type TaskProps = {
   status: TaskStatus;
   deleteTask: (id: string) => void;
   editTask: (id: string, newDescription: string) => void;
-  editTaskStatus: (id: string) => void;
+  editTaskStatus: (id: string, newStatus: TaskStatus) => void;
 };
 
 export default function Task({
@@ -23,7 +23,6 @@ export default function Task({
 }: TaskProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [localDescription, setLocalDescription] = useState<string>(description);
-  const [localStatus, setLocalStatus] = useState<TaskStatus>(status);
 
   const handleEdit = () => {
     setIsEdit(!isEdit);
@@ -39,34 +38,21 @@ export default function Task({
 
     const target = event.target as Element;
 
-    console.log(
-      'taskItem: ',
-      taskItem,
-      ' descriptionBox: ',
-      descriptionBox,
-      ' button container: ',
-      buttonContainer
-    );
-
     if (
       taskItem.contains(target) &&
       descriptionBox &&
       !descriptionBox.contains(target) &&
       !buttonContainer.contains(target)
     ) {
-      setLocalStatus((prevStatus) => {
-        if (prevStatus === TaskStatus.DONE) {
-          return TaskStatus.PENDING;
-        } else {
-          return TaskStatus.DONE;
-        }
-      });
+      if (status === TaskStatus.DONE) {
+        console.log('local status: ', status, 'update to pending');
+        editTaskStatus(id, TaskStatus.PENDING);
+      } else {
+        console.log('local status: ', status, 'update to done');
+        editTaskStatus(id, TaskStatus.DONE);
+      }
     }
   };
-
-  useEffect(() => {
-    console.log('task status: ', localStatus);
-  }, [localStatus]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
