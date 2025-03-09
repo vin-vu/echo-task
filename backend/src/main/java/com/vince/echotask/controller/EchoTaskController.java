@@ -36,12 +36,11 @@ public class EchoTaskController {
     }
 
     @PutMapping("/update-task-status")
-    ResponseEntity<String> updateTaskStatus(@RequestBody UpdateTaskStatusRequest request) {
+    ResponseEntity<UpdateStatusResponse> updateTaskStatus(@RequestBody UpdateStatusRequest request) {
         log.info("update task status request: {}", request.toString());
 
-        echoTaskService.updateTaskStatus(request.getId(), request.getStatus());
-
-        return new ResponseEntity<>("working?", HttpStatus.OK);
+        UpdateStatusResponse response = echoTaskService.updateTaskStatus(request.getId(), request.getStatus());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-task")

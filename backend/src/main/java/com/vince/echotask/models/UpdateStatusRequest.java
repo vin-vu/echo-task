@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateTaskStatusRequest {
+public class UpdateStatusRequest {
     private String id;
     private TaskStatus status;
 

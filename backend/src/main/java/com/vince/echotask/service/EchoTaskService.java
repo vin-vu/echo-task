@@ -8,7 +8,9 @@ import com.vince.echotask.repository.EchoTaskRepository;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.*;
@@ -66,9 +68,16 @@ public class EchoTaskService {
         return new TaskSummary(task.getId(), description, task.getStatus());
     }
 
-    public void updateTaskStatus(String id, TaskStatus status) {
+    public UpdateStatusResponse updateTaskStatus(String id, TaskStatus status) {
         int rowsUpdated = repository.updateTaskStatus(status, UUID.fromString(id));
-        log.info("number of rows updated: {}", rowsUpdated);
+        String message;
+        if (rowsUpdated == 1) {
+            message = String.format("Updated task ID: %s to be status: %s", id, status);
+            log.info("Updating task ID:{} to be status:{}", id, status);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task ID not found or update failed");
+        }
+        return new UpdateStatusResponse(message);
     }
 
     public TaskSummary deleteTask(String description, String id) throws IllegalAccessException {
