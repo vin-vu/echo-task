@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -53,9 +53,9 @@ public class EchoTaskController {
     }
 
     @GetMapping("/get-tasks")
-    ResponseEntity<ArrayList<TaskSummary>> getTasks() {
+    ResponseEntity<List<TaskSummary>> getTasks() {
         log.info("get all tasks request");
-        ArrayList<TaskSummary> response = echoTaskService.getAllTasks();
+        List<TaskSummary> response = echoTaskService.getAllTasks();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
