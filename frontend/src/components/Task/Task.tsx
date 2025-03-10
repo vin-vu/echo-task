@@ -7,7 +7,7 @@ type TaskProps = {
   id: string;
   description: string;
   deleteTask: (id: string) => void;
-  editTask: (id: string, newDescription: string) => void;
+  editTaskDescription: (id: string, newDescription: string) => void;
   editTaskStatus: (id: string) => void;
 };
 
@@ -15,7 +15,7 @@ export default function Task({
   id,
   description,
   deleteTask,
-  editTask,
+  editTaskDescription,
   editTaskStatus,
 }: TaskProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export default function Task({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    editTask(id, localDescription);
+    editTaskDescription(id, localDescription);
     setLocalDescription('');
     setIsEdit(false);
   };

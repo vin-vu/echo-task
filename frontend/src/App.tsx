@@ -23,7 +23,7 @@ export default function App() {
   const addTask = async (task: string | TaskData) => {
     if (typeof task === 'string') {
       const newTask = await addTaskAPI(task);
-      console.log('new task: ', newTask)
+      console.log('new task: ', newTask);
       if (newTask) {
         setTasks((tasks) => [...tasks, newTask]);
       }
@@ -47,7 +47,7 @@ export default function App() {
     }
   };
 
-  const editTask = (id: string, newDescription: string): void => {
+  const editTaskDescription = (id: string, newDescription: string): void => {
     setTasks((prevTasks) => {
       return prevTasks.map((task) =>
         task.id === id ? { ...task, description: newDescription } : task
@@ -102,7 +102,7 @@ export default function App() {
       id={task.id}
       description={task.description}
       deleteTask={deleteTask}
-      editTask={editTask}
+      editTaskDescription={editTaskDescription}
       editTaskStatus={editTaskStatus}
     />
   ));
