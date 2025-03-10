@@ -33,8 +33,9 @@ public class EchoTaskService {
     @Autowired
     EchoTaskRepository repository;
 
-    private static final ObjectMapper mapper = new ObjectMapper();
-
+    @Autowired
+    ObjectMapper mapper;
+    
     public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
 
         log.info("process intent: {}", request.toString());
