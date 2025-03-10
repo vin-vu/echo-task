@@ -14,7 +14,6 @@
   height: 100px;
   border-radius: 50%;
   border: 3px solid rgb(255, 255, 255);
-  animation: pulse 1.5s infinite ease-in-out;
 }
 
 .mic-icon {
@@ -23,8 +22,12 @@
   padding: 5px;
 }
 
-.mic-container:hover .mic-icon {
-  filter: drop-shadow(0 0 10px rgba(205, 204, 204, 0.8));
+.mic-container:hover .mic-circle {
+  animation: pulse 1.5s infinite;
+}
+
+.mic-container:active .mic-icon {
+  color: rgb(255, 85, 85);
 }
 
 @keyframes pulse {

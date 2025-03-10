@@ -37,7 +37,6 @@ export default function Task({
       document.getElementsByClassName('button-container');
 
     const target = event.target as Element;
-    console.log('target: ', target);
 
     for (let i = 0; i < taskItems.length; i++) {
       if (
