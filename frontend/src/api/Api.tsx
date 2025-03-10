@@ -1,4 +1,4 @@
-import { TaskData, TaskStatus } from '../App';
+import { TaskData } from '../App';
 
 export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
   const createTaskAPI = 'http://localhost:8080/get-tasks';
@@ -59,7 +59,7 @@ export const deleteTaskAPI = async (
 
 export const updateTaskStatusAPI = async (
   id: string,
-  status: TaskStatus
+  completed: boolean
 ): Promise<boolean | undefined> => {
   const url = 'http://localhost:8080/update-task-status';
   try {
@@ -68,7 +68,7 @@ export const updateTaskStatusAPI = async (
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, status }),
+      body: JSON.stringify({ id, completed }),
     });
     return response.ok;
   } catch (e) {

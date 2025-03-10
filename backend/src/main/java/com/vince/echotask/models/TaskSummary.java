@@ -14,5 +14,5 @@ public class TaskSummary {
     @Id
     private UUID id;
     private String description;
-    private TaskStatus status;
+    private boolean completed;
 }

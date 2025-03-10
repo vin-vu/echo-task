@@ -1,7 +1,6 @@
 package com.vince.echotask.repository;
 
 import com.vince.echotask.models.Task;
-import com.vince.echotask.models.TaskStatus;
 import com.vince.echotask.models.TaskSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,11 +21,11 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
             "LIMIT 1", nativeQuery = true)
     Task findBestMatch(@Param("input") String input);
 
-    @Query(value = "SELECT new com.vince.echotask.models.TaskSummary(t.id, t.description, t.status) FROM Task t")
+    @Query(value = "SELECT new com.vince.echotask.models.TaskSummary(t.id, t.description, t.completed) FROM Task t")
     List<TaskSummary> getAllTaskSummaries();
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Task t SET t.status = :newStatus where t.id = :id")
-    int updateTaskStatus(@Param("newStatus") TaskStatus newStatus, @Param("id") UUID id);
+    @Query(value = "UPDATE Task t SET t.completed = :completedStatus where t.id = :id")
+    int updateTaskStatus(@Param("completedStatus") boolean completedStatus, @Param("id") UUID id);
 }

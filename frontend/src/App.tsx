@@ -14,13 +14,8 @@ import './App.css';
 export type TaskData = {
   description: string;
   id: string;
-  status: TaskStatus;
+  completed: boolean;
 };
-
-export enum TaskStatus {
-  PENDING,
-  DONE,
-}
 
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
@@ -28,7 +23,6 @@ export default function App() {
   const addTask = async (task: string | TaskData) => {
     if (typeof task === 'string') {
       const newTask = await addTaskAPI(task);
-      console.log('new task: ', newTask);
       if (newTask) {
         setTasks((tasks) => [...tasks, newTask]);
       }
@@ -62,13 +56,13 @@ export default function App() {
 
   const editTaskStatus = async (
     id: string,
-    newStatus: TaskStatus
+    completedStatus: boolean
   ): Promise<void> => {
-    const success = await updateTaskStatusAPI(id, newStatus);
+    const success = await updateTaskStatusAPI(id, completedStatus);
     if (success) {
       setTasks((prevTasks) => {
         return prevTasks.map((task) =>
-          task.id === id ? { ...task, status: newStatus } : task
+          task.id === id ? { ...task, completed: completedStatus } : task
         );
       });
     }
@@ -76,11 +70,10 @@ export default function App() {
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description } = intentPayload;
-    const task: TaskData = { id, description, status: TaskStatus.PENDING };
+    const task: TaskData = { id, description, completed: false };
     if (intent === 'ADD_TASK') {
       addTask(task);
     } else if (intent === 'DELETE_TASK') {
-      console.log('here');
       deleteTask(task);
     }
   }, []);
@@ -104,7 +97,7 @@ export default function App() {
       key={task.id}
       id={task.id}
       description={task.description}
-      status={task.status}
+      completed={task.completed}
       deleteTask={deleteTask}
       editTaskDescription={editTaskDescription}
       editTaskStatus={editTaskStatus}

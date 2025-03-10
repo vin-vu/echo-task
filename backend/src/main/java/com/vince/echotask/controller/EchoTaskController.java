@@ -43,7 +43,7 @@ public class EchoTaskController {
     ResponseEntity<UpdateStatusResponse> updateTaskStatus(@RequestBody UpdateStatusRequest request) throws JsonProcessingException {
         log.info("update task status request: {}", mapper.writeValueAsString(request));
 
-        UpdateStatusResponse response = echoTaskService.updateTaskStatus(request.getId(), request.getStatus());
+        UpdateStatusResponse response = echoTaskService.updateTaskStatus(request.getId(), request.isCompleted());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

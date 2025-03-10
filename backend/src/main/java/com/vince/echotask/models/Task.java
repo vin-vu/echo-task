@@ -20,9 +20,8 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private TaskStatus status;
+    @Column(name = "completed", nullable = false)
+    private boolean completed;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

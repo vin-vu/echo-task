@@ -35,7 +35,7 @@ public class EchoTaskService {
 
     @Autowired
     ObjectMapper mapper;
-    
+
     public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
 
         log.info("process intent: {}", request.toString());
@@ -57,23 +57,23 @@ public class EchoTaskService {
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
             taskSummary = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.MARK_DONE)) {
-            taskSummary = new TaskSummary(UUID.randomUUID(), "mark done to be implemented", TaskStatus.PENDING);
+            taskSummary = new TaskSummary(UUID.randomUUID(), "mark done to be implemented", false);
         } else {
-            taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", TaskStatus.PENDING);
+            taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
-        return new ParsedIntent(taskSummary.getId(), intent, taskDescription, TaskStatus.PENDING);
+        return new ParsedIntent(taskSummary.getId(), intent, taskDescription, taskSummary.isCompleted());
     }
 
     public TaskSummary saveTask(String description) throws JsonProcessingException {
         Task task = new Task();
         task.setDescription(description);
-        task.setStatus(TaskStatus.PENDING);
+        task.setCompleted(false);
         Task savedTask = repository.save(task);
         log.info("Saved task : {}", mapper.writeValueAsString(savedTask));
-        return new TaskSummary(task.getId(), description, task.getStatus());
+        return new TaskSummary(task.getId(), description, task.isCompleted());
     }
 
-    public UpdateStatusResponse updateTaskStatus(String id, TaskStatus status) {
+    public UpdateStatusResponse updateTaskStatus(String id, boolean status) {
         int rowsUpdated = repository.updateTaskStatus(status, UUID.fromString(id));
         String message;
         if (rowsUpdated == 1) {
@@ -96,7 +96,7 @@ public class EchoTaskService {
         }
         log.info("Deleted task: {}", task);
         repository.deleteById(task.getId());
-        return new TaskSummary(task.getId(), description, task.getStatus());
+        return new TaskSummary(task.getId(), description, task.isCompleted());
     }
 
     public List<TaskSummary> getAllTasks() throws JsonProcessingException {

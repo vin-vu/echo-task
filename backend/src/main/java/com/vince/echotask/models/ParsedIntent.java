@@ -13,5 +13,5 @@ public class ParsedIntent {
     private UUID id;
     private Intent intent;
     private String description;
-    private TaskStatus status;
+    private boolean completed;
 }

@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateStatusRequest {
     private String id;
-    private TaskStatus status;
+    private boolean completed;
 }
