@@ -14,12 +14,4 @@ public class ParsedIntent {
     private Intent intent;
     private String description;
     private TaskStatus status;
-
-    public ParsedIntent(UUID id, Intent intent, String taskDescription) {
-    }
-
-    @Override
-    public String toString() {
-        return "ParsedIntent{id='" + id + "', intent='" + intent + "', description='" + description + "'}";
-    }
 }

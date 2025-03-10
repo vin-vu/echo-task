@@ -1,4 +1,4 @@
-import { TaskData } from '../App';
+import { TaskData, TaskStatus } from '../App';
 
 export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
   const createTaskAPI = 'http://localhost:8080/get-tasks';

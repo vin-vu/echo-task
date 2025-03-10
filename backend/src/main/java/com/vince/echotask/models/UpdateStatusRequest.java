@@ -8,9 +8,4 @@ import lombok.NoArgsConstructor;
 public class UpdateStatusRequest {
     private String id;
     private TaskStatus status;
-
-    @Override
-    public String toString() {
-        return "UpdateTaskStatusRequest{id='" + id + "', status='" + status + "'}";
-    }
 }
