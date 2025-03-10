@@ -56,7 +56,7 @@ public class EchoTaskController {
     }
 
     @GetMapping("/get-tasks")
-    ResponseEntity<List<TaskSummary>> getTasks() {
+    ResponseEntity<List<TaskSummary>> getTasks() throws JsonProcessingException {
         log.info("get all tasks request");
         List<TaskSummary> response = echoTaskService.getAllTasks();
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -2,19 +2,22 @@ import { FaTrash } from 'react-icons/fa';
 import { TiEdit } from 'react-icons/ti';
 import { useState } from 'react';
 import './Task.css';
+import { TaskStatus } from '../../App';
 
 type TaskProps = {
   id: string;
   description: string;
+  status: TaskStatus;
   deleteTask: (id: string) => void;
   editTaskDescription: (id: string, newDescription: string) => void;
-  editTaskStatus: (id: string) => void;
+  editTaskStatus: (id: string, status: TaskStatus) => void;
 };
 
 export default function Task({
   id,
   description,
   deleteTask,
+  status,
   editTaskDescription,
   editTaskStatus,
 }: TaskProps) {
@@ -41,7 +44,13 @@ export default function Task({
       !descriptionBox.contains(target) &&
       !buttonContainer.contains(target)
     ) {
-      editTaskStatus(id);
+      if (status === TaskStatus.PENDING) {
+        console.log('update to done');
+        editTaskStatus(id, TaskStatus.DONE);
+      } else {
+        console.log('update to pending');
+        editTaskStatus(id, TaskStatus.PENDING);
+      }
     }
   };
 

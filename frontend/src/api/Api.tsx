@@ -60,7 +60,7 @@ export const deleteTaskAPI = async (
 export const updateTaskStatusAPI = async (
   id: string,
   status: TaskStatus
-): Promise<TaskData | undefined> => {
+): Promise<boolean | undefined> => {
   const url = 'http://localhost:8080/update-task-status';
   try {
     const response = await fetch(url, {
@@ -70,10 +70,9 @@ export const updateTaskStatusAPI = async (
       },
       body: JSON.stringify({ id, status }),
     });
-    const task: TaskData = await response.json();
-    console.log('update task status response: ', task);
-    return task;
+    return response.ok;
   } catch (e) {
     console.error(e);
+    return false;
   }
 };

@@ -3,7 +3,12 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { IntentResponse } from './hooks/useSpeech';
-import { addTaskAPI, deleteTaskAPI, getAllTasksAPI } from './api/Api';
+import {
+  addTaskAPI,
+  deleteTaskAPI,
+  getAllTasksAPI,
+  updateTaskStatusAPI,
+} from './api/Api';
 import './App.css';
 
 export type TaskData = {
@@ -55,20 +60,18 @@ export default function App() {
     });
   };
 
-  const editTaskStatus = (id: string): void => {
-    setTasks((prevTasks) => {
-      return prevTasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              status:
-                task.status === TaskStatus.DONE
-                  ? TaskStatus.PENDING
-                  : TaskStatus.DONE,
-            }
-          : task
-      );
-    });
+  const editTaskStatus = async (
+    id: string,
+    newStatus: TaskStatus
+  ): Promise<void> => {
+    const success = await updateTaskStatusAPI(id, newStatus);
+    if (success) {
+      setTasks((prevTasks) => {
+        return prevTasks.map((task) =>
+          task.id === id ? { ...task, status: newStatus } : task
+        );
+      });
+    }
   };
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
@@ -101,6 +104,7 @@ export default function App() {
       key={task.id}
       id={task.id}
       description={task.description}
+      status={task.status}
       deleteTask={deleteTask}
       editTaskDescription={editTaskDescription}
       editTaskStatus={editTaskStatus}

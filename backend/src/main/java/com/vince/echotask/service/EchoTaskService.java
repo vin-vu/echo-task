@@ -1,5 +1,7 @@
 package com.vince.echotask.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
 import com.vince.echotask.nlp.IntentCategorizer;
 import com.vince.echotask.nlp.PhraseParser;
@@ -31,6 +33,8 @@ public class EchoTaskService {
     @Autowired
     EchoTaskRepository repository;
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
 
         log.info("process intent: {}", request.toString());
@@ -59,12 +63,12 @@ public class EchoTaskService {
         return new ParsedIntent(taskSummary.getId(), intent, taskDescription, TaskStatus.PENDING);
     }
 
-    public TaskSummary saveTask(String description) {
+    public TaskSummary saveTask(String description) throws JsonProcessingException {
         Task task = new Task();
         task.setDescription(description);
         task.setStatus(TaskStatus.PENDING);
         Task savedTask = repository.save(task);
-        log.info("Saved task : {}", savedTask);
+        log.info("Saved task : {}", mapper.writeValueAsString(savedTask));
         return new TaskSummary(task.getId(), description, task.getStatus());
     }
 
@@ -94,9 +98,9 @@ public class EchoTaskService {
         return new TaskSummary(task.getId(), description, task.getStatus());
     }
 
-    public List<TaskSummary> getAllTasks() {
+    public List<TaskSummary> getAllTasks() throws JsonProcessingException {
         List<TaskSummary> taskSummaries = repository.getAllTaskSummaries();
-        log.info("Task summaries: {}", taskSummaries);
+        log.info("Task summaries: {}", mapper.writeValueAsString(taskSummaries));
         return taskSummaries;
     }
 }
