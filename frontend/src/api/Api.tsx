@@ -30,7 +30,7 @@ export const addTaskAPI = async (
       body: JSON.stringify({ description }),
     });
     const task: TaskData = await response.json();
-    console.log('add task json: ', task);
+    console.log('add task response: ', task);
     return task;
   } catch (e) {
     console.error(e);
@@ -50,7 +50,28 @@ export const deleteTaskAPI = async (
       body: JSON.stringify({ id }),
     });
     const task: TaskData = await response.json();
-    console.log('delete task json: ', task);
+    console.log('delete task response: ', task);
+    return task;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updateTaskStatusAPI = async (
+  id: string,
+  status: TaskStatus
+): Promise<TaskData | undefined> => {
+  const url = 'http://localhost:8080/update-task-status';
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, status }),
+    });
+    const task: TaskData = await response.json();
+    console.log('update task status response: ', task);
     return task;
   } catch (e) {
     console.error(e);
