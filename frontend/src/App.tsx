@@ -23,6 +23,7 @@ export default function App() {
   const addTask = async (task: string | TaskData) => {
     if (typeof task === 'string') {
       const newTask = await addTaskAPI(task);
+      console.log('new task: ', newTask)
       if (newTask) {
         setTasks((tasks) => [...tasks, newTask]);
       }

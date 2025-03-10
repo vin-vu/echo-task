@@ -56,7 +56,7 @@ public class EchoTaskService {
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", TaskStatus.PENDING);
         }
-        return new ParsedIntent(taskSummary.getId(), intent, taskDescription);
+        return new ParsedIntent(taskSummary.getId(), intent, taskDescription, TaskStatus.PENDING);
     }
 
     public TaskSummary saveTask(String description) {

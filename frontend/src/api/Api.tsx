@@ -20,9 +20,9 @@ export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
 export const addTaskAPI = async (
   description: string
 ): Promise<TaskData | undefined> => {
-  const createTaskAPI = 'http://localhost:8080/create-task';
+  const url = 'http://localhost:8080/create-task';
   try {
-    const response = await fetch(createTaskAPI, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,9 +40,9 @@ export const addTaskAPI = async (
 export const deleteTaskAPI = async (
   id: string
 ): Promise<TaskData | undefined> => {
-  const createTaskAPI = 'http://localhost:8080/delete-task';
+  const url = 'http://localhost:8080/delete-task';
   try {
-    const response = await fetch(createTaskAPI, {
+    const response = await fetch(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

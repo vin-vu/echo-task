@@ -10,9 +10,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParsedIntent {
-    private String id;
+    private UUID id;
     private Intent intent;
     private String description;
+    private TaskStatus status;
 
     public ParsedIntent(UUID id, Intent intent, String taskDescription) {
     }
