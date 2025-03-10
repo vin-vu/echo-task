@@ -29,26 +29,28 @@ export default function Task({
   };
 
   const handleEditStatus = (event: React.MouseEvent) => {
-    const taskItem: Element = document.getElementsByClassName('task-item')[0];
-    const descriptionBox: Element =
-      document.getElementsByClassName('task-description')[0];
-    const buttonContainer: Element =
-      document.getElementsByClassName('button-container')[0];
+    const taskItems: HTMLCollectionOf<Element> =
+      document.getElementsByClassName('task-item');
+    const descriptionBoxs: HTMLCollectionOf<Element> =
+      document.getElementsByClassName('task-description');
+    const buttonContainers: HTMLCollectionOf<Element> =
+      document.getElementsByClassName('button-container');
 
     const target = event.target as Element;
+    console.log('target: ', target);
 
-    if (
-      taskItem.contains(target) &&
-      descriptionBox &&
-      !descriptionBox.contains(target) &&
-      !buttonContainer.contains(target)
-    ) {
-      if (completed === false) {
-        console.log('update to completed');
-        editTaskStatus(id, true);
-      } else {
-        console.log('update to NOT completed');
-        editTaskStatus(id, false);
+    for (let i = 0; i < taskItems.length; i++) {
+      if (
+        taskItems[i].contains(target) &&
+        descriptionBoxs[i] &&
+        !descriptionBoxs[i].contains(target) &&
+        !buttonContainers[i].contains(target)
+      ) {
+        if (completed === false) {
+          editTaskStatus(id, true);
+        } else {
+          editTaskStatus(id, false);
+        }
       }
     }
   };
