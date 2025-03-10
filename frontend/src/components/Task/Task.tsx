@@ -76,7 +76,10 @@ export default function Task({
     );
 
   return (
-    <div className="task-item" onClick={(e) => handleEditStatus(e)}>
+    <div
+      className={`task-item ${completed ? 'completed' : 'pending'}`}
+      onClick={(e) => handleEditStatus(e)}
+    >
       {displayDescription()}
       <div className="button-container">
         <FaTrash onClick={() => deleteTask(id)} />
