@@ -29,7 +29,6 @@ public class DependencyParser {
     }
 
     public SemanticGraph createDependencyParseTree(String phrase) {
-
         CoreDocument document = pipeline.processToCoreDocument(phrase);
         pipeline.annotate(document);
         SemanticGraph dependencyParse = document.sentences().get(0).dependencyParse();
@@ -48,7 +47,7 @@ public class DependencyParser {
         log.info("tag: {}", rootPOS);
 
         TraversalStrategy strategy = TraversalStrategyFactory.getStrategy(rootPOS);
-        strategy.traverse(dependencyParse, root, taskDescriptionWords);
+        strategy.traverse(dependencyParse, root, taskDescriptionWords, root);
 
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
         String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));

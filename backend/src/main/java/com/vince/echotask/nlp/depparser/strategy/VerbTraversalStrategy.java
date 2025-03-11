@@ -13,21 +13,22 @@ import java.util.Objects;
 public class VerbTraversalStrategy implements TraversalStrategy {
 
     @Override
-    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode,
+                         List<IndexedWord> taskDescriptionWords, IndexedWord root) {
+
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
+
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
             String relation = edge.getRelation().toString();
             log.info("edge - relation: {}, {}", edge, relation);
-
-            IndexedWord root = dependencyParse.getFirstRoot();
 
             // add root verb if intent exists as its nominal subject - see  ex. utterance 7
             if (Objects.equals(relation, "nsubj") && currentNode == root) {
                 taskDescriptionWords.add(currentNode);
             } else {
                 taskDescriptionWords.add(childNode);
-                traverse(dependencyParse, childNode, taskDescriptionWords);
+                traverse(dependencyParse, childNode, taskDescriptionWords, root);
             }
         }
     }

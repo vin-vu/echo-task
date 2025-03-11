@@ -12,7 +12,7 @@ import java.util.Objects;
 public class NounTraversalStrategy implements TraversalStrategy {
 
     @Override
-    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords, IndexedWord root) {
         if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
 
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
@@ -29,11 +29,11 @@ public class NounTraversalStrategy implements TraversalStrategy {
             if (Objects.equals(pos, "VB") && Objects.equals(relation, "csubj")) {
                 continue;
                 // handle NN root with JJ intent amod see ex. utterance9
-            } else if (dependencyParse.getFirstRoot() == currentNode && Objects.equals(pos, "JJ") && Objects.equals(relation, "amod")) {
+            } else if (root == currentNode && Objects.equals(pos, "JJ") && Objects.equals(relation, "amod")) {
                 continue;
             }
             taskDescriptionWords.add(childNode);
-            traverse(dependencyParse, childNode, taskDescriptionWords);
+            traverse(dependencyParse, childNode, taskDescriptionWords, root);
         }
     }
 }
