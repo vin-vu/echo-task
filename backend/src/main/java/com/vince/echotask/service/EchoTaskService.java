@@ -56,7 +56,7 @@ public class EchoTaskService {
             taskSummary = saveTask(taskDescription);
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
             taskSummary = deleteTask(taskDescription, null);
-        } else if (Objects.equals(intent, Intent.MARK_DONE)) {
+        } else if (Objects.equals(intent, Intent.COMPLETED_TASK)) {
             taskSummary = new TaskSummary(UUID.randomUUID(), "mark done to be implemented", false);
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);

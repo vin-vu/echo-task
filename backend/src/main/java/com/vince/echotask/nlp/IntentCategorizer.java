@@ -46,8 +46,7 @@ public class IntentCategorizer {
         }
         log.info("model training complete - saved as en-doccat-v2.bin");
     }
-
-
+    
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
 
         // load training file
