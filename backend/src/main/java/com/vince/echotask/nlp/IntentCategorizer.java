@@ -24,52 +24,61 @@ public class IntentCategorizer {
     @Autowired
     Tokenizer tokenizer;
 
-    public void trainModel() {
+    public void trainModel() throws IOException {
         DoccatModel doccatModel;
-        try {
-            // load training file
-            File trainingFile = new ClassPathResource("/data/doccat-training.txt").getFile();
-            List<String> processedLines = new ArrayList<>();
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(trainingFile))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(" ", 2);
-                    String intent = parts[0];
-                    String taskDescription = parts[1];
+        // load processed training file
+        InputStreamFactory inputStreamFactory = loadAndTokenizeTrainingData();
 
-                    String[] tokens = tokenizer.getTranscriptTokens(taskDescription);
-                    String processedTokens = String.join(" ", tokens);
-
-                    processedLines.add(intent + " " + processedTokens);
-                }
-            }
-
-            Path tempTrainingFile = Paths.get("backend/src/main/resources/data/doccat-training-processed.txt");
-            Files.write(tempTrainingFile, processedLines, StandardCharsets.UTF_8);
-
-            InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(tempTrainingFile.toFile());
-
-            // reading training file and train model
-            try (ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, "UTF-8");
-                 ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream)) {
-                TrainingParameters params = new TrainingParameters();
-                params.put(TrainingParameters.ITERATIONS_PARAM, "100");
-                params.put(TrainingParameters.CUTOFF_PARAM, "0");
-                doccatModel = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
-            }
-
-            Path modelPath = Paths.get("backend/src/main/resources/nlp/en-doccat-v2.bin");
-
-            //  try (OutputStream modelOut = new BufferedOutputStream(new FileOutputStream(modelPath))) {
-            try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
-                doccatModel.serialize(modelOut);
-            }
-
-            log.info("model training complete - saved as en-doccat-v2.bin");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        // reading training file and train model
+        try (ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, "UTF-8");
+             ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream)) {
+            TrainingParameters params = new TrainingParameters();
+            params.put(TrainingParameters.ITERATIONS_PARAM, "100");
+            params.put(TrainingParameters.CUTOFF_PARAM, "0");
+            doccatModel = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
         }
+
+        Path modelPath = Paths.get("backend/src/main/resources/nlp/en-doccat-v2.bin");
+
+        try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
+            doccatModel.serialize(modelOut);
+        }
+        log.info("model training complete - saved as en-doccat-v2.bin");
+    }
+
+
+    private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
+
+        // load training file
+        File trainingFile = new ClassPathResource("/data/doccat-training.txt").getFile();
+        List<String> processedLines = new ArrayList<>();
+
+        // normalize and tokenize training file
+        try (BufferedReader reader = new BufferedReader(new FileReader(trainingFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ", 2);
+                if (parts.length < 2) {
+                    log.warn("Skipping malformed line in training data: {}", line);
+                    continue;
+                }
+                String intent = parts[0];
+                String taskDescription = parts[1];
+
+                String[] tokens = tokenizer.getTranscriptTokens(taskDescription);
+                String processedTokens = String.join(" ", tokens);
+                processedLines.add(intent + " " + processedTokens);
+            }
+        }
+
+        Path tempTrainingFile = Paths.get("backend/src/main/resources/data/doccat-training-processed.txt");
+        Files.write(tempTrainingFile, processedLines, StandardCharsets.UTF_8);
+
+        log.info("Total training samples after preprocessing: {}", processedLines.size());
+        log.info("Processed training data saved at: {}", tempTrainingFile);
+
+        return new MarkableFileInputStreamFactory(tempTrainingFile.toFile());
     }
 
     public SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) throws IOException {
