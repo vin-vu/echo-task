@@ -13,7 +13,7 @@ import java.util.Objects;
 public class VerbTraversalStrategy implements TraversalStrategy {
 
     @Override
-    public void travserse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
+    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords) {
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
@@ -27,7 +27,7 @@ public class VerbTraversalStrategy implements TraversalStrategy {
                 taskDescriptionWords.add(currentNode);
             } else {
                 taskDescriptionWords.add(childNode);
-                travserse(dependencyParse, childNode, taskDescriptionWords);
+                traverse(dependencyParse, childNode, taskDescriptionWords);
             }
         }
     }

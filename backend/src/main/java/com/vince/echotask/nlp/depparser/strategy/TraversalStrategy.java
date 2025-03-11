@@ -6,5 +6,5 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import java.util.List;
 
 public interface TraversalStrategy {
-    void travserse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords);
+    void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords);
 }
