@@ -20,7 +20,6 @@ public class IntentCategorizer {
     public void trainModel() {
         DoccatModel doccatModel;
         try {
-
             // load training file
             File trainingFile = new ClassPathResource("/data/training-data.txt").getFile();
             InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(trainingFile);
@@ -51,13 +50,9 @@ public class IntentCategorizer {
         ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat.bin");
 
         try (InputStream modelInput = modelResource.getInputStream()) {
-
             DoccatModel doccatModel = new DoccatModel(modelInput);
             DocumentCategorizerME intentCategorizer = new DocumentCategorizerME(doccatModel);
-
             return intentCategorizer.sortedScoreMap(phraseTokens);
         }
-
-
     }
 }

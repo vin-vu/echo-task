@@ -1,0 +1,94 @@
+ADD_TASK add go to Costco
+ADD_TASK add buy new tires for Toyota
+ADD_TASK add listen to Illenium on Spotify
+ADD_TASK add visit Shibuya next spring
+ADD_TASK add finish the voice command app
+ADD_TASK add complete campaign difficulty on veteran
+ADD_TASK insert pick up dinner from Phoholic
+ADD_TASK insert shop gifts at South Coast Plaza
+ADD_TASK insert upgrade PC with RGB fans
+ADD_TASK insert attend LCS in 2025
+ADD_TASK put car maintenance at dealership
+ADD_TASK put dermatologist appointment
+ADD_TASK put meeting with Excision tomorrow
+ADD_TASK put eat Wagyu at Chubby Cattle
+ADD_TASK create new workout plan
+ADD_TASK create new training data for NLP models
+ADD_TASK create study plan for computer science
+ADD_TASK create item list for new PC build
+ADD_TASK plan trip to Howling Abyss
+ADD_TASK plan award ceremony in Noxus
+ADD_TASK plan an adventure to Piltover
+ADD_TASK plan dinner reservation for yakiniku
+ADD_TASK save marinate the chicken
+ADD_TASK save make a trip itinerary for Ionia
+ADD_TASK save look for Curel products at Shibuyala
+ADD_TASK save complete ANBU mission
+ADD_TASK log finish oil change by tonight
+ADD_TASK log research usability of RTX 5090
+ADD_TASK log have a canyon drive at Angel's Crest
+ADD_TASK log don't get stuck in Domain Expansion
+DELETE_TASK delete go to Costco
+DELETE_TASK delete buy new tires for Toyota GR86
+DELETE_TASK delete listen to Illenium on Spotify
+DELETE_TASK delete visit Shibuya next spring
+DELETE_TASK remove pick up dinner from Phoholic
+DELETE_TASK remove shop gifts at South Coast Plaza
+DELETE_TASK remove upgrade PC with RGB fans
+DELETE_TASK remove attend LCS in 2025
+DELETE_TASK cancel car maintenance at dealership
+DELETE_TASK cancel dermatologist appointment
+DELETE_TASK cancel meeting with Excision tomorrow
+DELETE_TASK cancel eat Wagyu at Chubby Cattle
+DELETE_TASK discard install Advan Beyond GT wheels on GR86
+DELETE_TASK discard take out trash tonight
+DELETE_TASK discard finish the voice command app
+DELETE_TASK discard complete campaign difficulty on veteran
+DELETE_TASK drop new workout plan
+DELETE_TASK drop new training data for NLP models
+DELETE_TASK drop study plan for computer science
+DELETE_TASK drop item list for new PC build
+DELETE_TASK forget plan trip to Howling Abyss
+DELETE_TASK forget award ceremony in Noxus
+DELETE_TASK forget an adventure to Piltover
+DELETE_TASK forget dinner reservation for yakiniku
+DELETE_TASK clear marinate the chicken
+DELETE_TASK clear make a trip itinerary for Ionia
+DELETE_TASK clear look for Curel products at Shibuyala
+DELETE_TASK clear complete ANBU mission
+DELETE_TASK erase finish oil change by tonight
+DELETE_TASK erase research usability of RTX 5090
+DELETE_TASK erase have a canyon drive at Angel's Crest
+DELETE_TASK erase don't get stuck in Domain Expansion
+COMPLETED_TASK completed go to Costco
+COMPLETED_TASK completed buy new tires for Toyota GR86
+COMPLETED_TASK completed listen to Illenium on Spotify
+COMPLETED_TASK completed visit Shibuya next spring
+COMPLETED_TASK completed finish the voice command app
+COMPLETED_TASK completed complete campaign difficulty on veteran
+COMPLETED_TASK finished pick up dinner from Phoholic
+COMPLETED_TASK finished shop gifts at South Coast Plaza
+COMPLETED_TASK finished upgrade PC with RGB fans
+COMPLETED_TASK finished attend LCS in 2025
+COMPLETED_TASK finished install Advan Beyond GT wheels on GR86
+COMPLETED_TASK finished take out trash tonight
+COMPLETED_TASK done car maintenance at dealership
+COMPLETED_TASK done dermatologist appointment
+COMPLETED_TASK done meeting with Excision tomorrow
+COMPLETED_TASK done eat Wagyu at Chubby Cattle
+COMPLETED_TASK close new workout plan
+COMPLETED_TASK close new training data for NLP models
+COMPLETED_TASK close study plan for computer science
+COMPLETED_TASK close item list for new PC build
+COMPLETED_TASK mark plan trip to Howling Abyss
+COMPLETED_TASK mark award ceremony in Noxus
+COMPLETED_TASK mark an adventure to Piltover
+COMPLETED_TASK mark dinner reservation for yakiniku
+COMPLETED_TASK check marinate the chicken
+COMPLETED_TASK check make a trip itinerary for Ionia
+COMPLETED_TASK check look for Curel products at Shibuyala
+COMPLETED_TASK check complete ANBU mission
+COMPLETED_TASK resolved finish oil change by tonight
+COMPLETED_TASK resolved research usability of RTX 5090
+COMPLETED_TASK resolved have a canyon drive at Angel's Crest
+COMPLETED_TASK resolved don't get stuck in Domain Expansion
