@@ -57,7 +57,7 @@ public class EchoTaskService {
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
             taskSummary = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.COMPLETED_TASK)) {
-            taskSummary = new TaskSummary(UUID.randomUUID(), "mark done to be implemented", false);
+            taskSummary = updateTaskStatus(null, false, taskDescription);
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
@@ -73,16 +73,19 @@ public class EchoTaskService {
         return new TaskSummary(task.getId(), description, task.isCompleted());
     }
 
-    public UpdateStatusResponse updateTaskStatus(String id, boolean status) {
-        int rowsUpdated = repository.updateTaskStatus(status, UUID.fromString(id));
-        String message;
-        if (rowsUpdated == 1) {
-            message = String.format("Updated task ID: %s to be status: %s", id, status);
-            log.info("Updating task ID:{} to be status:{}", id, status);
-        } else {
+    public TaskSummary updateTaskStatus(UUID id, boolean completedStatus, String description) {
+
+        id = resolveTaskId(id, description);
+
+        Task task = repository.updateTaskStatus(completedStatus, id);
+        if (task == null) {
+            log.warn("Failed to update Task ID:{} to be status:{}", id, completedStatus);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task ID not found or update failed");
         }
-        return new UpdateStatusResponse(message);
+
+        String message = String.format("Updated task ID: %s to be status: %s", id, completedStatus);
+        log.info(message);
+        return new TaskSummary(id, description, completedStatus);
     }
 
     public TaskSummary deleteTask(String description, String id) throws IllegalAccessException {
@@ -103,5 +106,18 @@ public class EchoTaskService {
         List<TaskSummary> taskSummaries = repository.getAllTaskSummaries();
         log.info("Task summaries: {}", mapper.writeValueAsString(taskSummaries));
         return taskSummaries;
+    }
+
+    private UUID resolveTaskId(UUID id, String description) {
+        if (id != null) {
+            return id;
+        }
+
+        if (description == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task ID or description required");
+        }
+
+        Task task = repository.findBestMatch(description);
+        return task.getId();
     }
 }

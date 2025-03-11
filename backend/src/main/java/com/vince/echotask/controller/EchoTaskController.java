@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -40,10 +41,10 @@ public class EchoTaskController {
     }
 
     @PutMapping("/update-task-status")
-    ResponseEntity<UpdateStatusResponse> updateTaskStatus(@RequestBody UpdateStatusRequest request) throws JsonProcessingException {
+    ResponseEntity<TaskSummary> updateTaskStatus(@RequestBody UpdateStatusRequest request) throws JsonProcessingException {
         log.info("update task status request: {}", mapper.writeValueAsString(request));
 
-        UpdateStatusResponse response = echoTaskService.updateTaskStatus(request.getId(), request.isCompleted());
+        TaskSummary response = echoTaskService.updateTaskStatus(UUID.fromString(request.getId()), request.isCompleted(), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

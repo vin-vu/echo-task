@@ -4,7 +4,6 @@ import com.vince.echotask.models.Task;
 import com.vince.echotask.models.TaskSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -24,8 +23,7 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
     @Query(value = "SELECT new com.vince.echotask.models.TaskSummary(t.id, t.description, t.completed) FROM Task t")
     List<TaskSummary> getAllTaskSummaries();
 
-    @Modifying
     @Transactional
-    @Query(value = "UPDATE Task t SET t.completed = :completedStatus where t.id = :id")
-    int updateTaskStatus(@Param("completedStatus") boolean completedStatus, @Param("id") UUID id);
+    @Query(value = "UPDATE tasks SET completed = :completedStatus WHERE id = :id RETURNING *", nativeQuery = true)
+    Task updateTaskStatus(@Param("completedStatus") boolean completedStatus, @Param("id") UUID id);
 }
