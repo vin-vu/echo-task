@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp;
+package com.vince.echotask.nlp.depparser;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.CoreDocument;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class PhraseParser {
+public class DependencyParser {
 
     private static final StanfordCoreNLP pipeline;
 

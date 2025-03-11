@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
 import com.vince.echotask.nlp.IntentCategorizer;
-import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
+import com.vince.echotask.nlp.depparser.DependencyParser;
 import com.vince.echotask.repository.EchoTaskRepository;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class EchoTaskService {
     IntentCategorizer intentCategorizer;
 
     @Autowired
-    PhraseParser phraseParser;
+    DependencyParser dependencyParser;
 
     @Autowired
     EchoTaskRepository repository;
@@ -48,8 +48,8 @@ public class EchoTaskService {
         Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if more than 1 intent - would share same probability and therefore in same Set
         Intent intent = Intent.valueOf(bestIntents.iterator().next());
 
-        SemanticGraph dependencyParse = phraseParser.createDependencyParseTree(request.getTranscript());
-        String taskDescription = phraseParser.extractDescription(dependencyParse);
+        SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
+        String taskDescription = dependencyParser.extractDescription(dependencyParse);
 
         TaskSummary taskSummary;
         if (Objects.equals(intent, Intent.ADD_TASK)) {

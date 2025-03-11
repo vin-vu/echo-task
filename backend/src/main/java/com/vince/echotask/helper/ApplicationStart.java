@@ -1,8 +1,8 @@
 package com.vince.echotask.helper;
 
 import com.vince.echotask.nlp.IntentCategorizer;
-import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
+import com.vince.echotask.nlp.depparser.DependencyParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -19,7 +19,7 @@ public class ApplicationStart {
     Tokenizer tokenizer;
 
     @Autowired
-    PhraseParser parser;
+    DependencyParser parser;
 
     @Autowired
     IntentCategorizer intentCategorizer;
