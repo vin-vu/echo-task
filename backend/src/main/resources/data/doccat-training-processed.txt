@@ -1,0 +1,94 @@
+ADD_TASK add go costco
+ADD_TASK add buy new tire toyota
+ADD_TASK add listen illenium spotify
+ADD_TASK add visit shibuya next spring
+ADD_TASK add finish voice command app
+ADD_TASK add complete campaign difficulty veteran
+ADD_TASK insert pick dinner phoholic
+ADD_TASK insert shop gift south coast plaza
+ADD_TASK insert upgrade pc rgb fan
+ADD_TASK insert attend lcs 2025
+ADD_TASK put car maintenance dealership
+ADD_TASK put dermatologist appointment
+ADD_TASK put meeting excision tomorrow
+ADD_TASK put eat wagyu chubby cattle
+ADD_TASK create new workout plan
+ADD_TASK create new training data nlp model
+ADD_TASK create study plan computer science
+ADD_TASK create item list new pc build
+ADD_TASK plan trip howling abyss
+ADD_TASK plan award ceremony noxus
+ADD_TASK plan adventure piltover
+ADD_TASK plan dinner reservation yakiniku
+ADD_TASK save marinate chicken
+ADD_TASK save make trip itinerary ionia
+ADD_TASK save look curel product shibuyala
+ADD_TASK save complete anbu mission
+ADD_TASK log finish oil change tonight
+ADD_TASK log research usability rtx 5090
+ADD_TASK log canyon drive angel+'s crest
+ADD_TASK log do+not get stuck domain expansion
+DELETE_TASK delete go costco
+DELETE_TASK delete buy new tire toyota gr86
+DELETE_TASK delete listen illenium spotify
+DELETE_TASK delete visit shibuya next spring
+DELETE_TASK remove pick dinner phoholic
+DELETE_TASK remove shop gift south coast plaza
+DELETE_TASK remove upgrade pc rgb fan
+DELETE_TASK remove attend lc 2025
+DELETE_TASK cancel car maintenance dealership
+DELETE_TASK cancel dermatologist appointment
+DELETE_TASK cancel meeting excision tomorrow
+DELETE_TASK cancel eat wagyu chubby cattle
+DELETE_TASK discard install advan beyond gt wheel gr86
+DELETE_TASK discard take trash tonight
+DELETE_TASK discard finish voice command app
+DELETE_TASK discard complete campaign difficulty veteran
+DELETE_TASK drop new workout plan
+DELETE_TASK drop new training data nlp model
+DELETE_TASK drop study plan computer science
+DELETE_TASK drop item list new pc build
+DELETE_TASK forget plan trip howling abyss
+DELETE_TASK forget award ceremony noxus
+DELETE_TASK forget adventure piltover
+DELETE_TASK forget dinner reservation yakiniku
+DELETE_TASK clear marinate chicken
+DELETE_TASK clear make trip itinerary ionia
+DELETE_TASK clear look curel product shibuyala
+DELETE_TASK clear complete anbu mission
+DELETE_TASK erase finish oil change tonight
+DELETE_TASK erase research usability rtx 5090
+DELETE_TASK erase canyon drive angel+'s crest
+DELETE_TASK erase do+not get stuck domain expansion
+COMPLETED_TASK complete go costco
+COMPLETED_TASK complete buy new tire toyota gr86
+COMPLETED_TASK complete listen illenium spotify
+COMPLETED_TASK complete visit shibuya next spring
+COMPLETED_TASK complete finish voice command app
+COMPLETED_TASK complete complete campaign difficulty veteran
+COMPLETED_TASK finish pick dinner phoholic
+COMPLETED_TASK finish shop gift south coast plaza
+COMPLETED_TASK finish upgrade pc rgb fan
+COMPLETED_TASK finish attend lc 2025
+COMPLETED_TASK finish install advan beyond gt wheel gr86
+COMPLETED_TASK finish take trash tonight
+COMPLETED_TASK do car maintenance dealership
+COMPLETED_TASK do dermatologist appointment
+COMPLETED_TASK do meeting excision tomorrow
+COMPLETED_TASK do eat wagyu chubby cattle
+COMPLETED_TASK close new workout plan
+COMPLETED_TASK close new training data nlp model
+COMPLETED_TASK close study plan computer science
+COMPLETED_TASK close item list new pc build
+COMPLETED_TASK mark plan trip howling abyss
+COMPLETED_TASK mark award ceremony noxus
+COMPLETED_TASK mark adventure piltover
+COMPLETED_TASK mark dinner reservation yakiniku
+COMPLETED_TASK check marinate chicken
+COMPLETED_TASK check make trip itinerary ionia
+COMPLETED_TASK check look curel product shibuyala
+COMPLETED_TASK check complete anbu mission
+COMPLETED_TASK resolve finish oil change tonight
+COMPLETED_TASK resolve research usability rtx 5090
+COMPLETED_TASK resolve canyon drive angel+'s crest
+COMPLETED_TASK resolve do+not get stuck domain expansion

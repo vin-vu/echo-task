@@ -1,5 +1,6 @@
 package com.vince.echotask.helper;
 
+import com.vince.echotask.nlp.IntentCategorizer;
 import com.vince.echotask.nlp.PhraseParser;
 import com.vince.echotask.nlp.Tokenizer;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,9 @@ public class ApplicationStart {
 
     @Autowired
     PhraseParser parser;
+
+    @Autowired
+    IntentCategorizer intentCategorizer;
 
     @EventListener(ApplicationReadyEvent.class)
     private void run() throws IOException {
