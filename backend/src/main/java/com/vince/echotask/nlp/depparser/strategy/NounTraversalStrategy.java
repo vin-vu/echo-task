@@ -5,6 +5,7 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,16 +13,18 @@ import java.util.Objects;
 public class NounTraversalStrategy implements TraversalStrategy {
 
     @Override
-    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode, List<IndexedWord> taskDescriptionWords, IndexedWord root) {
-        if (taskDescriptionWords.isEmpty()) taskDescriptionWords.add(currentNode);
+    public List<IndexedWord> traverse(SemanticGraph dependencyParse, IndexedWord currentNode, IndexedWord root) {
 
+        List<IndexedWord> descriptionWords = new ArrayList<>();
+        descriptionWords.add(currentNode);
+
+        List<IndexedWord> descriptionWordsChildren = new ArrayList<>();
         List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
         log.info("parent - children: {}, {}", currentNode, childrenNodes);
 
         for (IndexedWord childNode : childrenNodes) {
             SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
             String relation = edge.getRelation().toString();
-            log.info("2: edge - relation: {}, {}", edge, relation);
 
             String pos = childNode.tag();
 
@@ -32,8 +35,9 @@ public class NounTraversalStrategy implements TraversalStrategy {
             } else if (root == currentNode && Objects.equals(pos, "JJ") && Objects.equals(relation, "amod")) {
                 continue;
             }
-            taskDescriptionWords.add(childNode);
-            traverse(dependencyParse, childNode, taskDescriptionWords, root);
+            descriptionWordsChildren.addAll(traverse(dependencyParse, childNode, root));
         }
+        descriptionWords.addAll(descriptionWordsChildren);
+        return descriptionWords;
     }
 }

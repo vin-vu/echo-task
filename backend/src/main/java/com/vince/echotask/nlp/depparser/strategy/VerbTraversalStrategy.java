@@ -3,9 +3,9 @@ package com.vince.echotask.nlp.depparser.strategy;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
-import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,23 +13,25 @@ import java.util.Objects;
 public class VerbTraversalStrategy implements TraversalStrategy {
 
     @Override
-    public void traverse(SemanticGraph dependencyParse, IndexedWord currentNode,
-                         List<IndexedWord> taskDescriptionWords, IndexedWord root) {
+    public List<IndexedWord> traverse(SemanticGraph dependencyParse, IndexedWord currentNode, IndexedWord root) {
 
-        List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
+        List<IndexedWord> descriptionWords = new ArrayList<>();
 
-        for (IndexedWord childNode : childrenNodes) {
-            SemanticGraphEdge edge = dependencyParse.getEdge(currentNode, childNode);
-            String relation = edge.getRelation().toString();
-            log.info("edge - relation: {}, {}", edge, relation);
+        for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
+            String childRelation = dependencyParse.getEdge(currentNode, childNode).getRelation().toString();
+            log.info("parent - child: {} - {}", currentNode, childNode);
 
             // add root verb if intent exists as its nominal subject - see  ex. utterance 7
-            if (Objects.equals(relation, "nsubj") && currentNode == root) {
-                taskDescriptionWords.add(currentNode);
+            if (Objects.equals(childRelation, "nsubj") && currentNode == root) {
+                descriptionWords.add(root);
+                log.info("adding root verb: {}", descriptionWords);
             } else {
-                taskDescriptionWords.add(childNode);
-                traverse(dependencyParse, childNode, taskDescriptionWords, root);
+                descriptionWords.add(childNode);
+                log.info("added words: {}", descriptionWords);
+                descriptionWords.addAll(traverse(dependencyParse, childNode, root));
             }
+            log.info("description words children: {}", descriptionWords);
         }
+        return descriptionWords;
     }
 }

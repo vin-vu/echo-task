@@ -9,7 +9,6 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
@@ -39,19 +38,14 @@ public class DependencyParser {
     public String extractDescription(SemanticGraph dependencyParse) {
 
         IndexedWord root = dependencyParse.getFirstRoot();
-        log.info("root: {}", root);
-
-        List<IndexedWord> taskDescriptionWords = new ArrayList<>();
-
         String rootPOS = root.tag();
-        log.info("tag: {}", rootPOS);
+        log.info("root - POS: {} - {}", root, rootPOS);
 
         TraversalStrategy strategy = TraversalStrategyFactory.getStrategy(rootPOS);
-        strategy.traverse(dependencyParse, root, taskDescriptionWords, root);
-
+        List<IndexedWord> taskDescriptionWords = strategy.traverse(dependencyParse, root, root);
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
-        String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
 
+        String taskDescription = taskDescriptionWords.stream().map(IndexedWord::word).collect(Collectors.joining(" "));
         log.info("task description words: {}", taskDescription);
         return taskDescription;
     }
