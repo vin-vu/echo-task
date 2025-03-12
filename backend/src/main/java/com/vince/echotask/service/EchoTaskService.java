@@ -49,19 +49,21 @@ public class EchoTaskService {
         Intent intent = Intent.valueOf(bestIntents.iterator().next());
 
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
-        String taskDescription = dependencyParser.extractDescription(dependencyParse);
-
+        String taskDescription;
         TaskSummary taskSummary;
         if (Objects.equals(intent, Intent.ADD_TASK)) {
+            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
             taskSummary = saveTask(taskDescription);
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
+            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
             taskSummary = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.COMPLETED_TASK)) {
+            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
             taskSummary = updateTaskStatus(null, false, taskDescription);
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
-        return new ParsedIntent(taskSummary.getId(), intent, taskDescription, taskSummary.isCompleted());
+        return new ParsedIntent(taskSummary.getId(), intent, taskSummary.getDescription(), taskSummary.isCompleted());
     }
 
     public TaskSummary saveTask(String description) throws JsonProcessingException {

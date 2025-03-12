@@ -1,5 +1,6 @@
 package com.vince.echotask.nlp.depparser;
 
+import com.vince.echotask.models.Intent;
 import com.vince.echotask.nlp.depparser.strategy.TraversalStrategy;
 import com.vince.echotask.nlp.depparser.strategy.TraversalStrategyFactory;
 import edu.stanford.nlp.ling.IndexedWord;
@@ -35,13 +36,13 @@ public class DependencyParser {
         return dependencyParse;
     }
 
-    public String extractDescription(SemanticGraph dependencyParse) {
+    public String extractDescription(SemanticGraph dependencyParse, Intent intent) {
 
         IndexedWord root = dependencyParse.getFirstRoot();
         String rootPOS = root.tag();
         log.info("root - POS: {} - {}", root, rootPOS);
 
-        TraversalStrategy strategy = TraversalStrategyFactory.getStrategy(rootPOS);
+        TraversalStrategy strategy = TraversalStrategyFactory.getStrategy(rootPOS, intent);
         List<IndexedWord> taskDescriptionWords = strategy.traverse(dependencyParse, root, root);
         taskDescriptionWords.sort(Comparator.comparingInt(IndexedWord::index));
 
