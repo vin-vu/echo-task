@@ -117,7 +117,12 @@ public class EchoTaskService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task ID or description required");
         }
 
+        // below is flow for voice command
         Task task = repository.findBestMatch(description);
-        return task.getId();
+        if (task == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find task from given voice command");
+        } else {
+            return task.getId();
+        }
     }
 }
