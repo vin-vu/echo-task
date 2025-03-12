@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp;
+package com.vince.echotask.nlp.intentcategorizer;
 
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.*;
@@ -46,7 +46,7 @@ public class IntentCategorizer {
         }
         log.info("model training complete - saved as en-doccat-v2.bin");
     }
-    
+
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
 
         // load training file
