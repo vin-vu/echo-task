@@ -59,7 +59,7 @@ public class EchoTaskService {
             taskSummary = deleteTask(taskDescription, null);
         } else if (Objects.equals(intent, Intent.COMPLETED_TASK)) {
             taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-            taskSummary = updateTaskStatus(null, false, taskDescription);
+            taskSummary = updateTaskStatus(null, true, taskDescription);
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
