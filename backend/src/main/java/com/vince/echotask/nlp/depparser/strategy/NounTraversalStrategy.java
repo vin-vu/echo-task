@@ -15,9 +15,8 @@ public class NounTraversalStrategy implements TraversalStrategy {
     public List<IndexedWord> traverse(SemanticGraph dependencyParse, IndexedWord currentNode, IndexedWord root) {
 
         List<IndexedWord> descriptionWords = new ArrayList<>();
-        List<IndexedWord> childrenNodes = dependencyParse.getChildList(currentNode);
 
-        for (IndexedWord childNode : childrenNodes) {
+        for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
             String childNodeRelation = dependencyParse.getEdge(currentNode, childNode).getRelation().toString();
             String pos = childNode.tag();
             log.info("parent - child: {}, {}", currentNode, childNode);
