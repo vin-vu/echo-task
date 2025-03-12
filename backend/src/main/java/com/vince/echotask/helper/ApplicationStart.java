@@ -43,6 +43,9 @@ public class ApplicationStart {
         // root is go/NN
         String utterance9 = "Delete go to Costco";
 
+        // root is tomorrow/NN - delete/JJ is amod to appointment
+        String utterance10 = "delete skin specialist doctor appointment is tomorrow";
+
 //        SemanticGraph dependencyParse = parser.createDependencyParseTree(utterance);
 //        String taskDescription = parser.extractDescription(dependencyParse);
 
