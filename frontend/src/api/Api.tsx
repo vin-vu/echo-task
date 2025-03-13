@@ -60,7 +60,7 @@ export const deleteTaskAPI = async (
 export const updateTaskStatusAPI = async (
   id: string,
   completed: boolean
-): Promise<boolean | undefined> => {
+): Promise<TaskData | undefined> => {
   const url = 'http://localhost:8080/update-task-status';
   try {
     const response = await fetch(url, {
@@ -70,9 +70,11 @@ export const updateTaskStatusAPI = async (
       },
       body: JSON.stringify({ id, completed }),
     });
-    return response.ok;
+    const task: TaskData = await response.json();
+    console.log('delete task response: ', task);
+    return task;
   } catch (e) {
     console.error(e);
-    return false;
+    return;
   }
 };
