@@ -54,26 +54,25 @@ export default function App() {
     });
   };
 
+  const updateTasksStatusInState = (id: string, completedStatus: boolean) => {
+    setTasks((prevTasks) => {
+      return prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: completedStatus } : task
+      );
+    });
+  };
+
   const editTaskStatus = async (
     id: string,
     completedStatus: boolean,
     voiceCommand: boolean
   ): Promise<void> => {
     if (voiceCommand) {
-      console.log('id: ', id, 'status: ', completedStatus)
-      setTasks((prevTasks) => {
-        return prevTasks.map((task) =>
-          task.id === id ? { ...task, completed: completedStatus } : task
-        );
-      });
+      updateTasksStatusInState(id, completedStatus);
     } else {
       const success = await updateTaskStatusAPI(id, completedStatus);
       if (success) {
-        setTasks((prevTasks) => {
-          return prevTasks.map((task) =>
-            task.id === id ? { ...task, completed: completedStatus } : task
-          );
-        });
+        updateTasksStatusInState(id, completedStatus);
       }
     }
   };
