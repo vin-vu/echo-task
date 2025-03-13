@@ -36,21 +36,11 @@ export default function App() {
     }
   }, []);
 
-  const deleteTaskById = async (id: string): Promise<TaskData | undefined> => {
-    return await deleteTaskAPI(id);
-  };
-
-  const deleteTask = useCallback(async (taskInput: string | TaskData) => {
-    const deletedTask =
-      typeof taskInput === 'string'
-        ? await deleteTaskById(taskInput)
-        : taskInput;
-
-    if (deletedTask) {
-      setTasks((prevTasks) =>
-        prevTasks.filter((task) => task.id !== deletedTask.id)
-      );
+  const deleteTask = useCallback(async (id: string, voiceCommand: boolean) => {
+    if (!voiceCommand) {
+      await deleteTaskAPI(id);
     }
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   }, []);
 
   const editTaskDescription = (id: string, newDescription: string): void => {
@@ -82,7 +72,7 @@ export default function App() {
       if (intent === 'ADD_TASK') {
         addTask(task);
       } else if (intent === 'DELETE_TASK') {
-        deleteTask(task);
+        deleteTask(id, true);
       } else if (intent === 'COMPLETED_TASK') {
         editTaskStatus(task.id, task.completed, true);
       }

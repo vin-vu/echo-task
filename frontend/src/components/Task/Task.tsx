@@ -7,7 +7,7 @@ type TaskProps = {
   id: string;
   description: string;
   completed: boolean;
-  deleteTask: (id: string) => void;
+  deleteTask: (id: string, voiceCommand: boolean) => void;
   editTaskDescription: (id: string, newDescription: string) => void;
   editTaskStatus: (
     id: string,
@@ -87,7 +87,7 @@ export default function Task({
     >
       {displayDescription()}
       <div className="button-container">
-        <FaTrash onClick={() => deleteTask(id)} />
+        <FaTrash onClick={() => deleteTask(id, false)} />
         <TiEdit onClick={() => handleEdit()} />
       </div>
     </div>
