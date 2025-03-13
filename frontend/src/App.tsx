@@ -62,7 +62,7 @@ export default function App() {
     });
   };
 
-  const editTaskStatus = async (
+  const editTaskStatus = useCallback(async (
     id: string,
     completedStatus: boolean,
     voiceCommand: boolean
@@ -75,7 +75,7 @@ export default function App() {
         updateTasksStatusInState(id, completedStatus);
       }
     }
-  };
+  }, []);
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
     const { id, intent, description, completed } = intentPayload;
@@ -87,7 +87,7 @@ export default function App() {
     } else if (intent === 'COMPLETED_TASK') {
       editTaskStatus(task.id, task.completed, true);
     }
-  }, []);
+  }, [editTaskStatus]);
 
   useEffect(() => {
     console.log('tasks: ', tasks);
