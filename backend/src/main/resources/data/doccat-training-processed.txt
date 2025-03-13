@@ -8,6 +8,7 @@ ADD_TASK insert pick dinner phoholic
 ADD_TASK insert shop gift south coast plaza
 ADD_TASK insert upgrade pc rgb fan
 ADD_TASK insert attend lcs 2025
+ADD_TASK insert sunright boba meetup tomorrow
 ADD_TASK put car maintenance dealership
 ADD_TASK put dermatologist appointment
 ADD_TASK put meeting excision tomorrow
@@ -25,6 +26,7 @@ ADD_TASK save make trip itinerary ionia
 ADD_TASK save look curel product shibuyala
 ADD_TASK save complete anbu mission
 ADD_TASK log finish oil change tonight
+ADD_TASK log finish building 2jz motor weekend
 ADD_TASK log research usability rtx 5090
 ADD_TASK log canyon drive angel+'s crest
 ADD_TASK log do+not get stuck domain expansion
@@ -36,6 +38,7 @@ DELETE_TASK remove pick dinner phoholic
 DELETE_TASK remove shop gift south coast plaza
 DELETE_TASK remove upgrade pc rgb fan
 DELETE_TASK remove attend lc 2025
+DELETE_TASK remove sunright boba meetup tomorrow
 DELETE_TASK cancel car maintenance dealership
 DELETE_TASK cancel dermatologist appointment
 DELETE_TASK cancel meeting excision tomorrow
@@ -57,6 +60,7 @@ DELETE_TASK clear make trip itinerary ionia
 DELETE_TASK clear look curel product shibuyala
 DELETE_TASK clear complete anbu mission
 DELETE_TASK erase finish oil change tonight
+DELETE_TASK erase finish building 2jz motor weekend
 DELETE_TASK erase research usability rtx 5090
 DELETE_TASK erase canyon drive angel+'s crest
 DELETE_TASK erase do+not get stuck domain expansion
@@ -70,6 +74,7 @@ COMPLETED_TASK finish pick dinner phoholic
 COMPLETED_TASK finish shop gift south coast plaza
 COMPLETED_TASK finish upgrade pc rgb fan
 COMPLETED_TASK finish attend lc 2025
+COMPLETED_TASK finish sunright boba meetup tomorrow
 COMPLETED_TASK finish install advan beyond gt wheel gr86
 COMPLETED_TASK finish take trash tonight
 COMPLETED_TASK do car maintenance dealership
@@ -89,6 +94,7 @@ COMPLETED_TASK check make trip itinerary ionia
 COMPLETED_TASK check look curel product shibuyala
 COMPLETED_TASK check complete anbu mission
 COMPLETED_TASK resolve finish oil change tonight
+COMPLETED_TASK resolve finish building 2jz motor weekend
 COMPLETED_TASK resolve research usability rtx 5090
 COMPLETED_TASK resolve canyon drive angel+'s crest
 COMPLETED_TASK resolve do+not get stuck domain expansion

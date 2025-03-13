@@ -8,6 +8,7 @@ ADD_TASK insert pick up dinner from Phoholic
 ADD_TASK insert shop gifts at South Coast Plaza
 ADD_TASK insert upgrade PC with RGB fans
 ADD_TASK insert attend LCS in 2025
+ADD_TASK insert Sunright boba meetup is tomorrow
 ADD_TASK put car maintenance at dealership
 ADD_TASK put dermatologist appointment
 ADD_TASK put meeting with Excision tomorrow
@@ -25,6 +26,7 @@ ADD_TASK save make a trip itinerary for Ionia
 ADD_TASK save look for Curel products at Shibuyala
 ADD_TASK save complete ANBU mission
 ADD_TASK log finish oil change by tonight
+ADD_TASK log finish building the 2JZ motor before the weekend
 ADD_TASK log research usability of RTX 5090
 ADD_TASK log have a canyon drive at Angel's Crest
 ADD_TASK log don't get stuck in Domain Expansion
@@ -36,6 +38,7 @@ DELETE_TASK remove pick up dinner from Phoholic
 DELETE_TASK remove shop gifts at South Coast Plaza
 DELETE_TASK remove upgrade PC with RGB fans
 DELETE_TASK remove attend LCS in 2025
+DELETE_TASK remove Sunright boba meetup is tomorrow
 DELETE_TASK cancel car maintenance at dealership
 DELETE_TASK cancel dermatologist appointment
 DELETE_TASK cancel meeting with Excision tomorrow
@@ -57,6 +60,7 @@ DELETE_TASK clear make a trip itinerary for Ionia
 DELETE_TASK clear look for Curel products at Shibuyala
 DELETE_TASK clear complete ANBU mission
 DELETE_TASK erase finish oil change by tonight
+DELETE_TASK erase finish building the 2JZ motor before the weekend
 DELETE_TASK erase research usability of RTX 5090
 DELETE_TASK erase have a canyon drive at Angel's Crest
 DELETE_TASK erase don't get stuck in Domain Expansion
@@ -70,6 +74,7 @@ COMPLETED_TASK finished pick up dinner from Phoholic
 COMPLETED_TASK finished shop gifts at South Coast Plaza
 COMPLETED_TASK finished upgrade PC with RGB fans
 COMPLETED_TASK finished attend LCS in 2025
+COMPLETED_TASK finished Sunright boba meetup is tomorrow
 COMPLETED_TASK finished install Advan Beyond GT wheels on GR86
 COMPLETED_TASK finished take out trash tonight
 COMPLETED_TASK done car maintenance at dealership
@@ -89,6 +94,7 @@ COMPLETED_TASK check make a trip itinerary for Ionia
 COMPLETED_TASK check look for Curel products at Shibuyala
 COMPLETED_TASK check complete ANBU mission
 COMPLETED_TASK resolved finish oil change by tonight
+COMPLETED_TASK resolved finish building the 2JZ motor before the weekend
 COMPLETED_TASK resolved research usability of RTX 5090
 COMPLETED_TASK resolved have a canyon drive at Angel's Crest
 COMPLETED_TASK resolved don't get stuck in Domain Expansion

@@ -34,17 +34,17 @@ public class IntentCategorizer {
         try (ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, "UTF-8");
              ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream)) {
             TrainingParameters params = new TrainingParameters();
-            params.put(TrainingParameters.ITERATIONS_PARAM, "100");
-            params.put(TrainingParameters.CUTOFF_PARAM, "0");
+            params.put(TrainingParameters.ITERATIONS_PARAM, "150");
+            params.put(TrainingParameters.CUTOFF_PARAM, "5");
             doccatModel = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
         }
 
-        Path modelPath = Paths.get("backend/src/main/resources/nlp/en-doccat-v2.bin");
+        Path modelPath = Paths.get("backend/src/main/resources/nlp/en-doccat-v3.bin");
 
         try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
             doccatModel.serialize(modelOut);
         }
-        log.info("model training complete - saved as en-doccat-v2.bin");
+        log.info("model training complete - saved as en-doccat-v3.bin");
     }
 
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
@@ -81,7 +81,7 @@ public class IntentCategorizer {
     }
 
     public SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) throws IOException {
-        ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat-v2.bin");
+        ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat-v3.bin");
 
         try (InputStream modelInput = modelResource.getInputStream()) {
             DoccatModel doccatModel = new DoccatModel(modelInput);
