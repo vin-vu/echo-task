@@ -23,7 +23,7 @@ public class CompletedTaskVerbTraversalStrategy implements TraversalStrategy {
         }
 
         for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
-            String partOfSpeechChildNode = currentNode.tag();
+            String partOfSpeechChildNode = childNode.tag();
 
             if (Objects.equals(partOfSpeechChildNode, "VBN")) {
                 log.info("skipping VBN intent: {}", childNode);
