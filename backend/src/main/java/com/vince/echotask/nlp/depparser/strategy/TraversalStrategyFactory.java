@@ -8,7 +8,7 @@ import java.util.Objects;
 public class TraversalStrategyFactory {
     public static TraversalStrategy getStrategy(String tag, Intent intent) {
         if (intent == Intent.COMPLETED_TASK) {
-            if (Objects.equals(tag, "VBN")) {
+            if (Objects.equals(tag, "VBN") || Objects.equals(tag, "VB")) {
                 return new CompletedTaskVerbTraversalStrategy();
             } else {
                 throw new IllegalArgumentException("Unsupported POS tag: " + tag);
