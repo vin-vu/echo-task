@@ -9,7 +9,11 @@ type TaskProps = {
   completed: boolean;
   deleteTask: (id: string) => void;
   editTaskDescription: (id: string, newDescription: string) => void;
-  editTaskStatus: (id: string, completed: boolean) => void;
+  editTaskStatus: (
+    id: string,
+    completed: boolean,
+    voiceCommand: boolean
+  ) => void;
 };
 
 export default function Task({
@@ -46,9 +50,9 @@ export default function Task({
         !buttonContainers[i].contains(target)
       ) {
         if (completed === false) {
-          editTaskStatus(id, true);
+          editTaskStatus(id, true, false);
         } else {
-          editTaskStatus(id, false);
+          editTaskStatus(id, false, false);
         }
       }
     }

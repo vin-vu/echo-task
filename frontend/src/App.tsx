@@ -56,25 +56,37 @@ export default function App() {
 
   const editTaskStatus = async (
     id: string,
-    completedStatus: boolean
+    completedStatus: boolean,
+    voiceCommand: boolean
   ): Promise<void> => {
-    const success = await updateTaskStatusAPI(id, completedStatus);
-    if (success) {
+    if (voiceCommand) {
+      console.log('id: ', id, 'status: ', completedStatus)
       setTasks((prevTasks) => {
         return prevTasks.map((task) =>
           task.id === id ? { ...task, completed: completedStatus } : task
         );
       });
+    } else {
+      const success = await updateTaskStatusAPI(id, completedStatus);
+      if (success) {
+        setTasks((prevTasks) => {
+          return prevTasks.map((task) =>
+            task.id === id ? { ...task, completed: completedStatus } : task
+          );
+        });
+      }
     }
   };
 
   const handleVoiceCommands = useCallback((intentPayload: IntentResponse) => {
-    const { id, intent, description } = intentPayload;
-    const task: TaskData = { id, description, completed: false };
+    const { id, intent, description, completed } = intentPayload;
+    const task: TaskData = { id, description, completed };
     if (intent === 'ADD_TASK') {
       addTask(task);
     } else if (intent === 'DELETE_TASK') {
       deleteTask(task);
+    } else if (intent === 'COMPLETED_TASK') {
+      editTaskStatus(task.id, task.completed, true);
     }
   }, []);
 

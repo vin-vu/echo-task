@@ -4,9 +4,10 @@ import SpeechRecognition, {
 import { useEffect } from 'react';
 
 export type IntentResponse = {
+  id: string;
   intent: 'ADD_TASK' | 'DELETE_TASK' | 'COMPLETED_TASK';
   description: string;
-  id: string;
+  completed: boolean;
 };
 
 export const useSpeech = (
