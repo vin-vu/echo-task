@@ -20,21 +20,27 @@ export type TaskData = {
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
-  const createTaskFromDescription = async (
-    description: string
-  ): Promise<TaskData | undefined> => {
-    return await addTaskAPI(description);
+  const addVoiceTask = (task: TaskData) => {
+    setTasks((tasks) => [...tasks, task]);
   };
 
-  const addTask = useCallback(async (taskInput: string | TaskData) => {
-    const task =
-      typeof taskInput === 'string'
-        ? await createTaskFromDescription(taskInput)
-        : taskInput;
+  const addNonVoiceTask = async (taskDescription: string) => {
+    const task = await addTaskAPI(taskDescription);
     if (task) {
       setTasks((tasks) => [...tasks, task]);
     }
-  }, []);
+  };
+
+  const addTask = useCallback(
+    async (taskInput: string | TaskData, voiceCommand: boolean) => {
+      if (voiceCommand) {
+        addVoiceTask(taskInput as TaskData);
+      } else {
+        addNonVoiceTask(taskInput as string);
+      }
+    },
+    []
+  );
 
   const deleteTask = useCallback(async (id: string, voiceCommand: boolean) => {
     if (!voiceCommand) {
@@ -70,7 +76,7 @@ export default function App() {
       const { id, intent, description, completed } = intentPayload;
       const task: TaskData = { id, description, completed };
       if (intent === 'ADD_TASK') {
-        addTask(task);
+        addTask(task, true);
       } else if (intent === 'DELETE_TASK') {
         deleteTask(id, true);
       } else if (intent === 'COMPLETED_TASK') {
