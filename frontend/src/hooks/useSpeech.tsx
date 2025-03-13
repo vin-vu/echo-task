@@ -10,6 +10,12 @@ export type IntentResponse = {
   completed: boolean;
 };
 
+export enum Intent {
+  ADD_TASK = 'ADD_TASK',
+  DELETE_TASK = 'DELETE_TASK',
+  COMPLETED_TASK = 'COMPLETED_TASK',
+}
+
 export const useSpeech = (
   handleVoiceCommands: (intentPayload: IntentResponse) => void
 ) => {

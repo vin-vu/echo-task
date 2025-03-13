@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
-import { IntentResponse } from './hooks/useSpeech';
+import { Intent, IntentResponse } from './hooks/useSpeech';
 import {
   addTaskAPI,
   deleteTaskAPI,
@@ -75,11 +75,11 @@ export default function App() {
     (intentPayload: IntentResponse) => {
       const { id, intent, description, completed } = intentPayload;
       const task: TaskData = { id, description, completed };
-      if (intent === 'ADD_TASK') {
+      if (intent === Intent.ADD_TASK) {
         addTask(task, true);
-      } else if (intent === 'DELETE_TASK') {
+      } else if (intent === Intent.DELETE_TASK) {
         deleteTask(id, true);
-      } else if (intent === 'COMPLETED_TASK') {
+      } else if (intent === Intent.COMPLETED_TASK) {
         editTaskStatus(task.id, task.completed, true);
       }
     },
