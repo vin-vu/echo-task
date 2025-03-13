@@ -17,7 +17,8 @@ public class CompletedTaskVerbTraversalStrategy implements TraversalStrategy {
         List<IndexedWord> descriptionWords = new ArrayList<>();
 
         String partOfSpeechCurrentNode = currentNode.tag();
-        if (currentNode == root && !Objects.equals(partOfSpeechCurrentNode, "VBN")) {
+        if (currentNode == root && (!Objects.equals(partOfSpeechCurrentNode, "VBN") ||
+                !Objects.equals(partOfSpeechCurrentNode, "VB"))) {
             descriptionWords.add(root);
             log.info("adding root: {}", root);
         }
