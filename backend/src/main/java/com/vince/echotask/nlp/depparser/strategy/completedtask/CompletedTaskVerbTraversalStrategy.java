@@ -11,24 +11,34 @@ import java.util.Objects;
 
 @Slf4j
 public class CompletedTaskVerbTraversalStrategy implements TraversalStrategy {
+
     @Override
     public List<IndexedWord> traverse(SemanticGraph dependencyParse, IndexedWord currentNode, IndexedWord root) {
 
         List<IndexedWord> descriptionWords = new ArrayList<>();
 
         String partOfSpeechCurrentNode = currentNode.tag();
-        if (currentNode == root && (!Objects.equals(partOfSpeechCurrentNode, "VBN") ||
-                !Objects.equals(partOfSpeechCurrentNode, "VB"))) {
+        if (currentNode == root && !Objects.equals(partOfSpeechCurrentNode, "VBN")) {
             descriptionWords.add(root);
-            log.info("adding root: {}", root);
+            log.info("adding root: {}", root); // see example C2
         }
 
         for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
             String partOfSpeechChildNode = childNode.tag();
+            String childNodeRelation = dependencyParse.getEdge(currentNode, childNode).getRelation().toString();
 
-            if (Objects.equals(partOfSpeechChildNode, "VBN")) {
-                log.info("skipping VBN intent: {}", childNode);
+            if (currentNode == root && Objects.equals(partOfSpeechChildNode, "VBN")) {
+                log.info("skipping VBN intent: {}", childNode); // see example C2
                 descriptionWords.addAll(traverse(dependencyParse, childNode, root));
+
+            } else if (currentNode == root && Objects.equals(childNodeRelation, "advmod")) {
+                log.info("skipping advmod intent: {}", childNode);  // see example C3
+                descriptionWords.addAll(traverse(dependencyParse, childNode, root));
+
+            } else if (currentNode == root && Objects.equals(childNodeRelation, "nsubj")) {
+                log.info("skipping nsubj intent: {}", childNode);  // see example C4
+                descriptionWords.addAll(traverse(dependencyParse, childNode, root));
+
             } else {
                 log.info("adding word: {}", childNode);
                 descriptionWords.add(childNode);
