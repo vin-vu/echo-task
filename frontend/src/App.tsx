@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
-import { Intent, IntentResponse } from './hooks/useSpeech';
+import { Intent, IntentResponse } from './api/Api';
 import {
   addTaskAPI,
   deleteTaskAPI,
