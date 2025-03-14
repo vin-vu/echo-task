@@ -1,5 +1,6 @@
 import { FaMicrophone } from 'react-icons/fa';
-import { IntentResponse, useSpeech } from '../../hooks/useSpeech';
+import { useSpeech } from '../../hooks/useSpeech';
+import { IntentResponse } from '../../api/Api';
 import './Microphone.css';
 
 interface MicrophoneProps {
