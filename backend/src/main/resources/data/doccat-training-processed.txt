@@ -13,6 +13,7 @@ ADD_TASK put car maintenance dealership
 ADD_TASK put dermatologist appointment
 ADD_TASK put meeting excision tomorrow
 ADD_TASK put eat wagyu chubby cattle
+ADD_TASK put run omomo tonight
 ADD_TASK create new workout plan
 ADD_TASK create new training data nlp model
 ADD_TASK create study plan computer science
@@ -21,6 +22,7 @@ ADD_TASK plan trip howling abyss
 ADD_TASK plan award ceremony noxus
 ADD_TASK plan adventure piltover
 ADD_TASK plan dinner reservation yakiniku
+ADD_TASK plan talk discord server
 ADD_TASK save marinate chicken
 ADD_TASK save make trip itinerary ionia
 ADD_TASK save look curel product shibuyala
@@ -43,6 +45,7 @@ DELETE_TASK cancel car maintenance dealership
 DELETE_TASK cancel dermatologist appointment
 DELETE_TASK cancel meeting excision tomorrow
 DELETE_TASK cancel eat wagyu chubby cattle
+DELETE_TASK cancel run omomo tonight
 DELETE_TASK discard install advan beyond gt wheel gr86
 DELETE_TASK discard take trash tonight
 DELETE_TASK discard finish voice command app
@@ -51,6 +54,7 @@ DELETE_TASK drop new workout plan
 DELETE_TASK drop new training data nlp model
 DELETE_TASK drop study plan computer science
 DELETE_TASK drop item list new pc build
+DELETE_TASK drop talk discord server
 DELETE_TASK forget plan trip howling abyss
 DELETE_TASK forget award ceremony noxus
 DELETE_TASK forget adventure piltover
@@ -81,14 +85,16 @@ COMPLETED_TASK do car maintenance dealership
 COMPLETED_TASK do dermatologist appointment
 COMPLETED_TASK do meeting excision tomorrow
 COMPLETED_TASK do eat wagyu chubby cattle
+COMPLETED_TASK do run omomo tonight
+COMPLETED_TASK do talk discord server
 COMPLETED_TASK close new workout plan
 COMPLETED_TASK close new training data nlp model
 COMPLETED_TASK close study plan computer science
 COMPLETED_TASK close item list new pc build
-COMPLETED_TASK mark plan trip howling abyss
-COMPLETED_TASK mark award ceremony noxus
-COMPLETED_TASK mark adventure piltover
-COMPLETED_TASK mark dinner reservation yakiniku
+COMPLETED_TASK close plan trip howling abyss
+COMPLETED_TASK close conduct award ceremony noxus
+COMPLETED_TASK check embark piltover weekend
+COMPLETED_TASK check dinner reservation yakiniku tomorrow
 COMPLETED_TASK check marinate chicken
 COMPLETED_TASK check make trip itinerary ionia
 COMPLETED_TASK check look curel product shibuyala

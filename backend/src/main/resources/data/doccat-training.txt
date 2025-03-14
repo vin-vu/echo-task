@@ -13,6 +13,7 @@ ADD_TASK put car maintenance at dealership
 ADD_TASK put dermatologist appointment
 ADD_TASK put meeting with Excision tomorrow
 ADD_TASK put eat Wagyu at Chubby Cattle
+ADD_TASK put run to Omomo tonight
 ADD_TASK create new workout plan
 ADD_TASK create new training data for NLP models
 ADD_TASK create study plan for computer science
@@ -21,6 +22,7 @@ ADD_TASK plan trip to Howling Abyss
 ADD_TASK plan award ceremony in Noxus
 ADD_TASK plan an adventure to Piltover
 ADD_TASK plan dinner reservation for yakiniku
+ADD_TASK plan talk to Discord server
 ADD_TASK save marinate the chicken
 ADD_TASK save make a trip itinerary for Ionia
 ADD_TASK save look for Curel products at Shibuyala
@@ -43,6 +45,7 @@ DELETE_TASK cancel car maintenance at dealership
 DELETE_TASK cancel dermatologist appointment
 DELETE_TASK cancel meeting with Excision tomorrow
 DELETE_TASK cancel eat Wagyu at Chubby Cattle
+DELETE_TASK cancel run to Omomo tonight
 DELETE_TASK discard install Advan Beyond GT wheels on GR86
 DELETE_TASK discard take out trash tonight
 DELETE_TASK discard finish the voice command app
@@ -51,6 +54,7 @@ DELETE_TASK drop new workout plan
 DELETE_TASK drop new training data for NLP models
 DELETE_TASK drop study plan for computer science
 DELETE_TASK drop item list for new PC build
+DELETE_TASK drop talk to Discord server
 DELETE_TASK forget plan trip to Howling Abyss
 DELETE_TASK forget award ceremony in Noxus
 DELETE_TASK forget an adventure to Piltover
@@ -81,14 +85,16 @@ COMPLETED_TASK done car maintenance at dealership
 COMPLETED_TASK done dermatologist appointment
 COMPLETED_TASK done meeting with Excision tomorrow
 COMPLETED_TASK done eat Wagyu at Chubby Cattle
+COMPLETED_TASK done run to Omomo tonight
+COMPLETED_TASK done talk to Discord server
 COMPLETED_TASK close new workout plan
 COMPLETED_TASK close new training data for NLP models
 COMPLETED_TASK close study plan for computer science
 COMPLETED_TASK close item list for new PC build
-COMPLETED_TASK mark plan trip to Howling Abyss
-COMPLETED_TASK mark award ceremony in Noxus
-COMPLETED_TASK mark an adventure to Piltover
-COMPLETED_TASK mark dinner reservation for yakiniku
+COMPLETED_TASK close plan trip to Howling Abyss
+COMPLETED_TASK close conduct award ceremony in Noxus
+COMPLETED_TASK check embark to Piltover this weekend
+COMPLETED_TASK check dinner reservation for yakiniku is tomorrow
 COMPLETED_TASK check marinate the chicken
 COMPLETED_TASK check make a trip itinerary for Ionia
 COMPLETED_TASK check look for Curel products at Shibuyala
