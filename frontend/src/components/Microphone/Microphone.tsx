@@ -6,9 +6,7 @@ import './Microphone.css';
 interface MicrophoneProps {
   handleVoiceCommands: (intentPayload: IntentResponse) => void;
 }
-export default function Microphone({
-  handleVoiceCommands: handleVoiceCommands,
-}: MicrophoneProps) {
+export default function Microphone({ handleVoiceCommands }: MicrophoneProps) {
   const { startListening, stopListening } = useSpeech(handleVoiceCommands);
 
   return (

@@ -4,9 +4,10 @@
   align-items: center;
   width: 100%;
   background-color: #8758ff;
-  height: 50px;
   padding: 0px 10px;
   border-radius: 3px;
+  height: 50px;
+  flex: 0 0 auto;
 }
 
 .task-item.completed {
