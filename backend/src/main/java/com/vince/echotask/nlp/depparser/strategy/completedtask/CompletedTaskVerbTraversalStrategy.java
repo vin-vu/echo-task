@@ -24,11 +24,10 @@ public class CompletedTaskVerbTraversalStrategy implements TraversalStrategy {
         }
 
         for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
-            String partOfSpeechChildNode = childNode.tag();
             String childNodeRelation = dependencyParse.getEdge(currentNode, childNode).getRelation().toString();
 
-            if (currentNode == root && Objects.equals(partOfSpeechChildNode, "VBN")) {
-                log.info("skipping VBN intent: {}", childNode); // see example C2
+            if (currentNode == root && Objects.equals(childNodeRelation, "aux")) {
+                log.info("skipping aux intent: {}", childNode); // see example C2
                 descriptionWords.addAll(traverse(dependencyParse, childNode, root));
 
             } else if (currentNode == root && Objects.equals(childNodeRelation, "advmod")) {

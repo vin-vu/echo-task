@@ -17,16 +17,15 @@ public class CompletedTaskNounTraversalStrategy implements TraversalStrategy {
         List<IndexedWord> descriptionWords = new ArrayList<>();
 
         for (IndexedWord childNode : dependencyParse.getChildList(currentNode)) {
-            String childPartOfSpeech = childNode.tag();
             String childNodeRelation = dependencyParse.getEdge(currentNode, childNode).getRelation().toString();
 
-            if (Objects.equals(childPartOfSpeech, "JJ") && Objects.equals(childNodeRelation, "amod")) {
+            if (currentNode == root && Objects.equals(childNodeRelation, "amod")) {
+                log.info("adding noun root: {} -  skipped intent word: {}", root, currentNode); // see example C5, c6
                 descriptionWords.add(root);
-                log.info("adding noun root: {} -  skipped intent word: {}", root, currentNode);
                 descriptionWords.addAll(traverse(dependencyParse, childNode, root));
             } else {
-                descriptionWords.add(childNode);
                 log.info("adding word: {}", childNode);
+                descriptionWords.add(childNode);
                 descriptionWords.addAll(traverse(dependencyParse, childNode, root));
             }
             log.info("description words children: {}", descriptionWords);
