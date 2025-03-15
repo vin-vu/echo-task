@@ -1,8 +1,6 @@
 import { TaskData } from "../App";
 
-// spreading the task array twice, filtering based on completed/incomplete status,
-// then concating the filtered arrays is more readable solution
-// but I wanted to have fun with a 2 pointer in place sorting solution
+// for fun in place sorting algo
 export const sortTasks = (tasks: TaskData[]): TaskData[] => {
   const sortedTasks = tasks;
   let left = 0;

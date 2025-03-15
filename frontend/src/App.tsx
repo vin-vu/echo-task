@@ -3,6 +3,7 @@ import TodoForm from './components/taskform/TaskForm';
 import Task from './components/task/Task';
 import Microphone from './components/microphone/Microphone';
 import { Intent, IntentResponse } from './api/Api';
+import { sortTasks } from './algorithm/Algorithm';
 import {
   addTaskAPI,
   deleteTaskAPI,
@@ -10,7 +11,6 @@ import {
   updateTaskStatusAPI,
 } from './api/Api';
 import './App.css';
-import { sortTasks } from './algorithm/Algorithm';
 
 export type TaskData = {
   description: string;
@@ -22,13 +22,13 @@ export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
   const addVoiceTask = (task: TaskData) => {
-    setTasks((tasks) => [...tasks, task]);
+    setTasks((tasks) => [task, ...tasks]);
   };
 
   const addNonVoiceTask = async (taskDescription: string) => {
     const task = await addTaskAPI(taskDescription);
     if (task) {
-      setTasks((tasks) => [...tasks, task]);
+      setTasks((tasks) => [task, ...tasks]);
     }
   };
 
@@ -63,9 +63,14 @@ export default function App() {
         updateTaskStatusAPI(id, completedStatus);
       }
       setTasks((prevTasks) => {
-        return prevTasks.map((task) =>
+        const updatedTasks = prevTasks.map((task) =>
           task.id === id ? { ...task, completed: completedStatus } : task
         );
+        return [
+          ...updatedTasks
+            .filter((task) => !task.completed)
+            .concat(...updatedTasks.filter((task) => task.completed)),
+        ];
       });
     },
     []
@@ -94,7 +99,7 @@ export default function App() {
     async function fetchTasks() {
       const allTaskResponse = await getAllTasksAPI();
       if (allTaskResponse) {
-        const sortedTasks = sortTasks(allTaskResponse)
+        const sortedTasks = sortTasks(allTaskResponse);
         setTasks(sortedTasks);
       }
     }
