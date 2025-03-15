@@ -10,6 +10,7 @@ import {
   updateTaskStatusAPI,
 } from './api/Api';
 import './App.css';
+import { sortTasks } from './algorithm/Algorithm';
 
 export type TaskData = {
   description: string;
@@ -91,30 +92,10 @@ export default function App() {
 
   useEffect(() => {
     async function fetchTasks() {
-      const response = await getAllTasksAPI();
-      
-      if (response) {
-        const sortedResponse = response;
-        let left = 0;
-        let right = sortedResponse.length - 1;
-        let temp;
-        while (left < right) {
-          if (sortedResponse[left].completed) {
-            temp = sortedResponse[right];
-            sortedResponse[right] = sortedResponse[left]
-            sortedResponse[left] = temp; 
-            right--
-          } else if (!sortedResponse[right].completed) {
-            temp = sortedResponse[left]
-            sortedResponse[left] = sortedResponse[right]
-            sortedResponse[right] =  temp;
-            left++
-          } else {
-            right--;
-            left++;
-          }
-        }
-        setTasks(sortedResponse);
+      const allTaskResponse = await getAllTasksAPI();
+      if (allTaskResponse) {
+        const sortedTasks = sortTasks(allTaskResponse)
+        setTasks(sortedTasks);
       }
     }
     fetchTasks();
