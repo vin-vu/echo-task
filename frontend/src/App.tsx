@@ -116,8 +116,10 @@ export default function App() {
     <>
       <div className="main-container">
         <span>EchoTask</span>
-        <TodoForm addTask={addTask} />
-        <div className="task-container">{displayTasks}</div>
+        <div className="task-container">
+          <TodoForm addTask={addTask} />
+          <div className="task-list">{displayTasks}</div>
+        </div>
         <Microphone handleVoiceCommands={handleVoiceCommands} />
       </div>
     </>

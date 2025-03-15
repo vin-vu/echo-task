@@ -1,7 +1,6 @@
 .input-container {
-  width: 100%;
+  width: 95%;
   height: 35px;
-  max-width: 500px;
   display: flex;
 }
 
@@ -11,7 +10,7 @@
 }
 
 .input-container input {
-  flex-grow: 5;
+  flex-grow: 6;
   border: 2px solid #a0a0a0;
   background-color: #1a1a40;
   color: rgb(255, 255, 255);
@@ -28,8 +27,4 @@
   border: none;
   border-radius: 0px 3px 3px 0px;
   cursor: pointer;
-}
-
-.task-container {
-  width: 500px;
 }
