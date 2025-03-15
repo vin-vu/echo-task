@@ -13,10 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -97,5 +95,10 @@ public class IntentCategorizer {
         // meaning more than 1 intent can be shown in a set ex. add 33% delete 33% completed 33%
         Set<String> bestIntents = rankedIntentScores.get(rankedIntentScores.lastKey());
         return Intent.valueOf(bestIntents.iterator().next());
+    }
+
+    public Map<String, Set<String>> convertRankedIntentScores(SortedMap<Double, Set<String>> intentScores) {
+        return intentScores.entrySet().stream().collect(Collectors.toMap(entry ->
+                entry.getKey().toString(), Map.Entry::getValue));
     }
 }

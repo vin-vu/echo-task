@@ -43,6 +43,7 @@ public class EchoTaskService {
 
         SortedMap<Double, Set<String>> rankedIntentScores = intentCategorizer.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", rankedIntentScores);
+        intentCategorizer.convertRankedIntentScores(rankedIntentScores);
         Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
 
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
@@ -61,7 +62,7 @@ public class EchoTaskService {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
         return new ParsedIntent(taskSummary.getId(), intent, taskSummary.getDescription(), taskSummary.isCompleted(),
-                rankedIntentScores);
+                intentCategorizer.convertRankedIntentScores(rankedIntentScores));
     }
 
     public TaskSummary saveTask(String description) throws JsonProcessingException {
