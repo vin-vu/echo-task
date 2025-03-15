@@ -91,7 +91,7 @@ export default function App() {
       } else if (intent === Intent.COMPLETED_TASK) {
         editTaskStatus(task.id, task.completed, true);
       }
-      setIntentScores(intentPayload.rankedIntentScores)
+      setIntentScores(intentPayload.rankedIntentScores);
     },
     [addTask, deleteTask, editTaskStatus]
   );
@@ -129,15 +129,17 @@ export default function App() {
 
   return (
     <>
-      <div className="main-container">
-        <span>EchoTask</span>
-        <div className="task-container">
-          <TodoForm addTask={addTask} />
-          <div className="task-list">{displayTasks}</div>
+      <div className="app-container">
+        <div className="main-container">
+          <span>EchoTask</span>
+          <div className="task-container">
+            <TodoForm addTask={addTask} />
+            <div className="task-list">{displayTasks}</div>
+          </div>
+          <Microphone handleVoiceCommands={handleVoiceCommands} />
         </div>
-        <Microphone handleVoiceCommands={handleVoiceCommands} />
+        <IntentStatistics intentScores={intentScores} />
       </div>
-      <IntentStatistics intentScores={intentScores} />
     </>
   );
 }

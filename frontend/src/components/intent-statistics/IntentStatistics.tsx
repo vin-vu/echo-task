@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import "./IntentStatistics.css"
 
 interface IntentStatisticsProps {
   intentScores: Map<string, Set<string>>;
@@ -12,7 +13,7 @@ export default function IntentStatistics({
   const [completedTaskScore, setCompletedTaskScore] = useState(0);
 
   return (
-    <div className="intent-statistics">
+    <div className="statistics-container">
       <div className="intent-scores">
         <span>ADD TASK: {addTaskScore}</span>
         <span>DELETED TASK: {deleteTaskScore}</span>

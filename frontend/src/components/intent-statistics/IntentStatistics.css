@@ -1,0 +1,13 @@
+.statistics-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 750px;
+  height: 125px;
+  background-color: #1a1a40;
+}
+
+.intent-scores {
+  display: flex;
+  flex-direction: column;
+}
