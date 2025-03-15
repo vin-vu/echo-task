@@ -48,7 +48,6 @@ export default function App() {
     }
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   }, []);
-
   const editTaskDescription = (id: string, newDescription: string): void => {
     setTasks((prevTasks) => {
       return prevTasks.map((task) =>
@@ -93,8 +92,29 @@ export default function App() {
   useEffect(() => {
     async function fetchTasks() {
       const response = await getAllTasksAPI();
+      
       if (response) {
-        setTasks(response);
+        const sortedResponse = response;
+        let left = 0;
+        let right = sortedResponse.length - 1;
+        let temp;
+        while (left < right) {
+          if (sortedResponse[left].completed) {
+            temp = sortedResponse[right];
+            sortedResponse[right] = sortedResponse[left]
+            sortedResponse[left] = temp; 
+            right--
+          } else if (!sortedResponse[right].completed) {
+            temp = sortedResponse[left]
+            sortedResponse[left] = sortedResponse[right]
+            sortedResponse[right] =  temp;
+            left++
+          } else {
+            right--;
+            left++;
+          }
+        }
+        setTasks(sortedResponse);
       }
     }
     fetchTasks();
