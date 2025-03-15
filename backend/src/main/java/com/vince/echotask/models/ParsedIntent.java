@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.UUID;
 
 @Getter
@@ -14,4 +16,5 @@ public class ParsedIntent {
     private Intent intent;
     private String description;
     private boolean completed;
+    private SortedMap<Double, Set<String>> rankedIntentScores;
 }

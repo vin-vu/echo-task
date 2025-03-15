@@ -60,7 +60,8 @@ public class EchoTaskService {
         } else {
             taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
         }
-        return new ParsedIntent(taskSummary.getId(), intent, taskSummary.getDescription(), taskSummary.isCompleted());
+        return new ParsedIntent(taskSummary.getId(), intent, taskSummary.getDescription(), taskSummary.isCompleted(),
+                rankedIntentScores);
     }
 
     public TaskSummary saveTask(String description) throws JsonProcessingException {
