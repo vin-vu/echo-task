@@ -1,5 +1,6 @@
 package com.vince.echotask.nlp.intentcategorizer;
 
+import com.vince.echotask.models.Intent;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.*;
 import opennlp.tools.util.*;
@@ -88,5 +89,11 @@ public class IntentCategorizer {
             DocumentCategorizerME intentCategorizer = new DocumentCategorizerME(doccatModel);
             return intentCategorizer.sortedScoreMap(phraseTokens);
         }
+    }
+
+    public Intent getBestIntent(SortedMap<Double, Set<String>> sortedScores) {
+        // currently not handling if multiple intents share single probability - more than 1 intent will be shown in set
+        Set<String> bestIntents = sortedScores.get(sortedScores.lastKey());
+        return Intent.valueOf(bestIntents.iterator().next());
     }
 }

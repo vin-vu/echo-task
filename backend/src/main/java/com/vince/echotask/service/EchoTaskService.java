@@ -43,10 +43,7 @@ public class EchoTaskService {
 
         SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", sortedScoreMap);
-
-        Double highestScore = sortedScoreMap.lastKey();
-        Set<String> bestIntents = sortedScoreMap.get(highestScore); // not handling if more than 1 intent - would share same probability and therefore in same Set
-        Intent intent = Intent.valueOf(bestIntents.iterator().next());
+        Intent intent = intentCategorizer.getBestIntent(sortedScoreMap);
 
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
         String taskDescription;
