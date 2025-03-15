@@ -11,6 +11,7 @@ import {
   updateTaskStatusAPI,
 } from './api/Api';
 import './App.css';
+import IntentStatistics from './components/intent-statistics/IntentStatistics';
 
 export type TaskData = {
   description: string;
@@ -20,6 +21,9 @@ export type TaskData = {
 
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
+  const [intentScores, setIntentScores] = useState<Map<string, Set<string>>>(
+    new Map()
+  );
 
   const addVoiceTask = (task: TaskData) => {
     setTasks((tasks) => [task, ...tasks]);
@@ -87,6 +91,7 @@ export default function App() {
       } else if (intent === Intent.COMPLETED_TASK) {
         editTaskStatus(task.id, task.completed, true);
       }
+      setIntentScores(intentPayload.rankedIntentScores)
     },
     [addTask, deleteTask, editTaskStatus]
   );
@@ -94,6 +99,10 @@ export default function App() {
   useEffect(() => {
     console.log('tasks: ', tasks);
   }, [tasks]);
+
+  useEffect(() => {
+    console.log('intentScores: ', intentScores);
+  }, [intentScores]);
 
   useEffect(() => {
     async function fetchTasks() {
@@ -128,6 +137,7 @@ export default function App() {
         </div>
         <Microphone handleVoiceCommands={handleVoiceCommands} />
       </div>
+      <IntentStatistics intentScores={intentScores} />
     </>
   );
 }

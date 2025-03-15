@@ -3,6 +3,7 @@ import { TaskData } from '../App';
 export type IntentResponse = {
   id: string;
   intent: 'ADD_TASK' | 'DELETE_TASK' | 'COMPLETED_TASK';
+  rankedIntentScores: Map<string, Set<string>>;
   description: string;
   completed: boolean;
 };
