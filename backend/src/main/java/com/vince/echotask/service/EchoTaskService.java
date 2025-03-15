@@ -41,9 +41,9 @@ public class EchoTaskService {
         log.info("process intent: {}", request.toString());
         String[] lemmatizedTokens = tokenizer.getTranscriptTokens(request.getTranscript());
 
-        SortedMap<Double, Set<String>> sortedScoreMap = intentCategorizer.categorizeIntent(lemmatizedTokens);
-        log.info("sortedScoreMap: {}", sortedScoreMap);
-        Intent intent = intentCategorizer.getBestIntent(sortedScoreMap);
+        SortedMap<Double, Set<String>> rankedIntentScores = intentCategorizer.categorizeIntent(lemmatizedTokens);
+        log.info("sortedScoreMap: {}", rankedIntentScores);
+        Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
 
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
         String taskDescription;

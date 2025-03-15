@@ -25,6 +25,7 @@ public class IntentCategorizer {
     @Autowired
     Tokenizer tokenizer;
 
+    // must run below method to train a new Intent Categorizer  model
     public void trainModel() throws IOException {
         DoccatModel doccatModel;
 
@@ -91,9 +92,10 @@ public class IntentCategorizer {
         }
     }
 
-    public Intent getBestIntent(SortedMap<Double, Set<String>> sortedScores) {
-        // currently not handling if multiple intents share single probability - more than 1 intent will be shown in set
-        Set<String> bestIntents = sortedScores.get(sortedScores.lastKey());
+    public Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {
+        // currently not error handling if multiple intents share single probability
+        // meaning more than 1 intent can be shown in a set ex. add 33% delete 33% completed 33%
+        Set<String> bestIntents = rankedIntentScores.get(rankedIntentScores.lastKey());
         return Intent.valueOf(bestIntents.iterator().next());
     }
 }
