@@ -91,7 +91,15 @@ export default function App() {
       } else if (intent === Intent.COMPLETED_TASK) {
         editTaskStatus(task.id, task.completed, true);
       }
-      setIntentScores(intentPayload.rankedIntentScores);
+
+      // JSON serialization from HTTP response converts scores data structure to plain object
+      const convertedIntentScores = new Map<string, Set<string>>(
+        Object.entries(intentPayload.rankedIntentScores).map(([key, value]) => [
+          key,
+          new Set(value),
+        ])
+      );
+      setIntentScores(convertedIntentScores);
     },
     [addTask, deleteTask, editTaskStatus]
   );

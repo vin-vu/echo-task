@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import "./IntentStatistics.css"
+import { Intent } from '../../api/Api';
 
 interface IntentStatisticsProps {
   intentScores: Map<string, Set<string>>;
