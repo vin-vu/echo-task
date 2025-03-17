@@ -21,7 +21,7 @@ export type TaskData = {
 
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
-  const [intentScores, setIntentScores] = useState<Map<string, Set<string>>>(
+  const [intentScores, setIntentScores] = useState<Map<string, Set<Intent>>>(
     new Map()
   );
 
@@ -93,7 +93,7 @@ export default function App() {
       }
 
       // JSON serialization from HTTP response converts scores data structure to plain object
-      const convertedIntentScores = new Map<string, Set<string>>(
+      const convertedIntentScores = new Map<string, Set<Intent>>(
         Object.entries(intentPayload.rankedIntentScores).map(([key, value]) => [
           key,
           new Set(value),
@@ -104,13 +104,13 @@ export default function App() {
     [addTask, deleteTask, editTaskStatus]
   );
 
-  useEffect(() => {
-    console.log('tasks: ', tasks);
-  }, [tasks]);
+  // useEffect(() => {
+  //   console.log('tasks: ', tasks);
+  // }, [tasks]);
 
-  useEffect(() => {
-    console.log('intentScores: ', intentScores);
-  }, [intentScores]);
+  // useEffect(() => {
+  //   console.log('intentScores: ', intentScores);
+  // }, [intentScores]);
 
   useEffect(() => {
     async function fetchTasks() {
