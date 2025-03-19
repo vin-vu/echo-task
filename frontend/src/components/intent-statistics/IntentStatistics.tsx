@@ -15,7 +15,7 @@ export default function IntentStatistics({
 
   const handleIntentScores = useCallback(() => {
     for (const [score, intents] of intentScores) {
-      const scorePercentage = (Number(score) * 100).toFixed(2) + '%';
+      const scorePercentage = (Number(score) * 100).toFixed(2).padStart(5, '0') + '%';
       for (const intent of intents) {
         if (intent === Intent.ADD_TASK) {
           setAddTaskScore(scorePercentage);
