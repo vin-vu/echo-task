@@ -35,9 +35,13 @@ export default function IntentStatistics({
   return (
     <div className="statistics-container">
       <div className="intent-scores">
-        <span>ADD TASK: {addTaskScore}</span>
-        <span>DELETED TASK: {deleteTaskScore}</span>
-        <span>COMPLETED TASK: {completedTaskScore}</span>
+        <span>ADD TASK - {addTaskScore}</span>
+        <span>DELETED TASK - {deleteTaskScore}</span>
+        <span>COMPLETED TASK - {completedTaskScore}</span>
+      </div>
+      <div className="text-container">
+        <span>Transcription :</span>
+        <span>Parsed Description :</span>
       </div>
     </div>
   );

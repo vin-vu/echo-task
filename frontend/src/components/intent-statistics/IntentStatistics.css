@@ -1,6 +1,6 @@
 .statistics-container {
   display: flex;
-  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
   width: 750px;
   height: 125px;
@@ -8,6 +8,13 @@
 }
 
 .intent-scores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0 50px 0px 25px;
+}
+
+.text-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
