@@ -104,14 +104,6 @@ export default function App() {
     [addTask, deleteTask, editTaskStatus]
   );
 
-  // useEffect(() => {
-  //   console.log('tasks: ', tasks);
-  // }, [tasks]);
-
-  // useEffect(() => {
-  //   console.log('intentScores: ', intentScores);
-  // }, [intentScores]);
-
   useEffect(() => {
     async function fetchTasks() {
       const allTaskResponse = await getAllTasksAPI();

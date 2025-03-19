@@ -15,15 +15,14 @@ export default function IntentStatistics({
 
   const handleIntentScores = useCallback(() => {
     for (const [score, intents] of intentScores) {
-
+      const scorePercentage = (Number(score) * 100).toFixed(2) + '%';
       for (const intent of intents) {
-        console.log('score - intent: ', score, intent);
         if (intent === Intent.ADD_TASK) {
-          setAddTaskScore(score);
+          setAddTaskScore(scorePercentage);
         } else if (intent === Intent.DELETE_TASK) {
-          setDeleteTaskScore(score);
-        } else {
-          setCompletedTaskScore(score);
+          setDeleteTaskScore(scorePercentage);
+        } else if (intent === Intent.COMPLETED_TASK) {
+          setCompletedTaskScore(scorePercentage);
         }
       }
     }
