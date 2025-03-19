@@ -21,6 +21,7 @@ export type TaskData = {
 
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
+  const [taskDescription, setTaskDescription] = useState('');
   const [intentScores, setIntentScores] = useState<Map<string, Set<Intent>>>(
     new Map()
   );
@@ -100,6 +101,7 @@ export default function App() {
         ])
       );
       setIntentScores(convertedIntentScores);
+      setTaskDescription(description);
     },
     [addTask, deleteTask, editTaskStatus]
   );
@@ -138,7 +140,7 @@ export default function App() {
           </div>
           <Microphone handleVoiceCommands={handleVoiceCommands} />
         </div>
-        <IntentStatistics intentScores={intentScores} />
+        <IntentStatistics intentScores={intentScores} taskDescription={taskDescription}/>
       </div>
     </>
   );

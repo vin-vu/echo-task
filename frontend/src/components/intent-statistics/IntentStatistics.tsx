@@ -4,18 +4,21 @@ import { Intent } from '../../api/Api';
 
 interface IntentStatisticsProps {
   intentScores: Map<string, Set<string>>;
+  taskDescription: string;
 }
 
 export default function IntentStatistics({
   intentScores,
+  taskDescription,
 }: IntentStatisticsProps) {
-  const [addTaskScore, setAddTaskScore] = useState('0');
-  const [deleteTaskScore, setDeleteTaskScore] = useState('0');
-  const [completedTaskScore, setCompletedTaskScore] = useState('0');
+  const [addTaskScore, setAddTaskScore] = useState('00.00%');
+  const [deleteTaskScore, setDeleteTaskScore] = useState('00.00%');
+  const [completedTaskScore, setCompletedTaskScore] = useState('00.00%');
 
   const handleIntentScores = useCallback(() => {
     for (const [score, intents] of intentScores) {
-      const scorePercentage = (Number(score) * 100).toFixed(2).padStart(5, '0') + '%';
+      const scorePercentage =
+        (Number(score) * 100).toFixed(2).padStart(5, '0') + '%';
       for (const intent of intents) {
         if (intent === Intent.ADD_TASK) {
           setAddTaskScore(scorePercentage);
@@ -40,8 +43,14 @@ export default function IntentStatistics({
         <span>COMPLETED TASK - {completedTaskScore}</span>
       </div>
       <div className="text-container">
-        <span>Transcription :</span>
-        <span>Parsed Description :</span>
+        <div className="text-row">
+          <span className="label">Transcription :</span>
+          <span>test</span>
+        </div>
+        <div className="text-row">
+          <span className="label">Parsed Description :</span>
+          <span>{taskDescription}</span>
+        </div>
       </div>
     </div>
   );
