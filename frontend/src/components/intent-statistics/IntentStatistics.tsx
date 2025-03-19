@@ -3,7 +3,7 @@ import './IntentStatistics.css';
 import { Intent } from '../../api/Api';
 
 interface IntentStatisticsProps {
-  intentScores: Map<string, Set<string>>;
+  intentScores: Map<string, Set<Intent>>;
   taskDescription: string;
   transcript: string;
 }
@@ -16,6 +16,7 @@ export default function IntentStatistics({
   const [addTaskScore, setAddTaskScore] = useState('00.00%');
   const [deleteTaskScore, setDeleteTaskScore] = useState('00.00%');
   const [completedTaskScore, setCompletedTaskScore] = useState('00.00%');
+  const [intent, setIntent] = useState('');
 
   const handleIntentScores = useCallback(() => {
     for (const [score, intents] of intentScores) {
@@ -36,6 +37,22 @@ export default function IntentStatistics({
   useEffect(() => {
     handleIntentScores();
   }, [handleIntentScores]);
+
+  useEffect(() => {
+    const calculateHighestIntent = () => {
+      let highestScore = 0;
+      let highestIntent = '';
+      for (const [score, intents] of intentScores) {
+        const scoreNum = Number(score);
+        if (highestScore < scoreNum) {
+          highestScore = scoreNum;
+          highestIntent = Array.from(intents)[0];
+          setIntent(highestIntent);
+        }
+      }
+    };
+    calculateHighestIntent();
+  }, [intentScores]);
 
   return (
     <div className="statistics-container">
