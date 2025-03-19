@@ -5,11 +5,13 @@ import { Intent } from '../../api/Api';
 interface IntentStatisticsProps {
   intentScores: Map<string, Set<string>>;
   taskDescription: string;
+  transcript: string;
 }
 
 export default function IntentStatistics({
   intentScores,
   taskDescription,
+  transcript,
 }: IntentStatisticsProps) {
   const [addTaskScore, setAddTaskScore] = useState('00.00%');
   const [deleteTaskScore, setDeleteTaskScore] = useState('00.00%');
@@ -45,7 +47,7 @@ export default function IntentStatistics({
       <div className="text-container">
         <div className="text-row">
           <span className="label">Transcription :</span>
-          <span>test</span>
+          <span>{transcript}</span>
         </div>
         <div className="text-row">
           <span className="label">Parsed Description :</span>

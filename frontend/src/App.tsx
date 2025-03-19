@@ -22,6 +22,7 @@ export type TaskData = {
 export default function App() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [taskDescription, setTaskDescription] = useState('');
+  const [transcript, setTranscript] = useState('');
   const [intentScores, setIntentScores] = useState<Map<string, Set<Intent>>>(
     new Map()
   );
@@ -138,9 +139,13 @@ export default function App() {
             <TodoForm addTask={addTask} />
             <div className="task-list">{displayTasks}</div>
           </div>
-          <Microphone handleVoiceCommands={handleVoiceCommands} />
+          <Microphone handleVoiceCommands={handleVoiceCommands} setTranscript={setTranscript} />
         </div>
-        <IntentStatistics intentScores={intentScores} taskDescription={taskDescription}/>
+        <IntentStatistics
+          intentScores={intentScores}
+          taskDescription={taskDescription}
+          transcript={transcript}
+        />
       </div>
     </>
   );

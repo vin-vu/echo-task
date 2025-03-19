@@ -1,12 +1,18 @@
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { fetchIntent, IntentResponse } from '../api/Api';
 
-export const useSpeech = (
-  handleVoiceCommands: (intentPayload: IntentResponse) => void
-) => {
+interface useSpeechProps {
+  handleVoiceCommands: (intentPayload: IntentResponse) => void;
+  setTranscript: Dispatch<SetStateAction<string>>;
+}
+
+export const useSpeech = ({
+  handleVoiceCommands,
+  setTranscript,
+}: useSpeechProps) => {
   const {
     transcript,
     finalTranscript,
@@ -26,7 +32,8 @@ export const useSpeech = (
       }
     };
     updateTaskList();
-  }, [finalTranscript, handleVoiceCommands]);
+    setTranscript(finalTranscript);
+  }, [finalTranscript, handleVoiceCommands, setTranscript]);
 
   return {
     transcript,
