@@ -16,7 +16,7 @@ export default function IntentStatistics({
   const [addTaskScore, setAddTaskScore] = useState('00.00%');
   const [deleteTaskScore, setDeleteTaskScore] = useState('00.00%');
   const [completedTaskScore, setCompletedTaskScore] = useState('00.00%');
-  const [intent, setIntent] = useState<Intent>();
+  const [highestIntent, setHighestIntent] = useState<Intent>();
 
   useEffect(() => {
     const handleIntentScores = () => {
@@ -46,19 +46,22 @@ export default function IntentStatistics({
         if (highestScore < scoreNum) {
           highestScore = scoreNum;
           highestIntent = Array.from(intents)[0];
-          setIntent(highestIntent);
+          setHighestIntent(highestIntent);
         }
       }
     };
     calculateHighestIntent();
   }, [intentScores]);
 
+  const getStyle = (intent: Intent) =>
+    intent === highestIntent ? { fontWeight: 'bold' } : {};
+
   return (
     <div className="statistics-container">
       <div className="intent-scores">
-        <span>ADD TASK - {addTaskScore}</span>
-        <span>DELETED TASK - {deleteTaskScore}</span>
-        <span>COMPLETED TASK - {completedTaskScore}</span>
+        <span style={getStyle(Intent.ADD_TASK)}>ADD TASK - {addTaskScore}</span>
+        <span style={getStyle(Intent.DELETE_TASK)}>DELETE TASK - {deleteTaskScore}</span>
+        <span style={getStyle(Intent.COMPLETED_TASK)}>COMPLETED TASK - {completedTaskScore}</span>
       </div>
       <div className="text-container">
         <div className="text-row">
