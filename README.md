@@ -2,16 +2,17 @@
 
 Voice Controlled Task Management App
 
-EchoTask is a full stack web application designed to emulate IoT tools like Siri and Alexa allowing users to manage their tasks using voice commands. It leverages React for the frontend and Spring Boot for the backend, integrating speech recognition and natural language processing (NLP) to create an intuitive task  management experience.
+EchoTask is a full stack web application designed to emulate IoT tools like Siri and Alexa allowing users to manage their tasks using voice commands. It leverages React for the frontend and Spring Boot for the backend, integrating speech recognition and natural language processing (NLP) to create an intuitive task  management experience. EchoTask supports adding, deleting, and marking tasks as complete with verbal inputs.
 
-## Features
+## Table of Contents
+- [Tech Stack](#tech-stack)
+- [Local Setup Guide](#local-setup-guide)
+- [Usage](#usage)
+- [Known Limitations](#known-limitations)
+- [NLP Statistics](#nlp-statistics)
 
-* **Voice Controlled Task Management**: 
-Create, read, update, and delete tasks using natural voice commands
-* **Speech Recognition**:
-Utilizes React Speech Recognition to transcribe speech into text
-* **Natural Language Processing**:
-Implements Apache OpenNLP and Stanford CoreNLP for language processing
+## Demo
+![demo](/echo-task-demo.gif)
 
 ## Tech Stack
 
@@ -29,7 +30,7 @@ Implements Apache OpenNLP and Stanford CoreNLP for language processing
 
 ## Local Setup Guide
 
-This guide outlines the steps to run the EchoTask locally
+This guide outlines  steps to run the EchoTask locally
 
 #### Prerequisites
 
@@ -90,10 +91,11 @@ If you’re using IntelliJ, you can also start the backend by running the applic
 
 ## Usage
 
-1. After starting the application, visit **`http://localhost:8080/`** in your browser
+1. After starting the application, visit **`http://localhost:5173/`** in your browser
 2. Grant the application permission to use your microphone when prompted
 3. Click and hold the microphone button while giving verbal commands, then release the button when finished
-4. Supported commands include adding tasks, deleting tasks, and marking tasks as completed
+4. Supported commands include adding tasks, deleting tasks, and`marking tasks as completed
+5. It is recommended to annunciate words clearly to get an accurate transcript.
 
 #### Example Phrases for Voice Commands
 Some training data is stored in the following file, which can provide guidance on effective commands:
@@ -101,9 +103,9 @@ Some training data is stored in the following file, which can provide guidance o
 echo-task\backend\src\main\resources\data\doccat-training.txt
 ```
 
-#### Known Limitations
-- **“Add” and “Save” Commands:** These do not consistently trigger the `Add Task` intent
-- **Task Description Extraction:** The dependency parser may struggle to extract task descriptions accurately due to the wide variability in natural speech patterns
+## Known Limitations
+- **Incorrect Commands**: The document categorizer model may need additional tuning and training data if the wrong intent is classified.
+- **Incorrect Description Extraction**: The dependency parser may struggle to ignore intent actions from task descriptions due to the wide variability in natural speech patterns. This would require additional algorithmic solutions to handle the variety of utterances.
 
 ## NLP Statistics
 The UI includes a **Stats Section** that provides:
