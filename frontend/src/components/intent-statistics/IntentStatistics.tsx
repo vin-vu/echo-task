@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './IntentStatistics.css';
 import { Intent } from '../../api/Api';
 
@@ -16,32 +16,31 @@ export default function IntentStatistics({
   const [addTaskScore, setAddTaskScore] = useState('00.00%');
   const [deleteTaskScore, setDeleteTaskScore] = useState('00.00%');
   const [completedTaskScore, setCompletedTaskScore] = useState('00.00%');
-  const [intent, setIntent] = useState('');
-
-  const handleIntentScores = useCallback(() => {
-    for (const [score, intents] of intentScores) {
-      const scorePercentage =
-        (Number(score) * 100).toFixed(2).padStart(5, '0') + '%';
-      for (const intent of intents) {
-        if (intent === Intent.ADD_TASK) {
-          setAddTaskScore(scorePercentage);
-        } else if (intent === Intent.DELETE_TASK) {
-          setDeleteTaskScore(scorePercentage);
-        } else if (intent === Intent.COMPLETED_TASK) {
-          setCompletedTaskScore(scorePercentage);
-        }
-      }
-    }
-  }, [intentScores]);
+  const [intent, setIntent] = useState<Intent>();
 
   useEffect(() => {
+    const handleIntentScores = () => {
+      for (const [score, intents] of intentScores) {
+        const scorePercentage =
+          (Number(score) * 100).toFixed(2).padStart(5, '0') + '%';
+        for (const intent of intents) {
+          if (intent === Intent.ADD_TASK) {
+            setAddTaskScore(scorePercentage);
+          } else if (intent === Intent.DELETE_TASK) {
+            setDeleteTaskScore(scorePercentage);
+          } else if (intent === Intent.COMPLETED_TASK) {
+            setCompletedTaskScore(scorePercentage);
+          }
+        }
+      }
+    };
     handleIntentScores();
-  }, [handleIntentScores]);
+  }, [intentScores]);
 
   useEffect(() => {
     const calculateHighestIntent = () => {
       let highestScore = 0;
-      let highestIntent = '';
+      let highestIntent: Intent;
       for (const [score, intents] of intentScores) {
         const scoreNum = Number(score);
         if (highestScore < scoreNum) {
