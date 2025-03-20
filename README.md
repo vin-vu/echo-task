@@ -15,15 +15,15 @@ Implements Apache OpenNLP and Stanford CoreNLP for language processing
 
 ## Tech Stack
 
-### Frontend
+#### Frontend
 * **React**: Component-based UI development
 * **React Speech Recognition**: Speech-to-text functionality
 
-### Backend
+#### Backend
 * **Java Spring Boot**: REST API for handling communication, NLP integration, and speech processing
 * **PostgreSQL**: Database to store tasks
 
-### NLP
+#### NLP
 * **Apache OpenNLP**: Custom trained Document Categorizer to detect user intent
 * **Stanford CoreNLP**: Neural Network Dependency Parser to produce tree like relationships between words 
 
@@ -31,7 +31,7 @@ Implements Apache OpenNLP and Stanford CoreNLP for language processing
 
 This guide outlines the steps to run the EchoTask locally
 
-### Prerequisites
+#### Prerequisites
 
 Ensure you have the following installed on your machine:
 
@@ -39,7 +39,7 @@ Ensure you have the following installed on your machine:
 - **Java 17+**
 - **PostgreSQL** (Ensure the service is running)
 
-### Environment Variables
+#### Environment Variables
 
 Create a `.env` file at the **root level** of the project with the following contents:
 
@@ -49,7 +49,7 @@ SPRING_DATASOURCE_USERNAME=username
 SPRING_DATASOURCE_PASSWORD=password
 ```
 
-### Database Setup
+#### Database Setup
 
 1. Start your PostgreSQL service.
 2. Create a database named `echotask` using your preferred tool (e.g., pgAdmin, DBeaver, or CLI):
@@ -95,13 +95,13 @@ If you’re using IntelliJ, you can also start the backend by running the applic
 3. Click and hold the microphone button while giving verbal commands, then release the button when finished
 4. Supported commands include adding tasks, deleting tasks, and marking tasks as completed
 
-### Example Phrases for Voice Commands
+#### Example Phrases for Voice Commands
 Some training data is stored in the following file, which can provide guidance on effective commands:
 ```
 echo-task\backend\src\main\resources\data\doccat-training.txt
 ```
 
-### Known Limitations
+#### Known Limitations
 - **“Add” and “Save” Commands:** These do not consistently trigger the `Add Task` intent
 - **Task Description Extraction:** The dependency parser may struggle to extract task descriptions accurately due to the wide variability in natural speech patterns
 
