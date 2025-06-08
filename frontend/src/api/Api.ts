@@ -1,6 +1,6 @@
 import { TaskData } from '../App';
 
-const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL || '';
+const API_BASE_URL = import.meta.env.API_BASE_URL || '';
 
 export type IntentResponse = {
   id: string;
@@ -21,7 +21,7 @@ export const fetchIntent = async (
 ): Promise<IntentResponse | undefined> => {
   if (transcript.length !== 0) {
     console.log('sending: ', transcript);
-    const backendAPI = 'http://localhost:8080/detect-intent';
+    const backendAPI = `${API_BASE_URL}/detect-intent`;
     try {
       const response = await fetch(backendAPI, {
         method: 'POST',
@@ -40,7 +40,7 @@ export const fetchIntent = async (
 };
 
 export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
-  const createTaskAPI = 'http://localhost:8080/get-tasks';
+  const createTaskAPI = `${API_BASE_URL}/get-tasks`;
   try {
     const response = await fetch(createTaskAPI, {
       method: 'GET',
@@ -59,7 +59,7 @@ export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
 export const addTaskAPI = async (
   description: string
 ): Promise<TaskData | undefined> => {
-  const url = 'http://localhost:8080/create-task';
+  const url = `${API_BASE_URL}/create-task`;
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -79,7 +79,7 @@ export const addTaskAPI = async (
 export const deleteTaskAPI = async (
   id: string
 ): Promise<TaskData | undefined> => {
-  const url = 'http://localhost:8080/delete-task';
+  const url = `${API_BASE_URL}/delete-task`;
   try {
     const response = await fetch(url, {
       method: 'DELETE',
@@ -100,7 +100,7 @@ export const updateTaskStatusAPI = async (
   id: string,
   completed: boolean
 ): Promise<TaskData | undefined> => {
-  const url = 'http://localhost:8080/update-task-status';
+  const url = `${API_BASE_URL}/update-task-status`;
   try {
     const response = await fetch(url, {
       method: 'PUT',
