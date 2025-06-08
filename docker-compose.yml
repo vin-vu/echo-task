@@ -28,16 +28,16 @@ services:
       - app-network
 
     frontend:
-    build:
-      context: ./frontend
-    image: frontend-react
-    container_name: frontend-react
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
+      build:
+        context: ./frontend
+      image: frontend-react
+      container_name: frontend-react
+      ports:
+        - "3000:80"
+      depends_on:
+        - backend
+      networks:
+        - app-network
 
 volumes:
   postgres-data:

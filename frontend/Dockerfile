@@ -1,6 +1,7 @@
 FROM node:22 AS builder
 WORKDIR /app
 COPY . .
+COPY .env-prod .env
 RUN npm install
 RUN npm run build
 
