@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vince</groupId>
-    <artifactId>echotask</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>echotask</name>
+    <artifactId>echo-task</artifactId>
+    <version>1.0</version>
+    <name>echo-task</name>
     <description>Echo Task</description>
     <url/>
     <licenses>
