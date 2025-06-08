@@ -1,5 +1,7 @@
 import { TaskData } from '../App';
 
+const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL || '';
+
 export type IntentResponse = {
   id: string;
   intent: 'ADD_TASK' | 'DELETE_TASK' | 'COMPLETED_TASK';
