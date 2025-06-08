@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
-    container_name: postgres-db
+    container_name: postgres
     environment:
       POSTGRES_DB: echotask
       POSTGRES_USER: postgres
@@ -18,11 +16,26 @@ services:
   backend:
     build:
       context: ./backend
+    image: backend-spring-boot
     container_name: backend-spring-boot
+    env_file:
+      - backend/.env
     depends_on:
       - postgres
     ports:
       - "8080:8080"
+    networks:
+      - app-network
+
+    frontend:
+    build:
+      context: ./frontend
+    image: frontend-react
+    container_name: frontend-react
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     networks:
       - app-network
 
