@@ -19,6 +19,7 @@ jobs:
           node-version: '22'
 
       - name: Install deps & build
+        working-directory: frontend
         run: |
           npm ci
           npm run build
