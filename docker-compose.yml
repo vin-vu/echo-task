@@ -16,8 +16,8 @@ services:
   backend:
     build:
       context: ./backend
-    image: backend-spring-boot
-    container_name: backend-spring-boot
+    image: echo-task-spring-boot
+    container_name: echo-task-spring-boot
     env_file:
       - backend/.env
     depends_on:
@@ -27,17 +27,17 @@ services:
     networks:
       - app-network
 
-    frontend:
-      build:
-        context: ./frontend
-      image: frontend-react
-      container_name: frontend-react
-      ports:
-        - "3000:80"
-      depends_on:
-        - backend
-      networks:
-        - app-network
+  frontend:
+    build:
+      context: ./frontend
+    image: echo-task-react
+    container_name: echo-task-react
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
 volumes:
   postgres-data:
