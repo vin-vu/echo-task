@@ -1,7 +1,6 @@
 package com.vince.echotask.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,11 @@ import java.sql.Statement;
 @Service
 public class DatabaseSetupService {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public DatabaseSetupService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void createFullTextIndex() {

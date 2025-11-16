@@ -9,7 +9,6 @@ import com.vince.echotask.nlp.intentcategorizer.Tokenizer;
 import com.vince.echotask.repository.EchoTaskRepository;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,20 +20,21 @@ import java.util.*;
 @Service
 public class EchoTaskService {
 
-    @Autowired
-    Tokenizer tokenizer;
+    private final Tokenizer tokenizer;
+    private final IntentCategorizer intentCategorizer;
+    private final DependencyParser dependencyParser;
+    private final EchoTaskRepository repository;
+    private final ObjectMapper mapper;
 
-    @Autowired
-    IntentCategorizer intentCategorizer;
+    public EchoTaskService(Tokenizer tokenizer, IntentCategorizer intentCategorizer,
+                           DependencyParser dependencyParser, EchoTaskRepository repository, ObjectMapper mapper) {
+        this.tokenizer = tokenizer;
+        this.intentCategorizer = intentCategorizer;
+        this.dependencyParser = dependencyParser;
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
-    @Autowired
-    DependencyParser dependencyParser;
-
-    @Autowired
-    EchoTaskRepository repository;
-
-    @Autowired
-    ObjectMapper mapper;
 
     public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
 
@@ -45,6 +45,7 @@ public class EchoTaskService {
         log.info("sortedScoreMap: {}", rankedIntentScores);
         intentCategorizer.convertRankedIntentScores(rankedIntentScores);
         Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
+        log.info("best intent: {}", intent);
 
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
         String taskDescription;
@@ -92,7 +93,8 @@ public class EchoTaskService {
     public TaskSummary deleteTask(String description, String id) throws IllegalAccessException {
         Task task;
         if (id != null) {
-            task = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("Task not found with given ID"));
+            task = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("Task not found " +
+                    "with given ID"));
         } else if (description != null) {
             task = repository.findBestMatch(description);
         } else {

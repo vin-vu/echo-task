@@ -4,7 +4,6 @@ import com.vince.echotask.models.Intent;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.*;
 import opennlp.tools.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +19,11 @@ import java.util.stream.Collectors;
 @Component
 public class IntentCategorizer {
 
-    @Autowired
-    Tokenizer tokenizer;
+    private final Tokenizer tokenizer;
+
+    public IntentCategorizer(Tokenizer tokenizer) {
+        this.tokenizer = tokenizer;
+    }
 
     // must run below method to train a new Intent Categorizer  model
     public void trainModel() throws IOException {
@@ -91,8 +93,6 @@ public class IntentCategorizer {
     }
 
     public Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {
-        // currently not error handling if multiple intents share single probability
-        // meaning more than 1 intent can be shown in a set ex. add 33% delete 33% completed 33%
         Set<String> bestIntents = rankedIntentScores.get(rankedIntentScores.lastKey());
         return Intent.valueOf(bestIntents.iterator().next());
     }

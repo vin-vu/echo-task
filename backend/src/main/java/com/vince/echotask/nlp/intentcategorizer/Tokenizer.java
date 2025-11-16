@@ -25,7 +25,6 @@ public class Tokenizer {
     private static final TokenizerModel tokenizerModel;
     private static final POSModel posModel;
     private static final LemmatizerModel lemmatizerModel;
-
     private static final TokenizerME tokenizeME;
     private static final POSTaggerME posTaggerME;
     private static final LemmatizerME lemmatizerME;
@@ -33,10 +32,13 @@ public class Tokenizer {
     public static Set<String> stopWordsSet = new HashSet<>();
 
     static {
-        try (InputStream tokenizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
+        try (InputStream tokenizerStream =
+                     new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
              InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
-             InputStream lemmatizerStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("data/stopwords.txt").getInputStream()))
+             InputStream lemmatizerStream =
+                     new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("data" +
+                     "/stopwords.txt").getInputStream()))
         ) {
 
             // load models

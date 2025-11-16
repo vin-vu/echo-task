@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
 import com.vince.echotask.service.EchoTaskService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +17,18 @@ import java.util.UUID;
 @RestController
 public class EchoTaskController {
 
-    @Autowired
-    EchoTaskService echoTaskService;
+    private final EchoTaskService echoTaskService;
+    private final ObjectMapper mapper;
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    public EchoTaskController(EchoTaskService echoTaskService, ObjectMapper mapper) {
+        this.echoTaskService = echoTaskService;
+        this.mapper = mapper;
+    }
+
 
     @PostMapping("/detect-intent")
-    ResponseEntity<ParsedIntent> detectIntent(@RequestBody IntentRequest request) throws IOException, IllegalAccessException {
+    ResponseEntity<ParsedIntent> detectIntent(@RequestBody IntentRequest request) throws IOException,
+            IllegalAccessException {
         log.info(request.toString());
 
         ParsedIntent parsedIntent = echoTaskService.processIntent(request);
@@ -44,12 +48,14 @@ public class EchoTaskController {
     ResponseEntity<TaskSummary> updateTaskStatus(@RequestBody UpdateStatusRequest request) throws JsonProcessingException {
         log.info("update task status request: {}", mapper.writeValueAsString(request));
 
-        TaskSummary response = echoTaskService.updateTaskStatus(UUID.fromString(request.getId()), request.isCompleted(), null);
+        TaskSummary response = echoTaskService.updateTaskStatus(UUID.fromString(request.getId()),
+                request.isCompleted(), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-task")
-    ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException, JsonProcessingException {
+    ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException,
+            JsonProcessingException {
         log.info("Delete task request: {}", mapper.writeValueAsString(request));
 
         TaskSummary response = echoTaskService.deleteTask(null, request.getId());
