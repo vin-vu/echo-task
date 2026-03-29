@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -37,40 +40,53 @@ public class EchoTaskService {
 
 
     public ParsedIntent processIntent(IntentRequest request) throws IllegalAccessException, IOException {
+        log.info("process intent: {}", request);
 
-        log.info("process intent: {}", request.toString());
-        String[] lemmatizedTokens = tokenizer.getTranscriptTokens(request.getTranscript());
+        String transcript = request.getTranscript();
+        String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
 
         SortedMap<Double, Set<String>> rankedIntentScores = intentCategorizer.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", rankedIntentScores);
-        intentCategorizer.convertRankedIntentScores(rankedIntentScores);
+
+        var rankedScores = intentCategorizer.convertRankedIntentScores(rankedIntentScores);
         Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
         log.info("best intent: {}", intent);
 
-        if (Objects.equals(intent, Intent.UNKNOWN)) {
+        validateIntent(intent);
+
+        SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(transcript);
+        String taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
+        TaskSummary taskSummary = handleTaskIntent(intent, taskDescription);
+
+        return new ParsedIntent(
+                taskSummary.getId(),
+                intent,
+                taskSummary.getDescription(),
+                taskSummary.isCompleted(),
+                rankedScores
+        );
+    }
+
+    private void validateIntent(Intent intent) {
+        if (Intent.UNKNOWN.equals(intent)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Could not determine intent. Please say add, delete, or complete."
             );
         }
+    }
 
-        SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
-        String taskDescription;
-        TaskSummary taskSummary;
-        if (Objects.equals(intent, Intent.ADD_TASK)) {
-            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-            taskSummary = saveTask(taskDescription);
-        } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
-            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-            taskSummary = deleteTask(taskDescription, null);
-        } else if (Objects.equals(intent, Intent.COMPLETE_TASK)) {
-            taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-            taskSummary = updateTaskStatus(null, true, taskDescription);
-        } else {
-            taskSummary = new TaskSummary(UUID.randomUUID(), "unknown to be implemented", false);
-        }
-        return new ParsedIntent(taskSummary.getId(), intent, taskSummary.getDescription(), taskSummary.isCompleted(),
-                intentCategorizer.convertRankedIntentScores(rankedIntentScores));
+    private TaskSummary handleTaskIntent(Intent intent, String taskDescription) throws JsonProcessingException,
+            IllegalAccessException {
+        return switch (intent) {
+            case ADD_TASK -> saveTask(taskDescription);
+            case DELETE_TASK -> deleteTask(taskDescription, null);
+            case COMPLETE_TASK -> updateTaskStatus(null, true, taskDescription);
+            default -> throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Unsupported intent: " + intent
+            );
+        };
     }
 
     public TaskSummary saveTask(String description) throws JsonProcessingException {
