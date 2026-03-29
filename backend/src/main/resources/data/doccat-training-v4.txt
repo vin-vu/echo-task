@@ -1,0 +1,247 @@
+ADD_TASK add go to costco
+DELETE_TASK delete go to costco
+COMPLETE_TASK finished go to costco
+
+ADD_TASK add buy new tires for toyota
+DELETE_TASK delete buy new tires for toyota
+COMPLETE_TASK finished buy new tires for toyota
+
+ADD_TASK add listen to illenium on spotify
+DELETE_TASK delete listen to illenium on spotify
+COMPLETE_TASK finished listen to illenium on spotify
+
+ADD_TASK add visit shibuya next spring
+DELETE_TASK delete visit shibuya next spring
+COMPLETE_TASK finished visit shibuya next spring
+
+ADD_TASK add finish the voice command app
+DELETE_TASK delete finish the voice command app
+COMPLETE_TASK finished finish the voice command app
+
+ADD_TASK add complete campaign difficulty on veteran
+DELETE_TASK delete complete campaign difficulty on veteran
+COMPLETE_TASK finished complete campaign difficulty on veteran
+
+ADD_TASK add pick up dinner from phoholic
+DELETE_TASK delete pick up dinner from phoholic
+COMPLETE_TASK finished pick up dinner from phoholic
+
+ADD_TASK add shop gifts at south coast plaza
+DELETE_TASK delete shop gifts at south coast plaza
+COMPLETE_TASK finished shop gifts at south coast plaza
+
+ADD_TASK add upgrade pc with rgb fans
+DELETE_TASK delete upgrade pc with rgb fans
+COMPLETE_TASK finished upgrade pc with rgb fans
+
+ADD_TASK add attend lcs in 2025
+DELETE_TASK delete attend lcs in 2025
+COMPLETE_TASK finished attend lcs in 2025
+
+ADD_TASK insert wash the gr86 this weekend
+DELETE_TASK remove wash the gr86 this weekend
+COMPLETE_TASK mark wash the gr86 this weekend done
+
+ADD_TASK create call the dentist tomorrow
+DELETE_TASK remove call the dentist tomorrow
+COMPLETE_TASK completed call the dentist tomorrow
+
+ADD_TASK make book vegas hotel for edc
+DELETE_TASK cancel book vegas hotel for edc
+COMPLETE_TASK finished book vegas hotel for edc
+
+ADD_TASK add order protein powder online
+DELETE_TASK delete order protein powder online
+COMPLETE_TASK mark order protein powder online done
+
+ADD_TASK insert clean my keyboard switches
+DELETE_TASK remove clean my keyboard switches
+COMPLETE_TASK completed clean my keyboard switches
+
+ADD_TASK create pay credit card bill
+DELETE_TASK cancel pay credit card bill
+COMPLETE_TASK finished pay credit card bill
+
+ADD_TASK make install new brake pads
+DELETE_TASK delete install new brake pads
+COMPLETE_TASK mark install new brake pads done
+
+ADD_TASK add study system design tonight
+DELETE_TASK remove study system design tonight
+COMPLETE_TASK completed study system design tonight
+
+ADD_TASK insert buy boba after work
+DELETE_TASK delete buy boba after work
+COMPLETE_TASK finished buy boba after work
+
+ADD_TASK create message kevin about the trip
+DELETE_TASK remove message kevin about the trip
+COMPLETE_TASK mark message kevin about the trip done
+
+ADD_TASK add change engine oil next month
+DELETE_TASK delete change engine oil next month
+COMPLETE_TASK completed change engine oil next month
+
+ADD_TASK insert send mom birthday gift
+DELETE_TASK remove send mom birthday gift
+COMPLETE_TASK finished send mom birthday gift
+
+ADD_TASK create backup my laptop files
+DELETE_TASK cancel backup my laptop files
+COMPLETE_TASK mark backup my laptop files done
+
+ADD_TASK make practice leetcode after dinner
+DELETE_TASK delete practice leetcode after dinner
+COMPLETE_TASK completed practice leetcode after dinner
+
+ADD_TASK add renew car registration
+DELETE_TASK remove renew car registration
+COMPLETE_TASK finished renew car registration
+
+ADD_TASK insert schedule haircut for friday
+DELETE_TASK cancel schedule haircut for friday
+COMPLETE_TASK mark schedule haircut for friday done
+
+ADD_TASK create buy concert tickets tonight
+DELETE_TASK delete buy concert tickets tonight
+COMPLETE_TASK completed buy concert tickets tonight
+
+ADD_TASK make update resume for backend roles
+DELETE_TASK remove update resume for backend roles
+COMPLETE_TASK finished update resume for backend roles
+
+ADD_TASK add apply to software engineer jobs
+DELETE_TASK delete apply to software engineer jobs
+COMPLETE_TASK mark apply to software engineer jobs done
+
+ADD_TASK insert check tire pressure tomorrow
+DELETE_TASK remove check tire pressure tomorrow
+COMPLETE_TASK completed check tire pressure tomorrow
+
+ADD_TASK create meal prep for the week
+DELETE_TASK cancel meal prep for the week
+COMPLETE_TASK finished meal prep for the week
+
+ADD_TASK make refill prescription on monday
+DELETE_TASK delete refill prescription on monday
+COMPLETE_TASK mark refill prescription on monday done
+
+ADD_TASK add call insurance about claim
+DELETE_TASK remove call insurance about claim
+COMPLETE_TASK completed call insurance about claim
+
+ADD_TASK insert buy cat food from target
+DELETE_TASK delete buy cat food from target
+COMPLETE_TASK finished buy cat food from target
+
+ADD_TASK create finish spring cleaning
+DELETE_TASK remove finish spring cleaning
+COMPLETE_TASK mark finish spring cleaning done
+
+ADD_TASK make reserve dinner at din tai fung
+DELETE_TASK cancel reserve dinner at din tai fung
+COMPLETE_TASK completed reserve dinner at din tai fung
+
+ADD_TASK add submit timesheet before noon
+DELETE_TASK delete submit timesheet before noon
+COMPLETE_TASK finished submit timesheet before noon
+
+ADD_TASK insert review pull request tonight
+DELETE_TASK remove review pull request tonight
+COMPLETE_TASK mark review pull request tonight done
+
+ADD_TASK create buy new desk chair
+DELETE_TASK cancel buy new desk chair
+COMPLETE_TASK completed buy new desk chair
+
+ADD_TASK make update github portfolio
+DELETE_TASK delete update github portfolio
+COMPLETE_TASK finished update github portfolio
+
+ADD_TASK add find flights for japan trip
+DELETE_TASK remove find flights for japan trip
+COMPLETE_TASK mark find flights for japan trip done
+
+ADD_TASK insert practice dj transitions
+DELETE_TASK delete practice dj transitions
+COMPLETE_TASK completed practice dj transitions
+
+ADD_TASK create organize tax documents
+DELETE_TASK cancel organize tax documents
+COMPLETE_TASK finished organize tax documents
+
+ADD_TASK make pay rent on friday
+DELETE_TASK delete pay rent on friday
+COMPLETE_TASK mark pay rent on friday done
+
+ADD_TASK add pick up package downstairs
+DELETE_TASK remove pick up package downstairs
+COMPLETE_TASK completed pick up package downstairs
+
+ADD_TASK insert buy coolant for the gr86
+DELETE_TASK delete buy coolant for the gr86
+COMPLETE_TASK finished buy coolant for the gr86
+
+ADD_TASK create fix squeaky keyboard key
+DELETE_TASK remove fix squeaky keyboard key
+COMPLETE_TASK mark fix squeaky keyboard key done
+
+ADD_TASK make finish opennlp migration
+DELETE_TASK cancel finish opennlp migration
+COMPLETE_TASK completed finish opennlp migration
+
+ADD_TASK add text james about the rave
+DELETE_TASK delete text james about the rave
+COMPLETE_TASK finished text james about the rave
+
+ADD_TASK insert plan weekend hike route
+DELETE_TASK remove plan weekend hike route
+COMPLETE_TASK mark plan weekend hike route done
+
+ADD_TASK create buy socks from uniqlo
+DELETE_TASK cancel buy socks from uniqlo
+COMPLETE_TASK completed buy socks from uniqlo
+
+ADD_TASK make clean out my inbox
+DELETE_TASK delete clean out my inbox
+COMPLETE_TASK finished clean out my inbox
+
+ADD_TASK add prepare for interview tomorrow
+DELETE_TASK remove prepare for interview tomorrow
+COMPLETE_TASK mark prepare for interview tomorrow done
+
+ADD_TASK insert return amazon package
+DELETE_TASK delete return amazon package
+COMPLETE_TASK completed return amazon package
+
+ADD_TASK create set up docker on laptop
+DELETE_TASK cancel set up docker on laptop
+COMPLETE_TASK finished set up docker on laptop
+
+ADD_TASK make buy groceries for meal prep
+DELETE_TASK delete buy groceries for meal prep
+COMPLETE_TASK mark buy groceries for meal prep done
+
+ADD_TASK add charge camera batteries
+DELETE_TASK remove charge camera batteries
+COMPLETE_TASK completed charge camera batteries
+
+ADD_TASK insert message recruiter back
+DELETE_TASK delete message recruiter back
+COMPLETE_TASK finished message recruiter back
+
+ADD_TASK create read system design chapter
+DELETE_TASK remove read system design chapter
+COMPLETE_TASK mark read system design chapter done
+
+ADD_TASK make vacuum the apartment
+DELETE_TASK cancel vacuum the apartment
+COMPLETE_TASK completed vacuum the apartment
+
+ADD_TASK add book dentist appointment
+DELETE_TASK delete book dentist appointment
+COMPLETE_TASK finished book dentist appointment
+
+ADD_TASK insert buy gym clothes online
+DELETE_TASK remove buy gym clothes online
+COMPLETE_TASK mark buy gym clothes online done

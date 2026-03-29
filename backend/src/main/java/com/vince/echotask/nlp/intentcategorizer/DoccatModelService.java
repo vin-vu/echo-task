@@ -25,7 +25,7 @@ public class DoccatModelService {
     private final Tokenizer tokenizer;
     private DocumentCategorizerME intentCategorizer;
 
-    @Value("${app.trainModel:false}")
+    @Value("${app.trainModelOnStartup:false}")
     private boolean trainModelOnStartup;
 
     public DoccatModelService(Tokenizer tokenizer) {
@@ -33,7 +33,7 @@ public class DoccatModelService {
     }
 
     private void loadModel() throws Exception {
-        ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat-v3.bin");
+        ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat-v4.bin");
 
         try (InputStream modelInput = modelResource.getInputStream()) {
             DoccatModel doccatModel = new DoccatModel(modelInput);
@@ -99,8 +99,9 @@ public class DoccatModelService {
     }
 
     @PostConstruct
-    private void init() throws Exception {
+    public void init() throws Exception {
         if (trainModelOnStartup) {
+            log.info("post construct train model");
             trainModel();
         }
         loadModel();

@@ -56,7 +56,7 @@ public class EchoTaskService {
         } else if (Objects.equals(intent, Intent.DELETE_TASK)) {
             taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
             taskSummary = deleteTask(taskDescription, null);
-        } else if (Objects.equals(intent, Intent.COMPLETED_TASK)) {
+        } else if (Objects.equals(intent, Intent.COMPLETE_TASK)) {
             taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
             taskSummary = updateTaskStatus(null, true, taskDescription);
         } else {
