@@ -58,7 +58,7 @@ public class EchoTaskController {
             JsonProcessingException {
         log.info("Delete task request: {}", mapper.writeValueAsString(request));
 
-        TaskSummary response = echoTaskService.deleteTask(null, request.getId());
+        TaskSummary response = echoTaskService.deleteTask(UUID.fromString(request.getId()), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
