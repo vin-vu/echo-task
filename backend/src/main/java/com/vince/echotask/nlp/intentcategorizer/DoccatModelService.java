@@ -1,6 +1,5 @@
 package com.vince.echotask.nlp.intentcategorizer;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.*;
 import opennlp.tools.util.*;
@@ -23,48 +22,57 @@ import java.util.SortedMap;
 public class DoccatModelService {
 
     private final Tokenizer tokenizer;
-    private DocumentCategorizerME intentCategorizer;
+    private final DocumentCategorizerME intentCategorizer;
 
-    @Value("${app.trainModelOnStartup:false}")
-    private boolean trainModelOnStartup;
-
-    public DoccatModelService(Tokenizer tokenizer) {
+    public DoccatModelService(Tokenizer tokenizer,
+                              @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
         this.tokenizer = tokenizer;
+
+        if (trainModelOnStartup) {
+            trainModel();
+        }
+
+        this.intentCategorizer = loadModel();
     }
 
-    private void loadModel() throws Exception {
+    private DocumentCategorizerME loadModel() throws Exception {
         ClassPathResource modelResource = new ClassPathResource("nlp/en-doccat-v4.bin");
 
         try (InputStream modelInput = modelResource.getInputStream()) {
-            DoccatModel doccatModel = new DoccatModel(modelInput);
-            intentCategorizer = new DocumentCategorizerME(doccatModel);
+            DoccatModel model = new DoccatModel(modelInput);
+            return new DocumentCategorizerME(model);
         }
     }
 
     private void trainModel() throws IOException {
-        DoccatModel doccatModel;
-
         InputStreamFactory inputStreamFactory = loadAndTokenizeTrainingData();
 
-        try (ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, "UTF-8");
+        try (ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
              ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream)) {
-            TrainingParameters params = new TrainingParameters();
+
+            TrainingParameters params = TrainingParameters.defaultParams();
             params.put(TrainingParameters.ITERATIONS_PARAM, "150");
             params.put(TrainingParameters.CUTOFF_PARAM, "5");
-            doccatModel = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
+
+            DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
+            saveModel(model);
         }
 
+        log.info("Model training complete");
+    }
+
+    private void saveModel(DoccatModel model) throws IOException {
         Path modelPath = Paths.get("backend/src/main/resources/nlp/en-doccat-v4.bin");
 
         try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
-            doccatModel.serialize(modelOut);
+            model.serialize(modelOut);
         }
-        log.info("model training complete - saved as en-doccat-v4.bin");
+
+        log.info("Model saved at: {}", modelPath);
     }
 
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
-
-        File trainingFile = new ClassPathResource("/data/doccat-training-v4.txt").getFile();
+        File trainingFile = new ClassPathResource("data/doccat-training-v4.txt").getFile();
         List<String> processedLines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(trainingFile))) {
@@ -72,38 +80,26 @@ public class DoccatModelService {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" ", 2);
                 if (parts.length < 2) {
-                    log.warn("Skipping malformed line in training data: {}", line);
+                    log.warn("Skipping malformed line: {}", line);
                     continue;
                 }
-                String intent = parts[0];
-                String taskDescription = parts[1];
 
-                String[] tokens = tokenizer.getTranscriptTokens(taskDescription);
-                String processedTokens = String.join(" ", tokens);
-                processedLines.add(intent + " " + processedTokens);
+                String intent = parts[0];
+                String[] tokens = tokenizer.getTranscriptTokens(parts[1]);
+
+                processedLines.add(intent + " " + String.join(" ", tokens));
             }
         }
 
-        Path tempTrainingFile = Paths.get("backend/src/main/resources/data/doccat-training-processed.txt");
-        Files.write(tempTrainingFile, processedLines, StandardCharsets.UTF_8);
+        Path tempFile = Paths.get("backend/src/main/resources/data/doccat-training-processed.txt");
+        Files.write(tempFile, processedLines, StandardCharsets.UTF_8);
 
-        log.info("Total training samples after preprocessing: {}", processedLines.size());
-        log.info("Processed training data saved at: {}", tempTrainingFile);
+        log.info("Processed {} training samples", processedLines.size());
 
-        return new MarkableFileInputStreamFactory(tempTrainingFile.toFile());
+        return new MarkableFileInputStreamFactory(tempFile.toFile());
     }
 
     public SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
         return intentCategorizer.sortedScoreMap(phraseTokens);
-
-    }
-
-    @PostConstruct
-    public void init() throws Exception {
-        if (trainModelOnStartup) {
-            log.info("post construct train model");
-            trainModel();
-        }
-        loadModel();
     }
 }
