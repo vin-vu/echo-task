@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class TraversalStrategyFactory {
     public static TraversalStrategy getStrategy(String tag, Intent intent) {
-        if (intent == Intent.COMPLETED_TASK) {
+        if (intent == Intent.COMPLETE_TASK) {
             if (Objects.equals(tag, "VBN") || Objects.equals(tag, "VB") || Objects.equals(tag, "VBP")) {
                 return new CompletedTaskVerbTraversalStrategy();
             } else if (Objects.equals(tag, "NN")) {
