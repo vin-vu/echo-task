@@ -12,5 +12,8 @@ public class AppPaths {
     private String modelPath;
     private String trainingProcessedPath;
     private String trainingRawPath;
+
+    private String taskFinderTrainingRawPath;
+    private String taskFinderModelPath;
 }
 
