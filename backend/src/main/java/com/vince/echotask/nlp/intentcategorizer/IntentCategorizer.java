@@ -24,7 +24,15 @@ public class IntentCategorizer {
     }
 
     public Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {
-        Set<String> bestIntents = rankedIntentScores.get(rankedIntentScores.lastKey());
+        double topScore = rankedIntentScores.lastKey();
+        Set<String> bestIntents = rankedIntentScores.get(topScore);
+
+        if (bestIntents.size() > 1) {
+            return Intent.UNKNOWN;
+        }
+        if (topScore < 0.6) {
+            return Intent.UNKNOWN;
+        }
         return Intent.valueOf(bestIntents.iterator().next());
     }
 

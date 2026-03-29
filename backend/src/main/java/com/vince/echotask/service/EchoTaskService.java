@@ -47,6 +47,13 @@ public class EchoTaskService {
         Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
         log.info("best intent: {}", intent);
 
+        if (Objects.equals(intent, Intent.UNKNOWN)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not determine intent. Please say add, delete, or complete."
+            );
+        }
+
         SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(request.getTranscript());
         String taskDescription;
         TaskSummary taskSummary;
