@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,10 +55,14 @@ public class TaskFinderService {
     public void trainTaskFinder() throws IOException {
         TokenNameFinderFactory factory = TokenNameFinderFactory.create(null, null, Collections.emptyMap(),
                 new BioCodec());
-        File trainingFile = new File(appPaths.getTaskFinderTrainingRawPath());
+
+        Path trainingPath = Paths.get(appPaths.getTaskFinderTrainingRawPath());
 
         ObjectStream<String> lineStream =
-                new PlainTextByLineStream(new MarkableFileInputStreamFactory(trainingFile), StandardCharsets.UTF_8);
+                new PlainTextByLineStream(
+                        new MarkableFileInputStreamFactory(trainingPath.toFile()),
+                        StandardCharsets.UTF_8
+                );
 
         TokenNameFinderModel trainedModel;
         try (ObjectStream<NameSample> sampleStream = new NameSampleDataStream(lineStream)) {
@@ -63,10 +70,12 @@ public class TaskFinderService {
                     factory);
         }
 
-        File modelFile = new File(appPaths.getTaskFinderModelPath());
-        try (OutputStream modelOut = new BufferedOutputStream(new FileOutputStream(modelFile))) {
-            trainedModel.serialize(modelOut);
+        Path modelPath = Paths.get(appPaths.getTaskFinderModelPath());
 
+        Files.createDirectories(modelPath.getParent());
+
+        try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
+            trainedModel.serialize(modelOut);
         }
     }
 
