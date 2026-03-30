@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
 import com.vince.echotask.nlp.depparser.DependencyParser;
-import com.vince.echotask.nlp.intentcategorizer.IntentCategorizer;
+import com.vince.echotask.nlp.intentcategorizer.DoccatService;
 import com.vince.echotask.nlp.intentcategorizer.Tokenizer;
 import com.vince.echotask.repository.EchoTaskRepository;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -23,15 +23,15 @@ import java.util.UUID;
 public class EchoTaskService {
 
     private final Tokenizer tokenizer;
-    private final IntentCategorizer intentCategorizer;
+    private final DoccatService doccatService;
     private final DependencyParser dependencyParser;
     private final EchoTaskRepository repository;
     private final ObjectMapper mapper;
 
-    public EchoTaskService(Tokenizer tokenizer, IntentCategorizer intentCategorizer,
+    public EchoTaskService(Tokenizer tokenizer, DoccatService doccatService,
                            DependencyParser dependencyParser, EchoTaskRepository repository, ObjectMapper mapper) {
         this.tokenizer = tokenizer;
-        this.intentCategorizer = intentCategorizer;
+        this.doccatService = doccatService;
         this.dependencyParser = dependencyParser;
         this.repository = repository;
         this.mapper = mapper;
@@ -44,11 +44,11 @@ public class EchoTaskService {
         String transcript = request.getTranscript();
         String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
 
-        SortedMap<Double, Set<String>> rankedIntentScores = intentCategorizer.categorizeIntent(lemmatizedTokens);
+        SortedMap<Double, Set<String>> rankedIntentScores = doccatService.categorizeIntent(lemmatizedTokens);
         log.info("sortedScoreMap: {}", rankedIntentScores);
 
-        var rankedScores = intentCategorizer.convertRankedIntentScores(rankedIntentScores);
-        Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
+        var rankedScores = doccatService.convertRankedIntentScores(rankedIntentScores);
+        Intent intent = doccatService.getBestIntent(rankedIntentScores);
         log.info("best intent: {}", intent);
 
         validateIntent(intent);

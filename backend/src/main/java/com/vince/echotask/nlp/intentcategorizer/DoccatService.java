@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class IntentCategorizer {
+public class DoccatService {
 
     private final DoccatModelService doccatModelService;
 
-    public IntentCategorizer(DoccatModelService doccatModelService) {
+    public DoccatService(DoccatModelService doccatModelService) {
         this.doccatModelService = doccatModelService;
     }
 
