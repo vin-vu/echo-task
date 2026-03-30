@@ -39,6 +39,7 @@ public class DoccatModelService {
     }
 
     private DocumentCategorizerME loadModel() throws Exception {
+        log.info("Loading Intent Categorizer model");
         Path modelPath = Paths.get(appPaths.getDoccat().getModelPath());
 
         if (Files.exists(modelPath)) {
@@ -51,6 +52,7 @@ public class DoccatModelService {
         try (InputStream modelInput = modelResource.getInputStream()) {
             return new DocumentCategorizerME(new DoccatModel(modelInput));
         }
+
     }
 
     private void trainModel() throws IOException {

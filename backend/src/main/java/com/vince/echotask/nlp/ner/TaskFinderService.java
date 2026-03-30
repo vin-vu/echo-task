@@ -1,6 +1,7 @@
 package com.vince.echotask.nlp.ner;
 
 import com.vince.echotask.configuration.AppPaths;
+import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.namefind.*;
 import opennlp.tools.util.MarkableFileInputStreamFactory;
 import opennlp.tools.util.ObjectStream;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
+@Slf4j
 @Service
 public class TaskFinderService {
 
@@ -38,6 +40,7 @@ public class TaskFinderService {
     }
 
     private NameFinderME loadTaskFinder() throws Exception {
+        log.info("Loading Task Finder model");
         Path modelPath = Paths.get(appPaths.getTaskfinder().getModelPath());
 
         if (Files.exists(modelPath)) {
@@ -69,13 +72,18 @@ public class TaskFinderService {
             trainedModel = NameFinderME.train("eng", "task", sampleStream, TrainingParameters.defaultParams(),
                     factory);
         }
+        saveTaskFinder(trainedModel);
 
+        log.info("Model training complete");
+    }
+
+    private void saveTaskFinder(TokenNameFinderModel model) throws IOException {
         Path modelPath = Paths.get(appPaths.getTaskfinder().getModelPath());
 
         Files.createDirectories(modelPath.getParent());
 
         try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
-            trainedModel.serialize(modelOut);
+            model.serialize(modelOut);
         }
     }
 
