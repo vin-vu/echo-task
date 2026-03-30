@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp.intentcategorizer;
+package com.vince.echotask.nlp.intent;
 
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.lemmatizer.LemmatizerME;

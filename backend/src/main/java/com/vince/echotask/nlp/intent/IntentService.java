@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp.intentcategorizer;
+package com.vince.echotask.nlp.intent;
 
 import com.vince.echotask.models.Intent;
 import lombok.extern.slf4j.Slf4j;
@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class DoccatService {
+public class IntentService {
 
-    private final DoccatModelService doccatModelService;
+    private final IntentModelService intentModelService;
 
-    public DoccatService(DoccatModelService doccatModelService) {
-        this.doccatModelService = doccatModelService;
+    public IntentService(IntentModelService intentModelService) {
+        this.intentModelService = intentModelService;
     }
 
     public SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
-        return doccatModelService.categorizeIntent(phraseTokens);
+        return intentModelService.categorizeIntent(phraseTokens);
     }
 
     public Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {

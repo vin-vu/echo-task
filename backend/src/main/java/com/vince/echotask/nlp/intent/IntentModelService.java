@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp.intentcategorizer;
+package com.vince.echotask.nlp.intent;
 
 import com.vince.echotask.configuration.AppPaths;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ import java.util.SortedMap;
 
 @Slf4j
 @Service
-public class DoccatModelService {
+public class IntentModelService {
 
     private final Tokenizer tokenizer;
     private final AppPaths appPaths;
     private final DocumentCategorizerME intentCategorizer;
 
-    public DoccatModelService(Tokenizer tokenizer, AppPaths appPaths,
+    public IntentModelService(Tokenizer tokenizer, AppPaths appPaths,
                               @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
         this.tokenizer = tokenizer;
         this.appPaths = appPaths;
@@ -69,7 +69,7 @@ public class DoccatModelService {
             saveModel(model);
         }
 
-        log.info("Model training complete");
+        log.info("Doccat model training complete");
     }
 
     private void saveModel(DoccatModel model) throws IOException {
@@ -80,7 +80,7 @@ public class DoccatModelService {
             model.serialize(modelOut);
         }
 
-        log.info("Model saved at: {}", modelPath);
+        log.info("Doccat model saved at: {}", modelPath);
     }
 
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {

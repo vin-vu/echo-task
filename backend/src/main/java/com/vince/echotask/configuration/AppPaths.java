@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AppPaths {
     private String dataDir;
     private Doccat doccat = new Doccat();
-    private Taskfinder taskfinder = new Taskfinder();
+    private TaskFinder taskfinder = new TaskFinder();
 
     @Data
     public static class Doccat {
@@ -18,9 +18,8 @@ public class AppPaths {
     }
 
     @Data
-    public static class Taskfinder {
+    public static class TaskFinder {
         private String modelPath;
-        private String trainingProcessedPath;
         private String trainingRawPath;
     }
 }

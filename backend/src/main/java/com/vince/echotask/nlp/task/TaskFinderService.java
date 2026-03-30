@@ -1,6 +1,7 @@
-package com.vince.echotask.nlp.ner;
+package com.vince.echotask.nlp.task;
 
 import lombok.extern.slf4j.Slf4j;
+import opennlp.tools.util.Span;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -13,16 +14,7 @@ public class TaskFinderService {
         this.taskFinderModelService = taskFinderModelService;
     }
 
-    public void extractTask() {
-        String[] test = new String[]{
-                "create",
-                "fix",
-                "broken",
-                "shift",
-                "key",
-                "on",
-                "keyboard"
-        };
-        taskFinderModelService.findTask(test);
+    public Span[] extractTask(String[] test) {
+        return taskFinderModelService.findTask(test);
     }
 }

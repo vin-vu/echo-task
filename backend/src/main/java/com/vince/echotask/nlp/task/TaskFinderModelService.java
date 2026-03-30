@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp.ner;
+package com.vince.echotask.nlp.task;
 
 import com.vince.echotask.configuration.AppPaths;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +72,7 @@ public class TaskFinderModelService {
         }
         saveTaskFinder(trainedModel);
 
-        log.info("Model training complete");
+        log.info("Task Finder model training complete");
     }
 
     private void saveTaskFinder(TokenNameFinderModel model) throws IOException {
@@ -85,8 +85,8 @@ public class TaskFinderModelService {
         }
     }
 
-    public void findTask(String[] tokens) {
-        Span[] extractedTask = taskFinder.find(tokens);
+    public Span[] findTask(String[] taskTokens) {
+        Span[] extractedTask = taskFinder.find(taskTokens);
         taskFinder.clearAdaptiveData();
 
         log.info("Spans: {}",
@@ -94,5 +94,6 @@ public class TaskFinderModelService {
                         .map(s -> String.format("[%d,%d] %s", s.getStart(), s.getEnd(), s.getType()))
                         .toList()
         );
+        return extractedTask;
     }
 }
