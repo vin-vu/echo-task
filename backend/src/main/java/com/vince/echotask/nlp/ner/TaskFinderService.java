@@ -38,7 +38,7 @@ public class TaskFinderService {
     }
 
     private NameFinderME loadTaskFinder() throws Exception {
-        Path modelPath = Paths.get(appPaths.getTaskFinderModelPath());
+        Path modelPath = Paths.get(appPaths.getTaskfinder().getModelPath());
 
         if (Files.exists(modelPath)) {
             try (InputStream modelInput = Files.newInputStream(modelPath)) {
@@ -56,7 +56,7 @@ public class TaskFinderService {
         TokenNameFinderFactory factory = TokenNameFinderFactory.create(null, null, Collections.emptyMap(),
                 new BioCodec());
 
-        Path trainingPath = Paths.get(appPaths.getTaskFinderTrainingRawPath());
+        Path trainingPath = Paths.get(appPaths.getTaskfinder().getTrainingRawPath());
 
         ObjectStream<String> lineStream =
                 new PlainTextByLineStream(
@@ -70,7 +70,7 @@ public class TaskFinderService {
                     factory);
         }
 
-        Path modelPath = Paths.get(appPaths.getTaskFinderModelPath());
+        Path modelPath = Paths.get(appPaths.getTaskfinder().getModelPath());
 
         Files.createDirectories(modelPath.getParent());
 

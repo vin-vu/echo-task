@@ -39,7 +39,7 @@ public class DoccatModelService {
     }
 
     private DocumentCategorizerME loadModel() throws Exception {
-        Path modelPath = Paths.get(appPaths.getModelPath());
+        Path modelPath = Paths.get(appPaths.getDoccat().getModelPath());
 
         if (Files.exists(modelPath)) {
             try (InputStream modelInput = Files.newInputStream(modelPath)) {
@@ -71,7 +71,7 @@ public class DoccatModelService {
     }
 
     private void saveModel(DoccatModel model) throws IOException {
-        Path modelPath = Paths.get(appPaths.getModelPath());
+        Path modelPath = Paths.get(appPaths.getDoccat().getModelPath());
         Files.createDirectories(modelPath.getParent());
 
         try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
@@ -82,7 +82,7 @@ public class DoccatModelService {
     }
 
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
-        InputStream inputStream = new ClassPathResource(appPaths.getTrainingRawPath()).getInputStream();
+        InputStream inputStream = new ClassPathResource(appPaths.getDoccat().getTrainingRawPath()).getInputStream();
         List<String> processedLines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -101,7 +101,7 @@ public class DoccatModelService {
             }
         }
 
-        Path tempFile = Paths.get(appPaths.getTrainingProcessedPath());
+        Path tempFile = Paths.get(appPaths.getDoccat().getTrainingProcessedPath());
         Files.createDirectories(tempFile.getParent());
         Files.write(tempFile, processedLines, StandardCharsets.UTF_8);
 
