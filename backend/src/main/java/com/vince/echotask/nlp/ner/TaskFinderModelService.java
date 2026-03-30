@@ -3,10 +3,7 @@ package com.vince.echotask.nlp.ner;
 import com.vince.echotask.configuration.AppPaths;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.namefind.*;
-import opennlp.tools.util.MarkableFileInputStreamFactory;
-import opennlp.tools.util.ObjectStream;
-import opennlp.tools.util.PlainTextByLineStream;
-import opennlp.tools.util.TrainingParameters;
+import opennlp.tools.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Slf4j
@@ -87,4 +85,14 @@ public class TaskFinderModelService {
         }
     }
 
+    public void findTask(String[] tokens) {
+        Span[] extractedTask = taskFinder.find(tokens);
+        taskFinder.clearAdaptiveData();
+
+        log.info("Spans: {}",
+                Arrays.stream(extractedTask)
+                        .map(s -> String.format("[%d,%d] %s", s.getStart(), s.getEnd(), s.getType()))
+                        .toList()
+        );
+    }
 }
