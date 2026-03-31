@@ -1,4 +1,4 @@
-package com.vince.echotask.nlp.intentcategorizer;
+package com.vince.echotask.nlp.intent;
 
 import com.vince.echotask.configuration.AppPaths;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +20,15 @@ import java.util.SortedMap;
 
 @Slf4j
 @Service
-public class DoccatModelService {
+public class IntentModelService {
 
-    private final Tokenizer tokenizer;
+    private final IntentPreprocessor intentPreprocessor;
     private final AppPaths appPaths;
     private final DocumentCategorizerME intentCategorizer;
 
-    public DoccatModelService(Tokenizer tokenizer, AppPaths appPaths,
+    public IntentModelService(IntentPreprocessor intentPreprocessor, AppPaths appPaths,
                               @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
-        this.tokenizer = tokenizer;
+        this.intentPreprocessor = intentPreprocessor;
         this.appPaths = appPaths;
 
         if (trainModelOnStartup) {
@@ -39,7 +39,8 @@ public class DoccatModelService {
     }
 
     private DocumentCategorizerME loadModel() throws Exception {
-        Path modelPath = Paths.get(appPaths.getModelPath());
+        log.info("Loading Intent Categorizer model");
+        Path modelPath = Paths.get(appPaths.getDoccat().getModelPath());
 
         if (Files.exists(modelPath)) {
             try (InputStream modelInput = Files.newInputStream(modelPath)) {
@@ -51,6 +52,7 @@ public class DoccatModelService {
         try (InputStream modelInput = modelResource.getInputStream()) {
             return new DocumentCategorizerME(new DoccatModel(modelInput));
         }
+
     }
 
     private void trainModel() throws IOException {
@@ -67,22 +69,22 @@ public class DoccatModelService {
             saveModel(model);
         }
 
-        log.info("Model training complete");
+        log.info("Doccat model training complete");
     }
 
     private void saveModel(DoccatModel model) throws IOException {
-        Path modelPath = Paths.get(appPaths.getModelPath());
+        Path modelPath = Paths.get(appPaths.getDoccat().getModelPath());
         Files.createDirectories(modelPath.getParent());
 
         try (OutputStream modelOut = new BufferedOutputStream(Files.newOutputStream(modelPath))) {
             model.serialize(modelOut);
         }
 
-        log.info("Model saved at: {}", modelPath);
+        log.info("Doccat model saved at: {}", modelPath);
     }
 
     private InputStreamFactory loadAndTokenizeTrainingData() throws IOException {
-        InputStream inputStream = new ClassPathResource(appPaths.getTrainingRawPath()).getInputStream();
+        InputStream inputStream = new ClassPathResource(appPaths.getDoccat().getTrainingRawPath()).getInputStream();
         List<String> processedLines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -95,13 +97,13 @@ public class DoccatModelService {
                 }
 
                 String intent = parts[0];
-                String[] tokens = tokenizer.getTranscriptTokens(parts[1]);
+                String[] tokens = intentPreprocessor.preprocessForIntent(parts[1]);
 
                 processedLines.add(intent + " " + String.join(" ", tokens));
             }
         }
 
-        Path tempFile = Paths.get(appPaths.getTrainingProcessedPath());
+        Path tempFile = Paths.get(appPaths.getDoccat().getTrainingProcessedPath());
         Files.createDirectories(tempFile.getParent());
         Files.write(tempFile, processedLines, StandardCharsets.UTF_8);
 

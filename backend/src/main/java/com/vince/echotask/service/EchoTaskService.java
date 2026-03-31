@@ -3,66 +3,54 @@ package com.vince.echotask.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
-import com.vince.echotask.nlp.depparser.DependencyParser;
-import com.vince.echotask.nlp.intentcategorizer.IntentCategorizer;
-import com.vince.echotask.nlp.intentcategorizer.Tokenizer;
+import com.vince.echotask.nlp.intent.IntentService;
+import com.vince.echotask.nlp.task.TaskFinderService;
 import com.vince.echotask.repository.EchoTaskRepository;
-import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class EchoTaskService {
 
-    private final Tokenizer tokenizer;
-    private final IntentCategorizer intentCategorizer;
-    private final DependencyParser dependencyParser;
+    private final IntentService intentService;
+    private final TaskFinderService taskFinderService;
     private final EchoTaskRepository repository;
     private final ObjectMapper mapper;
 
-    public EchoTaskService(Tokenizer tokenizer, IntentCategorizer intentCategorizer,
-                           DependencyParser dependencyParser, EchoTaskRepository repository, ObjectMapper mapper) {
-        this.tokenizer = tokenizer;
-        this.intentCategorizer = intentCategorizer;
-        this.dependencyParser = dependencyParser;
+    public EchoTaskService(IntentService intentService, TaskFinderService taskFinderService,
+                           EchoTaskRepository repository, ObjectMapper mapper) {
+        this.intentService = intentService;
+        this.taskFinderService = taskFinderService;
         this.repository = repository;
         this.mapper = mapper;
     }
-
-
+    
     public ParsedIntent processIntent(IntentRequest request) {
-        log.info("process intent: {}", request);
-
         String transcript = request.getTranscript();
-        String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
 
-        SortedMap<Double, Set<String>> rankedIntentScores = intentCategorizer.categorizeIntent(lemmatizedTokens);
-        log.info("sortedScoreMap: {}", rankedIntentScores);
+        IntentResolution intentResolution = intentService.resolveIntent(transcript);
+        log.info("intentResolution: {}", intentResolution);
+        validateIntent(intentResolution.intent());
 
-        var rankedScores = intentCategorizer.convertRankedIntentScores(rankedIntentScores);
-        Intent intent = intentCategorizer.getBestIntent(rankedIntentScores);
-        log.info("best intent: {}", intent);
+        String task = taskFinderService.extractTask(transcript);
+        log.info("extracted task: {}", task);
+        invalidateExtractedTask(task);
 
-        validateIntent(intent);
-
-        SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(transcript);
-        String taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-        TaskSummary taskSummary = handleTaskIntent(intent, taskDescription);
+        TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), task);
 
         return new ParsedIntent(
                 taskSummary.getId(),
-                intent,
+                intentResolution.intent(),
                 taskSummary.getDescription(),
                 taskSummary.isCompleted(),
-                rankedScores
+                intentResolution.rankedScores()
         );
     }
 
@@ -71,6 +59,15 @@ public class EchoTaskService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Could not determine intent. Please say add, delete, or complete."
+            );
+        }
+    }
+
+    private void invalidateExtractedTask(String task) {
+        if (Objects.equals(task, "")) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not extract task. Please try again."
             );
         }
     }
