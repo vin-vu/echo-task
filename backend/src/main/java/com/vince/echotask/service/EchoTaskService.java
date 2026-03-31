@@ -3,36 +3,28 @@ package com.vince.echotask.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vince.echotask.models.*;
-import com.vince.echotask.nlp.depparser.DependencyParser;
 import com.vince.echotask.nlp.intent.IntentService;
-import com.vince.echotask.nlp.intent.Tokenizer;
+import com.vince.echotask.nlp.task.TaskFinderService;
 import com.vince.echotask.repository.EchoTaskRepository;
-import edu.stanford.nlp.semgraph.SemanticGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class EchoTaskService {
 
-    private final Tokenizer tokenizer;
     private final IntentService intentService;
-    private final DependencyParser dependencyParser;
     private final EchoTaskRepository repository;
     private final ObjectMapper mapper;
 
-    public EchoTaskService(Tokenizer tokenizer, IntentService intentService,
-                           DependencyParser dependencyParser, EchoTaskRepository repository, ObjectMapper mapper) {
-        this.tokenizer = tokenizer;
+    public EchoTaskService(IntentService intentService, TaskFinderService taskFinderService,
+                           EchoTaskRepository repository, ObjectMapper mapper) {
         this.intentService = intentService;
-        this.dependencyParser = dependencyParser;
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -42,27 +34,20 @@ public class EchoTaskService {
         log.info("process intent: {}", request);
 
         String transcript = request.getTranscript();
-        String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
+        IntentResolution intentResolution = intentService.resolveIntent(transcript);
+        log.info("intentResolution: {}", intentResolution);
 
-        SortedMap<Double, Set<String>> rankedIntentScores = intentService.categorizeIntent(lemmatizedTokens);
-        log.info("sortedScoreMap: {}", rankedIntentScores);
+        validateIntent(intentResolution.intent());
 
-        var rankedScores = intentService.convertRankedIntentScores(rankedIntentScores);
-        Intent intent = intentService.getBestIntent(rankedIntentScores);
-        log.info("best intent: {}", intent);
-
-        validateIntent(intent);
-
-        SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(transcript);
-        String taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-        TaskSummary taskSummary = handleTaskIntent(intent, taskDescription);
+        String tempTaskDescription = "go to costco";
+        TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), tempTaskDescription);
 
         return new ParsedIntent(
                 taskSummary.getId(),
-                intent,
+                intentResolution.intent(),
                 taskSummary.getDescription(),
                 taskSummary.isCompleted(),
-                rankedScores
+                intentResolution.rankedScores()
         );
     }
 
@@ -156,3 +141,31 @@ public class EchoTaskService {
                 ));
     }
 }
+
+//public ParsedIntent processIntent(IntentRequest request) {
+//    log.info("process intent: {}", request);
+//
+//    String transcript = request.getTranscript();
+//    String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
+//
+//    SortedMap<Double, Set<String>> rankedIntentScores = intentService.categorizeIntent(lemmatizedTokens);
+//    log.info("sortedScoreMap: {}", rankedIntentScores);
+//
+//    var rankedScores = intentService.convertRankedIntentScores(rankedIntentScores);
+//    Intent intent = intentService.getBestIntent(rankedIntentScores);
+//    log.info("best intent: {}", intent);
+//
+//    validateIntent(intent);
+//
+//    SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(transcript);
+//    String taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
+//    TaskSummary taskSummary = handleTaskIntent(intent, taskDescription);
+//
+//    return new ParsedIntent(
+//            taskSummary.getId(),
+//            intent,
+//            taskSummary.getDescription(),
+//            taskSummary.isCompleted(),
+//            rankedScores
+//    );
+//}
