@@ -23,7 +23,7 @@ public class IntentService {
     }
 
     private String[] tokenizeTranscript(String transcript) {
-        return intentPreprocessor.getTranscriptTokens(transcript);
+        return intentPreprocessor.preprocessForIntent(transcript);
     }
 
     private SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
