@@ -1,4 +1,6 @@
-package com.vince.echotask.models;
+package com.vince.echotask.models.dto.response;
+
+import com.vince.echotask.models.domain.Intent;
 
 import java.util.Map;
 import java.util.Set;

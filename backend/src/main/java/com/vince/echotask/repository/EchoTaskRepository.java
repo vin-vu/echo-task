@@ -1,7 +1,7 @@
 package com.vince.echotask.repository;
 
-import com.vince.echotask.models.Task;
-import com.vince.echotask.models.TaskSummary;
+import com.vince.echotask.models.domain.Task;
+import com.vince.echotask.models.dto.response.TaskSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +20,8 @@ public interface EchoTaskRepository extends JpaRepository<Task, UUID> {
             "LIMIT 1", nativeQuery = true)
     Task findBestMatch(@Param("input") String input);
 
-    @Query(value = "SELECT new com.vince.echotask.models.TaskSummary(t.id, t.description, t.completed) FROM Task t")
+    @Query(value = "SELECT new com.vince.echotask.models.dto.response.TaskSummary(t.id, t.description, t.completed) " +
+            "FROM Task t")
     List<TaskSummary> getAllTaskSummaries();
 
     @Transactional

@@ -1,7 +1,7 @@
 package com.vince.echotask.nlp.intent;
 
-import com.vince.echotask.models.Intent;
-import com.vince.echotask.models.IntentResolution;
+import com.vince.echotask.models.domain.Intent;
+import com.vince.echotask.models.dto.response.IntentResolution;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

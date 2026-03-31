@@ -1,4 +1,4 @@
-package com.vince.echotask.models;
+package com.vince.echotask.models.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

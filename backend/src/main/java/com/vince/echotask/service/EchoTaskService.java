@@ -2,7 +2,12 @@ package com.vince.echotask.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vince.echotask.models.*;
+import com.vince.echotask.models.domain.Intent;
+import com.vince.echotask.models.domain.Task;
+import com.vince.echotask.models.dto.request.IntentRequest;
+import com.vince.echotask.models.dto.response.IntentResolution;
+import com.vince.echotask.models.dto.response.ParsedIntent;
+import com.vince.echotask.models.dto.response.TaskSummary;
 import com.vince.echotask.nlp.intent.IntentService;
 import com.vince.echotask.nlp.task.TaskFinderService;
 import com.vince.echotask.repository.EchoTaskRepository;
@@ -31,7 +36,7 @@ public class EchoTaskService {
         this.repository = repository;
         this.mapper = mapper;
     }
-    
+
     public ParsedIntent processIntent(IntentRequest request) {
         String transcript = request.getTranscript();
 

@@ -1,4 +1,4 @@
-package com.vince.echotask.models;
+package com.vince.echotask.models.dto.response;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
