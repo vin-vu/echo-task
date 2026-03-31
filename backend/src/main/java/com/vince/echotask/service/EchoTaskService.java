@@ -154,31 +154,3 @@ public class EchoTaskService {
                 ));
     }
 }
-
-//public ParsedIntent processIntent(IntentRequest request) {
-//    log.info("process intent: {}", request);
-//
-//    String transcript = request.getTranscript();
-//    String[] lemmatizedTokens = tokenizer.getTranscriptTokens(transcript);
-//
-//    SortedMap<Double, Set<String>> rankedIntentScores = intentService.categorizeIntent(lemmatizedTokens);
-//    log.info("sortedScoreMap: {}", rankedIntentScores);
-//
-//    var rankedScores = intentService.convertRankedIntentScores(rankedIntentScores);
-//    Intent intent = intentService.getBestIntent(rankedIntentScores);
-//    log.info("best intent: {}", intent);
-//
-//    validateIntent(intent);
-//
-//    SemanticGraph dependencyParse = dependencyParser.createDependencyParseTree(transcript);
-//    String taskDescription = dependencyParser.extractDescription(dependencyParse, intent);
-//    TaskSummary taskSummary = handleTaskIntent(intent, taskDescription);
-//
-//    return new ParsedIntent(
-//            taskSummary.getId(),
-//            intent,
-//            taskSummary.getDescription(),
-//            taskSummary.isCompleted(),
-//            rankedScores
-//    );
-//}
