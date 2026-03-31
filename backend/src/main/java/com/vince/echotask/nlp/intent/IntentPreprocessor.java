@@ -1,12 +1,11 @@
 package com.vince.echotask.nlp.intent;
 
+import com.vince.echotask.nlp.TokenizerService;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -22,68 +21,49 @@ import java.util.Set;
 @Component
 public class IntentPreprocessor {
 
-    private static final TokenizerModel tokenizerModel;
-    private static final POSModel posModel;
-    private static final LemmatizerModel lemmatizerModel;
-    private static final TokenizerME tokenizeME;
-    private static final POSTaggerME posTaggerME;
-    private static final LemmatizerME lemmatizerME;
+    private final TokenizerService tokenizerService;
+    private final POSTaggerME posTaggerME;
+    private final LemmatizerME lemmatizerME;
+    private final Set<String> stopWordsSet = new HashSet<>();
 
-    public static Set<String> stopWordsSet = new HashSet<>();
+    public IntentPreprocessor(TokenizerService tokenizerService) {
+        this.tokenizerService = tokenizerService;
 
-    static {
-        try (InputStream tokenizerStream =
-                     new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream();
-             InputStream posStream = new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
+        try (InputStream posStream =
+                     new ClassPathResource("nlp/opennlp-en-ud-ewt-pos-1.2-2.5.0.bin").getInputStream();
              InputStream lemmatizerStream =
                      new ClassPathResource("nlp/opennlp-en-ud-ewt-lemmas-1.2-2.5.0.bin").getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("data" +
-                     "/stopwords.txt").getInputStream()))
+             BufferedReader bufferedReader =
+                     new BufferedReader(new InputStreamReader(
+                             new ClassPathResource("data/stopwords.txt").getInputStream()))
         ) {
+            POSModel posModel = new POSModel(posStream);
+            LemmatizerModel lemmatizerModel = new LemmatizerModel(lemmatizerStream);
 
-            // load models
-            tokenizerModel = new TokenizerModel(tokenizerStream);
-            posModel = new POSModel(posStream);
-            lemmatizerModel = new LemmatizerModel(lemmatizerStream);
+            this.posTaggerME = new POSTaggerME(posModel);
+            this.lemmatizerME = new LemmatizerME(lemmatizerModel);
 
-            // instantiate ME models
-            tokenizeME = new TokenizerME(tokenizerModel);
-            posTaggerME = new POSTaggerME(posModel);
-            lemmatizerME = new LemmatizerME(lemmatizerModel);
-
-            // load stopwords
             String stopWord;
             while ((stopWord = bufferedReader.readLine()) != null) {
                 stopWordsSet.add(stopWord);
             }
-            log.info("stopWord set: {}", stopWordsSet);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to initialize intent preprocessor", e);
         }
     }
 
-    public String[] getTranscriptTokens(String transcript) {
-        String[] transcriptTokens = tokenizeText(transcript);
-        String[] normalizedTokens = normalizeTokens(transcriptTokens);
+    public String[] preprocessForIntent(String transcript) {
+        String[] normalizedTokens = tokenizerService.tokenizeAndNormalize(transcript);
         String[] tokensWithoutStopWords = removeStopWords(normalizedTokens);
-        String[] partsOfSpeechTags = generatePartOfSpeechTags(tokensWithoutStopWords);
-        return lemmatizeTokens(tokensWithoutStopWords, partsOfSpeechTags);
-    }
-
-    private String[] tokenizeText(String phrase) {
-        return tokenizeME.tokenize(phrase);
-    }
-
-    private String[] normalizeTokens(String[] tokens) {
-        return Arrays.stream(tokens).map(String::toLowerCase).toArray(String[]::new);
+        String[] posTags = generatePartOfSpeechTags(tokensWithoutStopWords);
+        return lemmatizeTokens(tokensWithoutStopWords, posTags);
     }
 
     private String[] removeStopWords(String[] tokens) {
-        tokens = Arrays.stream(tokens)
+        return Arrays.stream(tokens)
                 .filter(token -> !stopWordsSet.contains(token))
                 .toArray(String[]::new);
-        return tokens;
     }
 
     private String[] generatePartOfSpeechTags(String[] tokens) {
