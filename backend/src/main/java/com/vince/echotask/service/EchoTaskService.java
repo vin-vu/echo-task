@@ -19,28 +19,29 @@ import java.util.UUID;
 public class EchoTaskService {
 
     private final IntentService intentService;
+    private final TaskFinderService taskFinderService;
     private final EchoTaskRepository repository;
     private final ObjectMapper mapper;
 
     public EchoTaskService(IntentService intentService, TaskFinderService taskFinderService,
                            EchoTaskRepository repository, ObjectMapper mapper) {
         this.intentService = intentService;
+        this.taskFinderService = taskFinderService;
         this.repository = repository;
         this.mapper = mapper;
     }
 
 
     public ParsedIntent processIntent(IntentRequest request) {
-        log.info("process intent: {}", request);
-
         String transcript = request.getTranscript();
         IntentResolution intentResolution = intentService.resolveIntent(transcript);
         log.info("intentResolution: {}", intentResolution);
 
         validateIntent(intentResolution.intent());
 
-        String tempTaskDescription = "go to costco";
-        TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), tempTaskDescription);
+        String task = taskFinderService.extractTask(transcript);
+        log.info("extracted task: {}", task);
+        TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), task);
 
         return new ParsedIntent(
                 taskSummary.getId(),

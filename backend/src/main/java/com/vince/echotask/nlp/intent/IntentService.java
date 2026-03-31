@@ -14,16 +14,16 @@ import java.util.stream.Collectors;
 @Component
 public class IntentService {
 
-    private final Tokenizer tokenizer;
+    private final IntentPreprocessor intentPreprocessor;
     private final IntentModelService intentModelService;
 
-    public IntentService(Tokenizer tokenizer, IntentModelService intentModelService) {
-        this.tokenizer = tokenizer;
+    public IntentService(IntentPreprocessor intentPreprocessor, IntentModelService intentModelService) {
+        this.intentPreprocessor = intentPreprocessor;
         this.intentModelService = intentModelService;
     }
 
     private String[] tokenizeTranscript(String transcript) {
-        return tokenizer.getTranscriptTokens(transcript);
+        return intentPreprocessor.preprocessForIntent(transcript);
     }
 
     private SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
