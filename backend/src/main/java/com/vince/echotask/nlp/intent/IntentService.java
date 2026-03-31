@@ -22,15 +22,15 @@ public class IntentService {
         this.intentModelService = intentModelService;
     }
 
-    public String[] tokenizeTranscript(String transcript) {
+    private String[] tokenizeTranscript(String transcript) {
         return tokenizer.getTranscriptTokens(transcript);
     }
 
-    public SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
+    private SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
         return intentModelService.categorizeIntent(phraseTokens);
     }
 
-    public Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {
+    private Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {
         double topScore = rankedIntentScores.lastKey();
         Set<String> bestIntents = rankedIntentScores.get(topScore);
 
@@ -43,7 +43,7 @@ public class IntentService {
         return Intent.valueOf(bestIntents.iterator().next());
     }
 
-    public Map<String, Set<String>> convertRankedIntentScores(SortedMap<Double, Set<String>> intentScores) {
+    private Map<String, Set<String>> convertRankedIntentScores(SortedMap<Double, Set<String>> intentScores) {
         return intentScores.entrySet().stream().collect(Collectors.toMap(entry ->
                 entry.getKey().toString(), Map.Entry::getValue));
     }
