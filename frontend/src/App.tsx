@@ -24,7 +24,7 @@ export default function App() {
   const [taskDescription, setTaskDescription] = useState('');
   const [transcript, setTranscript] = useState('');
   const [intentScores, setIntentScores] = useState<Map<string, Set<Intent>>>(
-    new Map()
+    new Map(),
   );
 
   const addVoiceTask = (task: TaskData) => {
@@ -46,7 +46,7 @@ export default function App() {
         addNonVoiceTask(taskInput as string);
       }
     },
-    []
+    [],
   );
 
   const deleteTask = useCallback(async (id: string, voiceCommand: boolean) => {
@@ -58,7 +58,7 @@ export default function App() {
   const editTaskDescription = (id: string, newDescription: string): void => {
     setTasks((prevTasks) => {
       return prevTasks.map((task) =>
-        task.id === id ? { ...task, description: newDescription } : task
+        task.id === id ? { ...task, description: newDescription } : task,
       );
     });
   };
@@ -70,7 +70,7 @@ export default function App() {
       }
       setTasks((prevTasks) => {
         const updatedTasks = prevTasks.map((task) =>
-          task.id === id ? { ...task, completed: completedStatus } : task
+          task.id === id ? { ...task, completed: completedStatus } : task,
         );
         return [
           ...updatedTasks
@@ -79,7 +79,7 @@ export default function App() {
         ];
       });
     },
-    []
+    [],
   );
 
   const handleVoiceCommands = useCallback(
@@ -90,7 +90,7 @@ export default function App() {
         addTask(task, true);
       } else if (intent === Intent.DELETE_TASK) {
         deleteTask(id, true);
-      } else if (intent === Intent.COMPLETED_TASK) {
+      } else if (intent === Intent.COMPLETE_TASK) {
         editTaskStatus(task.id, task.completed, true);
       }
 
@@ -99,12 +99,12 @@ export default function App() {
         Object.entries(intentPayload.rankedIntentScores).map(([key, value]) => [
           key,
           new Set(value),
-        ])
+        ]),
       );
       setIntentScores(convertedIntentScores);
       setTaskDescription(description);
     },
-    [addTask, deleteTask, editTaskStatus]
+    [addTask, deleteTask, editTaskStatus],
   );
 
   useEffect(() => {
@@ -139,7 +139,10 @@ export default function App() {
             <TodoForm addTask={addTask} />
             <div className="task-list">{displayTasks}</div>
           </div>
-          <Microphone handleVoiceCommands={handleVoiceCommands} setTranscript={setTranscript} />
+          <Microphone
+            handleVoiceCommands={handleVoiceCommands}
+            setTranscript={setTranscript}
+          />
         </div>
         <IntentStatistics
           intentScores={intentScores}

@@ -28,7 +28,7 @@ export default function IntentStatistics({
             setAddTaskScore(scorePercentage);
           } else if (intent === Intent.DELETE_TASK) {
             setDeleteTaskScore(scorePercentage);
-          } else if (intent === Intent.COMPLETED_TASK) {
+          } else if (intent === Intent.COMPLETE_TASK) {
             setCompletedTaskScore(scorePercentage);
           }
         }
@@ -60,8 +60,12 @@ export default function IntentStatistics({
     <div className="statistics-container">
       <div className="intent-scores">
         <span style={getStyle(Intent.ADD_TASK)}>ADD TASK - {addTaskScore}</span>
-        <span style={getStyle(Intent.DELETE_TASK)}>DELETE TASK - {deleteTaskScore}</span>
-        <span style={getStyle(Intent.COMPLETED_TASK)}>COMPLETED TASK - {completedTaskScore}</span>
+        <span style={getStyle(Intent.DELETE_TASK)}>
+          DELETE TASK - {deleteTaskScore}
+        </span>
+        <span style={getStyle(Intent.COMPLETE_TASK)}>
+          COMPLETED TASK - {completedTaskScore}
+        </span>
       </div>
       <div className="text-container">
         <div className="text-row">
