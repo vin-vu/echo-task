@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 public class IntentService {
 
     private final IntentPreprocessor intentPreprocessor;
-    private final IntentModelService intentModelService;
+    private final IntentModel intentModel;
 
-    public IntentService(IntentPreprocessor intentPreprocessor, IntentModelService intentModelService) {
+    public IntentService(IntentPreprocessor intentPreprocessor, IntentModel intentModel) {
         this.intentPreprocessor = intentPreprocessor;
-        this.intentModelService = intentModelService;
+        this.intentModel = intentModel;
     }
 
     private String[] tokenizeTranscript(String transcript) {
@@ -27,7 +27,7 @@ public class IntentService {
     }
 
     private SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
-        return intentModelService.categorizeIntent(phraseTokens);
+        return intentModel.categorizeIntent(phraseTokens);
     }
 
     private Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {

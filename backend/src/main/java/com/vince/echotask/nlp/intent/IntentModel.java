@@ -20,14 +20,14 @@ import java.util.SortedMap;
 
 @Slf4j
 @Service
-public class IntentModelService {
+public class IntentModel {
 
     private final IntentPreprocessor intentPreprocessor;
     private final AppPaths appPaths;
     private final DocumentCategorizerME intentCategorizer;
 
-    public IntentModelService(IntentPreprocessor intentPreprocessor, AppPaths appPaths,
-                              @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
+    public IntentModel(IntentPreprocessor intentPreprocessor, AppPaths appPaths,
+                       @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
         this.intentPreprocessor = intentPreprocessor;
         this.appPaths = appPaths;
 
