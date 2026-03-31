@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-public class Tokenizer {
+public class IntentPreprocessor {
 
     private static final TokenizerModel tokenizerModel;
     private static final POSModel posModel;

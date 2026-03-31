@@ -22,13 +22,13 @@ import java.util.SortedMap;
 @Service
 public class IntentModelService {
 
-    private final Tokenizer tokenizer;
+    private final IntentPreprocessor intentPreprocessor;
     private final AppPaths appPaths;
     private final DocumentCategorizerME intentCategorizer;
 
-    public IntentModelService(Tokenizer tokenizer, AppPaths appPaths,
+    public IntentModelService(IntentPreprocessor intentPreprocessor, AppPaths appPaths,
                               @Value("${app.trainModelOnStartup:false}") boolean trainModelOnStartup) throws Exception {
-        this.tokenizer = tokenizer;
+        this.intentPreprocessor = intentPreprocessor;
         this.appPaths = appPaths;
 
         if (trainModelOnStartup) {
@@ -97,7 +97,7 @@ public class IntentModelService {
                 }
 
                 String intent = parts[0];
-                String[] tokens = tokenizer.getTranscriptTokens(parts[1]);
+                String[] tokens = intentPreprocessor.getTranscriptTokens(parts[1]);
 
                 processedLines.add(intent + " " + String.join(" ", tokens));
             }
