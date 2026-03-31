@@ -1,19 +1,18 @@
 package com.vince.echotask.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vince.echotask.models.*;
+import com.vince.echotask.models.domain.Intent;
+import com.vince.echotask.models.dto.request.IntentRequest;
+import com.vince.echotask.models.dto.response.IntentResolution;
+import com.vince.echotask.models.dto.response.ParsedIntent;
+import com.vince.echotask.models.dto.response.TaskSummary;
 import com.vince.echotask.nlp.intent.IntentService;
 import com.vince.echotask.nlp.task.TaskFinderService;
-import com.vince.echotask.repository.EchoTaskRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -21,17 +20,15 @@ public class EchoTaskService {
 
     private final IntentService intentService;
     private final TaskFinderService taskFinderService;
-    private final EchoTaskRepository repository;
-    private final ObjectMapper mapper;
+    private final TaskActionService taskActionService;
 
     public EchoTaskService(IntentService intentService, TaskFinderService taskFinderService,
-                           EchoTaskRepository repository, ObjectMapper mapper) {
+                           TaskActionService taskActionService) {
         this.intentService = intentService;
         this.taskFinderService = taskFinderService;
-        this.repository = repository;
-        this.mapper = mapper;
+        this.taskActionService = taskActionService;
     }
-    
+
     public ParsedIntent processIntent(IntentRequest request) {
         String transcript = request.getTranscript();
 
@@ -41,7 +38,7 @@ public class EchoTaskService {
 
         String task = taskFinderService.extractTask(transcript);
         log.info("extracted task: {}", task);
-        invalidateExtractedTask(task);
+        validateExtractedTask(task);
 
         TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), task);
 
@@ -63,7 +60,7 @@ public class EchoTaskService {
         }
     }
 
-    private void invalidateExtractedTask(String task) {
+    private void validateExtractedTask(String task) {
         if (Objects.equals(task, "")) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -74,9 +71,9 @@ public class EchoTaskService {
 
     private TaskSummary handleTaskIntent(Intent intent, String taskDescription) {
         return switch (intent) {
-            case ADD_TASK -> saveTask(taskDescription);
-            case DELETE_TASK -> deleteTask(null, taskDescription);
-            case COMPLETE_TASK -> updateTaskStatus(null, true, taskDescription);
+            case ADD_TASK -> taskActionService.saveTask(taskDescription);
+            case DELETE_TASK -> taskActionService.deleteTask(null, taskDescription);
+            case COMPLETE_TASK -> taskActionService.updateTaskStatus(null, true, taskDescription);
             default -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Unsupported intent: " + intent
@@ -84,72 +81,4 @@ public class EchoTaskService {
         };
     }
 
-    public TaskSummary saveTask(String description) {
-        Task task = new Task();
-        task.setDescription(description);
-        task.setCompleted(false);
-
-        Task savedTask = repository.save(task);
-        log.info("Saved task: {}", savedTask);
-
-        return new TaskSummary(savedTask.getId(), savedTask.getDescription(), savedTask.isCompleted());
-    }
-
-    public TaskSummary updateTaskStatus(UUID id, boolean completedStatus, String description) {
-        UUID resolvedId = resolveTaskId(id, description);
-
-        Task task = repository.updateTaskStatus(completedStatus, resolvedId);
-        if (task == null) {
-            log.warn("Failed to update Task ID:{} to status:{}", resolvedId, completedStatus);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found or update failed");
-        }
-
-        log.info("Updated task ID:{} to status:{}", resolvedId, completedStatus);
-        return new TaskSummary(task.getId(), task.getDescription(), task.isCompleted());
-    }
-
-    public TaskSummary deleteTask(UUID id, String description) {
-        UUID resolvedId = resolveTaskId(id, description);
-        Task task = getTaskOrThrow(resolvedId);
-
-        repository.deleteById(resolvedId);
-        log.info("Deleted task: {}", task);
-
-        return new TaskSummary(task.getId(), task.getDescription(), task.isCompleted());
-    }
-
-    public List<TaskSummary> getAllTasks() throws JsonProcessingException {
-        List<TaskSummary> taskSummaries = repository.getAllTaskSummaries();
-        log.info("Task summaries: {}", mapper.writeValueAsString(taskSummaries));
-        return taskSummaries;
-    }
-
-    private UUID resolveTaskId(UUID id, String description) {
-        if (id != null) return id;
-
-        if (description == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Task ID or description required"
-            );
-        }
-
-        Task task = repository.findBestMatch(description);
-        if (task == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "No matching task found"
-            );
-        }
-
-        return task.getId();
-    }
-
-    private Task getTaskOrThrow(UUID id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Task not found: " + id
-                ));
-    }
 }

@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 export type IntentResponse = {
   id: string;
-  intent: 'ADD_TASK' | 'DELETE_TASK' | 'COMPLETED_TASK';
+  intent: 'ADD_TASK' | 'DELETE_TASK' | 'COMPLETE_TASK';
   rankedIntentScores: Map<string, Set<string>>;
   description: string;
   completed: boolean;
@@ -13,11 +13,11 @@ export type IntentResponse = {
 export enum Intent {
   ADD_TASK = 'ADD_TASK',
   DELETE_TASK = 'DELETE_TASK',
-  COMPLETED_TASK = 'COMPLETED_TASK',
+  COMPLETE_TASK = 'COMPLETE_TASK',
 }
 
 export const fetchIntent = async (
-  transcript: string
+  transcript: string,
 ): Promise<IntentResponse | undefined> => {
   if (transcript.length !== 0) {
     console.log('sending: ', transcript);
@@ -57,7 +57,7 @@ export const getAllTasksAPI = async (): Promise<TaskData[] | undefined> => {
 };
 
 export const addTaskAPI = async (
-  description: string
+  description: string,
 ): Promise<TaskData | undefined> => {
   const url = `${API_BASE_URL}/create-task`;
   try {
@@ -77,7 +77,7 @@ export const addTaskAPI = async (
 };
 
 export const deleteTaskAPI = async (
-  id: string
+  id: string,
 ): Promise<TaskData | undefined> => {
   const url = `${API_BASE_URL}/delete-task`;
   try {
@@ -98,7 +98,7 @@ export const deleteTaskAPI = async (
 
 export const updateTaskStatusAPI = async (
   id: string,
-  completed: boolean
+  completed: boolean,
 ): Promise<TaskData | undefined> => {
   const url = `${API_BASE_URL}/update-task-status`;
   try {

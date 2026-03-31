@@ -1,4 +1,4 @@
-package com.vince.echotask.models;
+package com.vince.echotask.models.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

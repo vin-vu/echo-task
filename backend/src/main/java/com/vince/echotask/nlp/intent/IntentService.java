@@ -1,7 +1,7 @@
 package com.vince.echotask.nlp.intent;
 
-import com.vince.echotask.models.Intent;
-import com.vince.echotask.models.IntentResolution;
+import com.vince.echotask.models.domain.Intent;
+import com.vince.echotask.models.dto.response.IntentResolution;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 public class IntentService {
 
     private final IntentPreprocessor intentPreprocessor;
-    private final IntentModelService intentModelService;
+    private final IntentModel intentModel;
 
-    public IntentService(IntentPreprocessor intentPreprocessor, IntentModelService intentModelService) {
+    public IntentService(IntentPreprocessor intentPreprocessor, IntentModel intentModel) {
         this.intentPreprocessor = intentPreprocessor;
-        this.intentModelService = intentModelService;
+        this.intentModel = intentModel;
     }
 
     private String[] tokenizeTranscript(String transcript) {
@@ -27,7 +27,7 @@ public class IntentService {
     }
 
     private SortedMap<Double, Set<String>> categorizeIntent(String[] phraseTokens) {
-        return intentModelService.categorizeIntent(phraseTokens);
+        return intentModel.categorizeIntent(phraseTokens);
     }
 
     private Intent getBestIntent(SortedMap<Double, Set<String>> rankedIntentScores) {

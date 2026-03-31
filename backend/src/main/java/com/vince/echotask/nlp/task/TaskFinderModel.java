@@ -21,13 +21,13 @@ import java.util.Collections;
 
 @Slf4j
 @Service
-public class TaskFinderModelService {
+public class TaskFinderModel {
 
     private final AppPaths appPaths;
     private final NameFinderME taskFinder;
 
-    public TaskFinderModelService(AppPaths appPaths,
-                                  @Value("${app.trainTaskFinderModel:false}") boolean trainTaskFinderModel) throws Exception {
+    public TaskFinderModel(AppPaths appPaths,
+                           @Value("${app.trainTaskFinderModel:false}") boolean trainTaskFinderModel) throws Exception {
         this.appPaths = appPaths;
 
         if (trainTaskFinderModel) {

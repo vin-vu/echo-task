@@ -12,16 +12,16 @@ import java.util.Arrays;
 public class TaskFinderService {
 
     private final TokenizerService tokenizerService;
-    private final TaskFinderModelService taskFinderModelService;
+    private final TaskFinderModel taskFinderModel;
 
-    public TaskFinderService(TokenizerService tokenizerService, TaskFinderModelService taskFinderModelService) {
+    public TaskFinderService(TokenizerService tokenizerService, TaskFinderModel taskFinderModel) {
         this.tokenizerService = tokenizerService;
-        this.taskFinderModelService = taskFinderModelService;
+        this.taskFinderModel = taskFinderModel;
     }
 
     public String extractTask(String transcript) {
         String[] tokens = tokenizerService.tokenizeAndNormalize(transcript);
-        Span[] taskSpans = taskFinderModelService.findTask(tokens);
+        Span[] taskSpans = taskFinderModel.findTask(tokens);
         return extractTaskFromSpans(tokens, taskSpans);
     }
 
