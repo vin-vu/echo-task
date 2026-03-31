@@ -1,11 +1,6 @@
 # EchoTask
 
-Voice Controlled Task Management App
-
-EchoTask is a full stack web application designed to emulate IoT tools like Siri and Alexa allowing users to manage
-their tasks using voice commands. It uses React for the frontend and Spring Boot for the backend, integrating speech
-recognition and natural language processing (NLP) to create an intuitive task management experience. EchoTask supports
-adding, deleting, and marking tasks as complete with verbal inputs.
+EchoTask is a full stack  application that enables users to manage tasks through voice commands, similar to assistants like Siri and Alexa. It combines speech recognition with a lightweight NLP pipeline to convert spoken input into structured actions such as adding, deleting, and completing tasks. Built with React and Spring Boot, the app provides a voice-driven task management experience.
 
 ## Table of Contents
 
