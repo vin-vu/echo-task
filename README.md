@@ -25,64 +25,97 @@ adding, deleting, and marking tasks as complete with verbal inputs.
 
 #### Frontend
 
-* **React**: Component-based UI development
-* **React Speech Recognition**: Speech-to-text functionality
+* **React**: Component based UI development
+* **React Speech Recognition**: Speech-to-text input
 
 #### Backend
 
-* **Java Spring Boot**: REST API for handling communication, NLP integration, and speech processing
-* **PostgreSQL**: Database to store tasks
+- **Spring Boot (Java)** – REST APIs, NLP orchestration, request handling
+- **PostgreSQL** – Task persistence
 
 #### NLP
 
-* **Apache OpenNLP**: Custom trained Document Categorizer to detect user
-  intent - [Doccat Documentation](https://opennlp.apache.org/docs/2.5.4/manual/opennlp.html#tools.doccat)
-* **Stanford CoreNLP**: Neural Network Dependency Parser to produce tree like relationships between
-  words - [Depparse Documentation](https://stanfordnlp.github.io/CoreNLP/depparse.html#description)
+- **Apache OpenNLP**: 
+   - Document Categorizer for intent classification - [Doccat Documentation](https://opennlp.apache.org/docs/3.0.0-M1/manual/opennlp.html#tools.doccat)
+   - Named Entity Recogniation (NER) - [NER Documentation](https://opennlp.apache.org/docs/3.0.0-M1/manual/opennlp.html#tools.namefind)
 
 ## NLP Approach
 
-#### Model Training
+### Pipeline
+User input is preprocessed (tokenization, normalization, optional lemmatization) before being passed through two stages:
 
-#### General Pipeline
+1. **Intent Classification (Document Categorizer)**
+2. **Task Extraction (NER Model)**
 
-To obtain the best results, phrases sent to NLP tools need to be preprocessed. They will definitely need to be tokenized
-and normalized and possibly lemmatized. The preprocessing allows NLP tools to produce more consistent and predictable
-results. In this app, there are 2 different NLP libaries implemeneted here have their own preprocessing pipeline. It
-might seem redundant, but for the simplicity of the application it makes sense for each to use their own preprocessing
-tools and pipeline. In a live production app, a single NLP library with shared tools would make more sense. After
-preprocessing, phrases get sent to the Document Categorizer to capture user intent and then Dependency Parsing to
-extract the task description.
+Each NLP component currently maintains its own preprocessing for simplicity. In production, this would be unified.
 
-#### Document Categorizer
+---
 
-The first major step is to understand the intent. In this app, the intent can be roughly translated to a CRUD operation.
-For example, to say "add go to Costco" or "insert go to Costco" would mean the same thing where we want to create a task
-object. Similarily, "delete go to Costco" or "remove go to Costco" would be a delete operation. And, "finished go to
-Costco" or "close go to Costco" is marking a task as complete and would translate to an update operation. A document
-categorizer was the selected here because we want to classify text into predefined categories. By understanding the
-intent, we can update the database and the UI accordingly.
+### Intent Classification (Document Categorizer)
 
-#### Dependency Parsing
+A custom Document Categorizer (Doccat) model classifies utterances into CRUD like intents:
 
-The next and most challenging step is to extract meaningful words from an utterance. If we look at the phrase "add
-go to Costco" or "finished go to Costco", the goal is dynamically ignore the intent verb (add/finished) while keeping
-the task description. Dependency parsing was selected because it generates a tree depicting the relationship between
-words. From here, DFS algorithms are used to traverse the tree to collect the meaningful words. The challenge is that
-there are essentially an infinite number of possible phrases a user might say, so only a subset of them will be safely
-handled, as shown in the training data file `backend/src/main/resources/data/doccat-training.txt`.
+- **ADD** → create task (`"add go to Costco"`)
+- **DELETE** → remove task (`"delete go to Costco"`)
+- **COMPLETE** → update task (`"finished go to Costco"`)
+
+This determines which backend operation to execute.
+
+---
+
+### Task Extraction (NER)
+
+A custom Named Entity Recognition (NER) model extracts the task description from the utterance.
+
+- Input: `"add go to Costco"`
+- Output: `"go to Costco"`
+
+The model identifies spans labeled as task-related entities, enabling flexible extraction across different phrasing.
+
+### Why NER replaced initial Dependency Parsing implementation
+
+Dependency parsing required manual tree traversal logic and struggled with variability in natural language.
+
+NER provides:
+- Direct span extraction
+- Better generalization across phrasing
+- Simpler and more maintainable implementation
 
 ## NLP Statistics
 
 The UI includes a **Stats Section** that provides:
 
-- **Intent Probabilities:** Displays confidence levels for `Add`, `Delete`, and `Complete` intents
-- **Captured Transcription:** Shows the raw text captured from the microphone
-- **Parsed Description:** Displays the extracted task description generated by the dependency parser
+- **Intent Probabilities** – confidence scores for each intent  
+- **Transcription** – raw speech-to-text output  
+- **Parsed Description** – extracted task text from NER  
+
+## Usage
+
+1. After starting the application, visit **`http://localhost:5173/`** in your browser
+2. Allow microphone access
+3. Hold mic button → speak → release
+4. Supported actions:
+- Add task
+- Delete task
+- Complete task
+
+## Known Limitations
+
+- **Intent Misclassification** → requires more training data
+- **NER Extraction Errors** → may miss or incorrectly span task descriptions
+- **Speech Variability** → dependent on transcription accuracy
+
+## Example Phrases
+
+Some training data is stored in the following file, which can provide guidance on effective commands:
+
+```
+echo-task\backend\src\main\resources\data\doccat-training.txt
+echo-task\backend\src\main\resources\data\task-ner-training.txt
+```
 
 ## Local Setup Guide
 
-This guide outlines steps to run the EchoTask locally
 
 #### Prerequisites
 
@@ -140,27 +173,3 @@ If you’re using IntelliJ, you can also start the backend by running the applic
    ```sh
    npm run dev
    ```
-
-## Usage
-
-1. After starting the application, visit **`http://localhost:5173/`** in your browser
-2. Grant the application permission to use your microphone when prompted
-3. Click and hold the microphone button while giving verbal commands, then release the button when finished
-4. Supported commands include adding tasks, deleting tasks, and`marking tasks as completed
-5. It is recommended to annunciate words clearly to get an accurate transcript.
-
-## Known Limitations
-
-- **Incorrect Commands**: The document categorizer model may need additional tuning and training data if the wrong
-  intent is classified.
-- **Incorrect Description Extraction**: The dependency parser may struggle to ignore intent actions from task
-  descriptions due to the wide variability in natural speech patterns. This would require additional algorithmic
-  solutions to handle the variety of utterances.
-
-## Example Phrases
-
-Some training data is stored in the following file, which can provide guidance on effective commands:
-
-```
-echo-task\backend\src\main\resources\data\doccat-training.txt
-```
