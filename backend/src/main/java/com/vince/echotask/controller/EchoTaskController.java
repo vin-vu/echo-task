@@ -9,6 +9,7 @@ import com.vince.echotask.models.dto.request.UpdateStatusRequest;
 import com.vince.echotask.models.dto.response.ParsedIntent;
 import com.vince.echotask.models.dto.response.TaskSummary;
 import com.vince.echotask.service.EchoTaskService;
+import com.vince.echotask.service.TaskActionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,15 @@ import java.util.UUID;
 public class EchoTaskController {
 
     private final EchoTaskService echoTaskService;
+    private final TaskActionService taskActionService;
     private final ObjectMapper mapper;
 
-    public EchoTaskController(EchoTaskService echoTaskService, ObjectMapper mapper) {
+    public EchoTaskController(EchoTaskService echoTaskService, TaskActionService taskActionService,
+                              ObjectMapper mapper) {
         this.echoTaskService = echoTaskService;
+        this.taskActionService = taskActionService;
         this.mapper = mapper;
     }
-
 
     @PostMapping("/detect-intent")
     ResponseEntity<ParsedIntent> detectIntent(@RequestBody IntentRequest request) throws IOException {
@@ -44,7 +47,7 @@ public class EchoTaskController {
     ResponseEntity<TaskSummary> createTask(@RequestBody TaskRequest request) throws JsonProcessingException {
         log.info("create task request: {}", mapper.writeValueAsString(request));
 
-        TaskSummary response = echoTaskService.saveTask(request.getDescription());
+        TaskSummary response = taskActionService.saveTask(request.getDescription());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -52,24 +55,24 @@ public class EchoTaskController {
     ResponseEntity<TaskSummary> updateTaskStatus(@RequestBody UpdateStatusRequest request) throws JsonProcessingException {
         log.info("update task status request: {}", mapper.writeValueAsString(request));
 
-        TaskSummary response = echoTaskService.updateTaskStatus(UUID.fromString(request.getId()),
+        TaskSummary response = taskActionService.updateTaskStatus(UUID.fromString(request.getId()),
                 request.isCompleted(), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-task")
-    ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws IllegalAccessException,
+    ResponseEntity<TaskSummary> deleteTask(@RequestBody DeleteTaskRequest request) throws
             JsonProcessingException {
         log.info("Delete task request: {}", mapper.writeValueAsString(request));
 
-        TaskSummary response = echoTaskService.deleteTask(UUID.fromString(request.getId()), null);
+        TaskSummary response = taskActionService.deleteTask(UUID.fromString(request.getId()), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/get-tasks")
     ResponseEntity<List<TaskSummary>> getTasks() throws JsonProcessingException {
         log.info("get all tasks request");
-        List<TaskSummary> response = echoTaskService.getAllTasks();
+        List<TaskSummary> response = taskActionService.getAllTasks();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
