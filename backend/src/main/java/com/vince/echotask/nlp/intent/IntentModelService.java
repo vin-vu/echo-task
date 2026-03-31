@@ -97,7 +97,7 @@ public class IntentModelService {
                 }
 
                 String intent = parts[0];
-                String[] tokens = intentPreprocessor.getTranscriptTokens(parts[1]);
+                String[] tokens = intentPreprocessor.preprocessForIntent(parts[1]);
 
                 processedLines.add(intent + " " + String.join(" ", tokens));
             }
