@@ -14,17 +14,14 @@ import java.util.Arrays;
 @Component
 public class TokenizerService {
 
-    private static final TokenizerModel tokenizerModel;
-    private static final TokenizerME tokenizeME;
+    private final TokenizerME tokenizeME;
 
-    static {
+    public TokenizerService() throws IOException {
         try (InputStream tokenizerStream =
-                     new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream()
-        ) {
-            tokenizerModel = new TokenizerModel(tokenizerStream);
+                     new ClassPathResource("nlp/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin").getInputStream()) {
+
+            TokenizerModel tokenizerModel = new TokenizerModel(tokenizerStream);
             tokenizeME = new TokenizerME(tokenizerModel);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
