@@ -31,8 +31,7 @@ public class EchoTaskService {
         this.repository = repository;
         this.mapper = mapper;
     }
-
-
+    
     public ParsedIntent processIntent(IntentRequest request) {
         String transcript = request.getTranscript();
 
