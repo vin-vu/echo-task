@@ -27,8 +27,7 @@ public class EchoTaskController {
 
 
     @PostMapping("/detect-intent")
-    ResponseEntity<ParsedIntent> detectIntent(@RequestBody IntentRequest request) throws IOException,
-            IllegalAccessException {
+    ResponseEntity<ParsedIntent> detectIntent(@RequestBody IntentRequest request) throws IOException {
         log.info(request.toString());
 
         ParsedIntent parsedIntent = echoTaskService.processIntent(request);

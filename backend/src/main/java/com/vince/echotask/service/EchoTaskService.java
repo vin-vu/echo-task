@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -34,13 +35,15 @@ public class EchoTaskService {
 
     public ParsedIntent processIntent(IntentRequest request) {
         String transcript = request.getTranscript();
+
         IntentResolution intentResolution = intentService.resolveIntent(transcript);
         log.info("intentResolution: {}", intentResolution);
-
         validateIntent(intentResolution.intent());
 
         String task = taskFinderService.extractTask(transcript);
         log.info("extracted task: {}", task);
+        invalidateExtractedTask(task);
+
         TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), task);
 
         return new ParsedIntent(
@@ -57,6 +60,15 @@ public class EchoTaskService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Could not determine intent. Please say add, delete, or complete."
+            );
+        }
+    }
+
+    private void invalidateExtractedTask(String task) {
+        if (Objects.equals(task, "")) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not extract task. Please try again."
             );
         }
     }
