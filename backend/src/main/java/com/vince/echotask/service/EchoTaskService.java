@@ -46,7 +46,7 @@ public class EchoTaskService {
 
         String task = taskFinderService.extractTask(transcript);
         log.info("extracted task: {}", task);
-        invalidateExtractedTask(task);
+        validateExtractedTask(task);
 
         TaskSummary taskSummary = handleTaskIntent(intentResolution.intent(), task);
 
@@ -68,7 +68,7 @@ public class EchoTaskService {
         }
     }
 
-    private void invalidateExtractedTask(String task) {
+    private void validateExtractedTask(String task) {
         if (Objects.equals(task, "")) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
